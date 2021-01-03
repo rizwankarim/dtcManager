@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+
+    defaultConfig {
+        applicationId "com.example.dtcmanager"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    //picasso dependency
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //Circular Image View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+//    MaterialSearchbar
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.1'
+//    MultiSpinner
+    implementation 'com.github.pratikbutani:MultiSelectSpinner:-SNAPSHOT'
+//    Google Maps
+    implementation 'com.google.maps:google-maps-services:0.1.20'
+    implementation 'com.google.android.libraries.places:places:2.3.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.github.junaidkhan2857:GetCurrentLocation:v1.0.2'
+
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //calender
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    // Retrofit
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //paper Db
+    implementation 'io.paperdb:paperdb:2.7.1'
+
+    implementation "com.airbnb.android:lottie:3.4.0"
+
+    //Spniier
+    implementation 'com.jaredrummler:material-spinner:1.3.1'
+
+
+    //FireBase
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    implementation platform('com.google.firebase:firebase-bom:26.1.1')
+
+}
