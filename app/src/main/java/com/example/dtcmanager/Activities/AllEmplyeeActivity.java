@@ -74,6 +74,7 @@ public class AllEmplyeeActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllEmplyeeActivity.this, CreateNewEmployeeActivity.class);
                 intent.putExtra("orign", "AddEmployee");
                 startActivity(intent);
+                finish();
             }
         });
     }

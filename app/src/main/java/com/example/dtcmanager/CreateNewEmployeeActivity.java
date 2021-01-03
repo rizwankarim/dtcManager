@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
 import com.androidbuts.multispinnerfilter.MultiSpinnerListener;
 import com.androidbuts.multispinnerfilter.MultiSpinnerSearch;
+import com.example.dtcmanager.Activities.AllEmplyeeActivity;
 import com.example.dtcmanager.Activities.SelectAddressActivity;
 import com.example.dtcmanager.Common.Common;
 import com.example.dtcmanager.Common.FileUtils;
@@ -175,7 +176,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 check = 1;
                 requestCode = 2856;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
+                intent.setType("image/*");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
             }
         });
@@ -185,7 +186,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 check = 2;
                 requestCode = 2856;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
+                intent.setType("image/*");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
             }
         });
@@ -195,7 +196,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 check = 3;
                 requestCode = 2856;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
+                intent.setType("image/*");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
             }
         });

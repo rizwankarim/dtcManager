@@ -63,7 +63,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                        AlertDialog.Builder dialog1 = new AlertDialog.Builder(context);
-                        dialog1.setMessage("Are you sure to Remove thi?");
+                        dialog1.setMessage("Are you sure to Remove this?");
                         dialog1.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

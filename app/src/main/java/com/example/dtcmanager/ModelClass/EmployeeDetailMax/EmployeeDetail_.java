@@ -43,7 +43,7 @@ public class EmployeeDetail_ {
     @SerializedName("File")
     @Expose
     private String file;
-    @SerializedName("end_Date")
+    @SerializedName("End_Date")
     @Expose
     private String endDate;
     @SerializedName("Joining_Date")
@@ -52,7 +52,7 @@ public class EmployeeDetail_ {
     @SerializedName("Joining_File")
     @Expose
     private String joiningFile;
-    @SerializedName("image")
+    @SerializedName("Image")
     @Expose
     private String image;
     @SerializedName("Passport_No")
