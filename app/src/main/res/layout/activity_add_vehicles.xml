@@ -94,7 +94,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Vehicle Number"
                             android:inputType="text"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -139,7 +139,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Model"
                             android:inputType="text"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -184,7 +184,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Kilometers"
                             android:inputType="number"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -230,7 +230,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Insurance Date Start"
                             android:inputType="date"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -276,7 +276,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Insurrance Date End"
                             android:inputType="date"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -322,7 +322,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="License End Date"
                             android:inputType="date"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -367,7 +367,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Examination Date"
                             android:inputType="date"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View

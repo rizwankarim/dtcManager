@@ -102,6 +102,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
     TextView txtCreateNewvehicle;
     private static final int PICKFILE_RESULT_CODE = 2856;
     private static final int PICKPHOTO_RESULT_CODE = 2857;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +140,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
                 @Override
                 public void onClick(View view) {
 //                    if (imagePath != null || imageUri != null) {
-                        EditVehicle(id);
+                    EditVehicle(id);
 
 //                    else {
 //                        Toast.makeText(AddVehiclesActivity.this, "Please add Image ", Toast.LENGTH_SHORT).show();
@@ -240,16 +241,13 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
                     String image = "http://test.proglabs.org/DTC/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
                     Log.i("TAG", "onBindViewHolder:" + image);
 
-                    if (response.body().getVehicleDetails().get(0).getEmployee().size() > 0 )
-                    {
+                    if (response.body().getVehicleDetails().get(0).getEmployee().size() > 0) {
                         employeeId = response.body().getVehicleDetails().get(0).getEmployee().get(0).getId();
                         AllEmploye();
                     }
 
-                    if (response.body().getVehicleDetails().get(0).getLocation().size() > 0)
-                    {
-                        for (int i = 0 ; i < response.body().getVehicleDetails().get(0).getLocation().size()   ; i++)
-                        {
+                    if (response.body().getVehicleDetails().get(0).getLocation().size() > 0) {
+                        for (int i = 0; i < response.body().getVehicleDetails().get(0).getLocation().size(); i++) {
                             locationIdList.add(response.body().getVehicleDetails().get(0).getLocation().get(i).getId());
                         }
 
@@ -327,7 +325,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
         } else {
             showLoadingDialog();
             Call<AddVechile> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddVechile(manager_id, vehicle_number, model, kilometers, insurance_date_start,
-                    insurance_date_end, license_date_end, examination_date, employee_id, (ArrayList<String>) locationIdList);
+                    insurance_date_end, license_date_end, examination_date, employee_id,"nullimage", (ArrayList<String>) locationIdList);
 
             call.enqueue(new Callback<AddVechile>() {
                 @Override
@@ -396,18 +394,14 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
                     if (response.code() == 200) {
 
 
+                        if (imageUri != null) {
 
-                             if(imageUri !=null) {
-
-                                 UploadVechileImage(Integer.parseInt(id));
-                             }
-                    else {
-                                 hideLoadingDialog();
-//                                 Toast.makeText(AddVehiclesActivity.this, "Update Data", Toast.LENGTH_SHORT).show();
-
-                                 finish();
-                             }
-
+                            UploadVechileImage(Integer.parseInt(id));
+                        } else {
+                            hideLoadingDialog();
+                            Toast.makeText(AddVehiclesActivity.this, "Update Data", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
 
                     } else {
@@ -490,7 +484,6 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
             }
         });
 
-
     }
 
     private void setLocationInSpinner(List<AllLocation> allLocationList) {
@@ -504,10 +497,8 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
             boolData.setName(allLocationList.get(i).getName());
             boolData.setSelected(false);
 
-            for (int j = 0 ; j < locationIdList.size() ; j++)
-            {
-                if (allLocationList.get(i).getId().equals(locationIdList.get(j)))
-                {
+            for (int j = 0; j < locationIdList.size(); j++) {
+                if (allLocationList.get(i).getId().equals(locationIdList.get(j))) {
                     boolData.setSelected(true);
                 }
             }
@@ -567,17 +558,15 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
             employeeList.add(allEmployeeList.get(w).getUserName());
         }
         spinnerArrayAdapter = new ArrayAdapter<String>
-                (this,  R.layout.spineer_layout,
+                (this, R.layout.spineer_layout,
                         employeeList); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spineer_layout);
         chooseEmployeeSpinner.setAdapter(spinnerArrayAdapter);
 
-        if (originCheck.equals("EditVehicle"))
-        {
+        if (originCheck.equals("EditVehicle")) {
             for (int w = 0; w < allEmployeeList.size(); w++) {
 
-                if (employeeId.equals(allEmployeeList.get(w).getId()))
-                {
+                if (employeeId.equals(allEmployeeList.get(w).getId())) {
                     chooseEmployeeSpinner.setSelection(spinnerArrayAdapter.getPosition(allEmployeeList.get(w).getUserName()));
                 }
             }

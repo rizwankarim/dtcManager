@@ -64,7 +64,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
 
         String Image =  allVehicle.getImage();
 
-        Picasso.get().load("http://test.proglabs.org/DTC/api/Manager/Vehicle_Image/" + Image)
+        Picasso.get().load("http://dtc.anstm.com/dtcAdmin/api/Manager/Vehicle_Image/" + Image)
                 .into(holder.navigation_img, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {

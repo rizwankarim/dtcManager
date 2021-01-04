@@ -96,7 +96,7 @@ public class ViewVehicleActivity extends AppCompatActivity {
                     ViewVehicleLocationAdapter viewVehicleLocationAdapter = new ViewVehicleLocationAdapter(ViewVehicleActivity.this, locationList);
                     VehicleRecylerView.setAdapter(viewVehicleLocationAdapter);
                       iamgeurl = response.body().getVehicleDetails().get(0).getImage();
-                    String image = "http://test.proglabs.org/DTC/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
+                    String image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
                     Log.i("TAG", "onBindViewHolder:" + image);
 
 

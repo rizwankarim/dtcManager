@@ -133,6 +133,7 @@ public interface APIinterface {
             @Query("license_date_end") String license_date_end,
             @Query("examination_date") String examination_date,
             @Query("employee_id") String employee_id,
+            @Query("image") String image,
             @Field("location_id[]") ArrayList<String> location_id
             // @Query("child_id") String child_id
     );

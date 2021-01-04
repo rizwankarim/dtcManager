@@ -163,6 +163,7 @@ public class VehiclesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         recylerviews();
+
     }
 
     public void showLoadingDialog() {
