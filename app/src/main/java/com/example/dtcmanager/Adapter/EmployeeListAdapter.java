@@ -85,6 +85,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
                         intent.putExtra("orign", "EditEmployee");
                         intent.putExtra("id", allEmployee.getId());
                         context.startActivity(intent);
+
                     }
                 });
                 dialog.setNeutralButton("View", new DialogInterface.OnClickListener() {

@@ -97,8 +97,9 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
     ProgressBar progressBar1;
     FileUtils fileUtils;
     AlertDialog loadingDialog;
-    CheckBox OverTime,WithoutOverTime;
+    CheckBox OverTime, WithoutOverTime;
     int over_time = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -316,19 +317,17 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             Toast.makeText(this, "Please Add Passport File", Toast.LENGTH_SHORT).show();
         } else if (imageUri3 == null) {
             Toast.makeText(this, "Please Add Joining File", Toast.LENGTH_SHORT).show();
-        }
-        else if(WithoutOverTime.isChecked()){
-              over_time = 0;
-        }
-        else {
+        } else if (WithoutOverTime.isChecked()) {
+            over_time = 0;
+        } else {
 //            List<String> sub_emp_id = new ArrayList<>();
 //            sub_emp_id = Common.childsList;
             showLoadingDialog();
 
             Call<AddEmployee> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddEmployee(manager_id, user_name, password, position,
                     phone, basic_salary, expenses, String.valueOf(over_time), unique_id, end_date, passport_no,
-                    passport_end_date, joining_date, employeeList,"nullimage","nulltoken",
-                    "nullfile","nulljoin","nullpass","nullimage");
+                    passport_end_date, joining_date, employeeList, "nullimage", "nulltoken",
+                    "nullfile", "nulljoin", "nullpass", "nullimage");
 
             call.enqueue(new Callback<AddEmployee>() {
                 @Override
@@ -379,11 +378,11 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     String joining_date = response.body().getEmployeeDetail().get(0).getJoiningDate();
                     String basic_salary = response.body().getEmployeeDetail().get(0).getBasicSalary();
                     String expenses = response.body().getEmployeeDetail().get(0).getExpenses();
-                    if(response.body().getEmployeeDetail().get(0).getOverTime().equals("1")){
+                    if (response.body().getEmployeeDetail().get(0).getOverTime().equals("1")) {
                         OverTime.setChecked(true);
                         WithoutOverTime.setChecked(false);
                     }
-                    if(!response.body().getEmployeeDetail().get(0).getOverTime().equals("1")){
+                    if (!response.body().getEmployeeDetail().get(0).getOverTime().equals("1")) {
                         WithoutOverTime.setChecked(true);
                         OverTime.setChecked(false);
                     }
@@ -398,17 +397,15 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     edtJoinging.setText(joining_date);
                     edtBasic.setText(basic_salary);
                     edtexpense.setText(expenses);
-                     edtPassortEndDate.setText(passportEndDate);
+                    edtPassortEndDate.setText(passportEndDate);
 
-                     if (response.body().getEmployeeDetail().get(0).getSubEmployee().size() > 0)
-                     {
-                         for (int i = 0 ; i < response.body().getEmployeeDetail().get(0).getSubEmployee().size() ; i++)
-                         {
-                             employeeList.add(response.body().getEmployeeDetail().get(0).getSubEmployee().get(i).getId());
-                         }
+                    if (response.body().getEmployeeDetail().get(0).getSubEmployee().size() > 0) {
+                        for (int i = 0; i < response.body().getEmployeeDetail().get(0).getSubEmployee().size(); i++) {
+                            employeeList.add(response.body().getEmployeeDetail().get(0).getSubEmployee().get(i).getId());
+                        }
 
-                         AllEmploye();
-                     }
+                        AllEmploye();
+                    }
 
 
                 } else if (response.code() == 400) {
@@ -424,7 +421,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
             @Override
             public void onFailure(Call<EmployeeDetail> call, Throwable t) {
-                Toast.makeText(CreateNewEmployeeActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateNewEmployeeActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -513,21 +510,19 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 @Override
                 public void onResponse(Call<EditEmployee> call, Response<EditEmployee> response) {
                     if (response.code() == 200) {
-                      hideLoadingDialog();
+
                         String emp_id = String.valueOf(id);
-                      if(imageUri1 != null){
+                        if (imageUri1 != null) {
                             UPloadId(emp_id);
-                        }
-                        else if(imageUri2 != null) {
+                        } else if (imageUri2 != null) {
                             UploadPassport(emp_id);
-                        }
-                        else if(imageUri3 != null) {
+                        } else if (imageUri3 != null) {
                             UploadJoiningfile(emp_id);
-                        }
-                      else if(imageUri !=null){
+                        } else if (imageUri != null) {
                             UploadJoiningImage(emp_id);
                         }
-                      Toast.makeText(CreateNewEmployeeActivity.this, "Employee Updated Successfully", Toast.LENGTH_SHORT).show();
+                        hideLoadingDialog();
+                        Toast.makeText(CreateNewEmployeeActivity.this, "Employee Updated Successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     } else if (response.code() == 404) {
                         hideLoadingDialog();
@@ -565,7 +560,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 if (response.code() == 200) {
 //                    progressBar1.setVisibility(View.GONE);
                     //hideLoadingDialog();
-                    if (originCheck.equals("AddEmployee")){
+                    if (originCheck.equals("AddEmployee")) {
                         UploadPassport(emp_id);
                     }
 
@@ -605,10 +600,10 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 if (response.code() == 200) {
                     //progressBar1.setVisibility(View.GONE);
 
-                  if (originCheck.equals("AddEmployee")) {
-                      //hideLoadingDialog();
-                      UploadJoiningfile(emp_id);
-                  }
+                    if (originCheck.equals("AddEmployee")) {
+                        //hideLoadingDialog();
+                        UploadJoiningfile(emp_id);
+                    }
 
                 } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
@@ -641,14 +636,15 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             public void onResponse(Call<UploadJoingFile> call, Response<UploadJoingFile> response) {
                 if (response.code() == 200) {
                     //progressBar1.setVisibility(View.GONE);
-                    if (originCheck.equals("AddEmployee")){
-                    //hideLoadingDialog();
-                    UploadJoiningImage(emp_id);
+                    if (originCheck.equals("AddEmployee")) {
+                        //hideLoadingDialog();
+                        UploadJoiningImage(emp_id);
                     }
                 } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
                     hideLoadingDialog();
-                   Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -676,18 +672,17 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             public void onResponse(Call<UploadJoingImages> call, Response<UploadJoingImages> response) {
                 if (response.code() == 200) {
                     progressBar1.setVisibility(View.GONE);
-                      if (originCheck.equals("AddEmployee")){
+                    if (originCheck.equals("AddEmployee")) {
                         hideLoadingDialog();
                         Toast.makeText(CreateNewEmployeeActivity.this, "Employee Added Successfully", Toast.LENGTH_SHORT).show();
                         finish();
-                }
+                    }
 
 
                 } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
                     hideLoadingDialog();
                     Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong while adding", Toast.LENGTH_SHORT).show();
-
                 }
             }
 
@@ -717,6 +712,14 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         }
     }
 
+    @Override
+    public void onBackPressed() {
+//        Intent intent= new Intent(CreateNewEmployeeActivity.this,AllEmplyeeActivity.class);
+//        startActivity(intent);
+//        finish();
+        super.onBackPressed();
+    }
+
     private void openGallery() {
         Intent galleryIntent = new Intent(
                 Intent.ACTION_PICK,
@@ -737,8 +740,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     imageUri1 = data.getData();
                     txtidAttach.setText("File Attached");
                     txtidAttach.setTextColor(Color.parseColor("#68F965"));
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
                 }
             } else if (check == 2) {
@@ -747,8 +749,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     imageUri2 = data.getData();
                     txtPassportAttach.setText("File Attached");
                     txtPassportAttach.setTextColor(Color.parseColor("#68F965"));
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
                 }
             } else if (check == 3) {
@@ -757,8 +758,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     imageUri3 = data.getData();
                     txtContractAttach.setText("File Attached");
                     txtContractAttach.setTextColor(Color.parseColor("#68F965"));
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -774,8 +774,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
             }
 
-        }
-        else if (resultCode == Activity.RESULT_CANCELED) {
+        } else if (resultCode == Activity.RESULT_CANCELED) {
 
             Toast.makeText(CreateNewEmployeeActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
             btnattachPhoto.setVisibility(View.GONE);
@@ -1039,10 +1038,8 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             boolData.setSelected(false);
 
 
-            for (int j = 0 ; j < employeeList.size() ; j++)
-            {
-                if (allEmployeeList.get(i).getId().equals(employeeList.get(j)))
-                {
+            for (int j = 0; j < employeeList.size(); j++) {
+                if (allEmployeeList.get(i).getId().equals(employeeList.get(j))) {
 
                     boolData.setSelected(true);
                 }
@@ -1051,7 +1048,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             data.add(boolData);
 
         }
-
 
 
         employeeListSpinner.setItems(data, new MultiSpinnerListener() {

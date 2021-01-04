@@ -134,8 +134,6 @@ public class HomeFragment extends Fragment {
                 } else {
                     sendNotificationToSubEmployee(notifications, date, time);
                     showLoadingDialog();
-
-
                 }
             }
 

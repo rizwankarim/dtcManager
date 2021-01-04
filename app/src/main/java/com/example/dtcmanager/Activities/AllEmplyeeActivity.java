@@ -128,6 +128,13 @@ public class AllEmplyeeActivity extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        getInfo();
+//    }
+
     public void showLoadingDialog() {
         loadingDialog = new AlertDialog.Builder(this).create();
         View view = LayoutInflater.from(this).inflate(R.layout.loading_dailoug, null, false);

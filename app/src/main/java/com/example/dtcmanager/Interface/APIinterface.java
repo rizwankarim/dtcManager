@@ -214,6 +214,7 @@ public interface APIinterface {
     Call<EditLocation> EditLocation(
             @Query("name") String name,
             @Query("id") String id,
+            @Query("title") String title,
             @Query("latitudes") String latitudes,
             @Query("longitudes") String longitudes
 

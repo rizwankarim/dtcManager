@@ -128,13 +128,14 @@ public class CreateLocationActivity extends AppCompatActivity {
 
     private void EditLocation(String id) {
         String name = edtLocation.getText().toString();
+        String title= estlocationTitle.getText().toString();
         if(name.isEmpty()){
             edtLocation.setError("Please Select Location");
             edtLocation.requestFocus();
         }
         else {
        showLoadingDialog();
-        Call<EditLocation> call = RetrofitClientClass.getInstance().getInterfaceInstance().EditLocation(name,id,String.valueOf(Common.SelectedLati),String.valueOf(Common.Selectlongi));
+        Call<EditLocation> call = RetrofitClientClass.getInstance().getInterfaceInstance().EditLocation(name,id,title,String.valueOf(Common.SelectedLati),String.valueOf(Common.Selectlongi));
         call.enqueue(new Callback<EditLocation>() {
             @Override
             public void onResponse(Call<EditLocation> call, Response<EditLocation> response) {
