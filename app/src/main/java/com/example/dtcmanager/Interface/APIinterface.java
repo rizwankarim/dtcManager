@@ -179,6 +179,8 @@ public interface APIinterface {
             @Query("start_date") String start_date,
             @Query("dead_line") String dead_line,
             @Query("location_id") String ProjectLocationId,
+            @Query("schedule_file") String schedule_file,
+            @Query("contract_file") String contract_file,
             @Field("vehicle_id[]") ArrayList<String> vehicle_id,
             @Field("employee_id[]") ArrayList<String> employee_id
             // @Query("child_id") String child_id

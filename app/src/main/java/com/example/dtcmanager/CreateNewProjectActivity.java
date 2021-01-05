@@ -90,9 +90,9 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
     List<String> locationIdList = new ArrayList<>();
     List<String> employeeList = new ArrayList<>();
     List<String> VehicleId = new ArrayList<>();
-//    List<String> employeeidList = new ArrayList<>();
+    //    List<String> employeeidList = new ArrayList<>();
     ArrayList<String> vehicleIdList = new ArrayList<>();
-//    List<String> vehicle_id = new ArrayList<>();
+    //    List<String> vehicle_id = new ArrayList<>();
     ArrayList<String> employee_id = new ArrayList<>();
     FileUtils fileUtils;
     TextView txtCreateNewProject;
@@ -132,9 +132,6 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 @Override
                 public void onClick(View view) {
                     EditProject(id);
-
-//                    locationId, VehicleId, employeeList)
-//                    Toast.makeText(CreateNewProjectActivity.this, "loca" + ProjectLocationId + employee_id + vehicleIdList, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -203,7 +200,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 permissions[1]) == PackageManager.PERMISSION_GRANTED) {
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*");
+            intent.setType("image/*");
             startActivityForResult(intent, requestCode);
 
         } else {
@@ -313,18 +310,21 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         } else if (vehicleIdList.size() < 1) {
             Toast.makeText(this, "Please Select Vehicles", Toast.LENGTH_SHORT).show();
         }
-        else if (imageUri == null) {
+        /*else if (imageUri == null) {
             Toast.makeText(this, "Please Select Schedule File", Toast.LENGTH_SHORT).show();
-        } else if (imageUri1 == null) {
+        }*/
+        else if (imageUri1 == null) {
             Toast.makeText(this, "Please Select Contract File", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             showLoadingDialog();
 
-            Log.i("TAG", "SaveProject: " + ProjectLocationId + "\n" +employee_id + "\n" +vehicleIdList);
+            Log.i("TAG", "SaveProject: " + ProjectLocationId + "\n" + employee_id + "\n" + vehicleIdList);
 
-            Call<AddProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProject(manager_id, name, value, start_date,
-                    dead_line, ProjectLocationId, vehicleIdList,employee_id);
+            Call<AddProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProject(manager_id, name,
+                    value, start_date,
+                    dead_line, ProjectLocationId,
+                    "nullfile", "nullfile",
+                    vehicleIdList, employee_id);
             call.enqueue(new Callback<AddProject>() {
                 @Override
                 public void onResponse(Call<AddProject> call, Response<AddProject> response) {
@@ -333,6 +333,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                         String id = String.valueOf(id1);
 //                        Toast.makeText(CreateNewProjectActivity.this, "Addedd", Toast.LENGTH_SHORT).show();
                         Uploadschedule(id);
+//                        UploadContract(id);
 //                        Toast.makeText(CreateNewProjectActivity.this, "AddEdd", Toast.LENGTH_SHORT).show();
 
 
@@ -368,14 +369,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             @Override
             public void onResponse(Call<Uploadprojectschedul> call, Response<Uploadprojectschedul> response) {
                 if (response.code() == 200) {
-
-                    hideLoadingDialog();
-
-                    Toast.makeText(CreateNewProjectActivity.this, ""+originCheck, Toast.LENGTH_SHORT).show();
-
                     if ((originCheck.equals("AddProject"))) {
-                        hideLoadingDialog();
-//                    Toast.makeText(CreateNewProjectActivity.this, "Addedd1", Toast.LENGTH_SHORT).show();
                         UploadContract(id);
                     } else if ((originCheck.equals("EditProject"))) {
                         hideLoadingDialog();
@@ -404,41 +398,47 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
     }
 
     private void UploadContract(String id) {
-        File file = new File(fileUtils.getRealPath(this, imageUri1));
-        RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri1)), file);
-        MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
-        Call<UploadprojectContract> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadContract(id, files);
-        call.enqueue(new Callback<UploadprojectContract>() {
-            @Override
-            public void onResponse(Call<UploadprojectContract> call, Response<UploadprojectContract> response) {
-                if (response.code() == 200) {
-                    hideLoadingDialog();
-                    finish();
-
-                    if ((originCheck.equals("AddProject"))) {
+        try {
+            File file = new File(fileUtils.getRealPath(this, imageUri1));
+            RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri1)), file);
+            MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
+            Call<UploadprojectContract> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadContract(id, files);
+            call.enqueue(new Callback<UploadprojectContract>() {
+                @Override
+                public void onResponse(Call<UploadprojectContract> call, Response<UploadprojectContract> response) {
+                    if (response.code() == 200) {
                         hideLoadingDialog();
                         finish();
 
-                    } else if ((originCheck.equals("EditProject"))) {
-                        hideLoadingDialog();
+                        if ((originCheck.equals("AddProject"))) {
+                            hideLoadingDialog();
+                            Toast.makeText(CreateNewProjectActivity.this, "Project Added Succesfully..", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        } else if ((originCheck.equals("EditProject"))) {
+                            hideLoadingDialog();
 //                    Toast.makeText(CreateNewProjectActivity.this, "Addedd1", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+                            finish();
+                        }
 
-                } else if (response.code() == 404) {
-                    hideLoadingDialog();
+                    } else if (response.code() == 404) {
+                        hideLoadingDialog();
 //                    Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
 
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UploadprojectContract> call, Throwable t) {
-                hideLoadingDialog();
+                @Override
+                public void onFailure(Call<UploadprojectContract> call, Throwable t) {
+                    hideLoadingDialog();
 //                Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            Log.d("ErrorImage", e.getMessage());
+        }
+
     }
 
 
@@ -672,7 +672,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     allLocationList = response.body().getAllLocations();
 
 //                    Toast.makeText(CreateNewProjectActivity.this, "No Location", Toast.LENGTH_SHORT).show();
-                        spinnerevents(allLocationList);
+                    spinnerevents(allLocationList);
 
                 } else if (response.code() == 404) {
 //                    Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
@@ -748,9 +748,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     allVehicleList = response.body().getAllVehicles();
 
 
-
-                        setVehiclesSpinner(allVehicleList);
-
+                    setVehiclesSpinner(allVehicleList);
 
 
                 } else if (response.code() == 404) {

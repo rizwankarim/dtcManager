@@ -118,8 +118,6 @@ public class VehiclesActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void RemoveVechile(String id) {

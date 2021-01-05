@@ -11,9 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/ChildProfiletoolbar"
         android:layout_width="match_parent"
@@ -94,7 +91,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Project name"
                             android:inputType="text"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -139,7 +136,7 @@
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Value"
                             android:inputType="number"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -185,7 +182,7 @@
                             android:hint="Start Date"
                             android:focusable="false"
                             android:inputType="number"
-                            android:textDirection="rtl"
+                            android:textDirection="ltr"
                             android:textSize="16sp" />
 
                         <View
@@ -245,7 +242,6 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
