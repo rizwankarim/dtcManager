@@ -151,14 +151,10 @@ public class HomeFragment extends Fragment {
                         Intent intent = new Intent(requireContext(), LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
                     }
                 });
-
                 dialog.show();
             }
-
-
         });
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
@@ -189,8 +185,6 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
     }
 
     private void sendNotificationToSubEmployee(String notifications, String date, String time) {
@@ -204,9 +198,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Notification> call, Response<Notification> response) {
                     if (response.code() == 200) {
-
+                        hideLoadingDialog();
                         employeeList.remove(0);
-                        sendNotificationToSubEmployee(notifications, date, time);
+                        Toast.makeText(requireContext(), "Notification Sent Successfully", Toast.LENGTH_SHORT).show();
+                        //sendNotificationToSubEmployee(notifications, date, time);
 
                     } else if (response.code() == 404) {
                         hideLoadingDialog();

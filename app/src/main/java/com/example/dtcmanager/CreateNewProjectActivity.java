@@ -512,9 +512,9 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                         } else if (imageUri1 != null) {
                             UploadContract(id);
                         }
+                        Toast.makeText(CreateNewProjectActivity.this, "Project Update Successfully", Toast.LENGTH_SHORT).show();
 
                         finish();
-//                        Toast.makeText(CreateNewProjectActivity.this, "Project Update Successfully", Toast.LENGTH_SHORT).show();
                     } else if (response.code() == 400) {
                         hideLoadingDialog();
 //                        Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
