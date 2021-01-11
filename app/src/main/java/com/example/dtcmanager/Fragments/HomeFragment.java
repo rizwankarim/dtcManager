@@ -90,7 +90,6 @@ public class HomeFragment extends Fragment {
 
         homeActivity = new HomeActivity();
 
-
         LinearLayout layoutEmployeeBtn = view.findViewById(R.id.layoutEmployeeBtn);
         LinearLayout locationBtn = view.findViewById(R.id.locationsHomebtn);
         LinearLayout VehiclesBtn = view.findViewById(R.id.vehicles_btn);
@@ -245,12 +244,17 @@ public class HomeFragment extends Fragment {
                         if (allEmployeeList.size()>0) {
                             noData.setVisibility(View.GONE);
                             employeeListSpinner.setVisibility(View.VISIBLE);
+                            textNoti.setVisibility(View.VISIBLE);
+                            create_employee_btn.setVisibility(View.VISIBLE);
+
                             setLocationInSpinner(allEmployeeList);
                         }
 
                         else{
                             noData.setVisibility(View.VISIBLE);
                             employeeListSpinner.setVisibility(View.GONE);
+                            textNoti.setVisibility(View.GONE);
+                            create_employee_btn.setVisibility(View.GONE);
                         }
                 }
             }
