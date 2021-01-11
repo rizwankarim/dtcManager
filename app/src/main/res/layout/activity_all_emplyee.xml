@@ -10,8 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/ChildProfiletoolbar"
             android:layout_width="match_parent"
@@ -83,8 +81,6 @@
                                     app:mt_maxSuggestionsCount="10"
                                     app:mt_placeholder="Search" />
                             </RelativeLayout>
-
-
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -104,11 +100,27 @@
                             android:src="@drawable/ic_plus"
                             android:background="@android:color/transparent"/>
 
+                        <TextView
+                            android:id="@+id/noData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/helvetica_neu_bold"
+                            android:text="No Employee Found"
+                            android:textColor="@color/Red"
+                            android:layout_marginTop="10dp"
+                            android:textSize="20sp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            />
 
                         <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="10dp"
                             android:id="@+id/addemployee_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
+
+
 
                     </LinearLayout>
 

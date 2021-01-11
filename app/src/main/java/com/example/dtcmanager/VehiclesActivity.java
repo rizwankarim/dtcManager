@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.VehicleListAdapter;
@@ -44,6 +45,7 @@ public class VehiclesActivity extends AppCompatActivity {
     String manager_id;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
+    TextView noData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class VehiclesActivity extends AppCompatActivity {
         setSupportActionBar(ChildProfiletoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressBar1 = findViewById(R.id.progressBar1);
-
+        noData= findViewById(R.id.noData);
         recyclerViewVehicle = findViewById(R.id.vehicles_recycler);
         recyclerViewVehicle.setHasFixedSize(false);
         recyclerViewVehicle.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -72,13 +74,9 @@ public class VehiclesActivity extends AppCompatActivity {
 
     }
     private void clickevents() {
-
-
         addvehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Intent intent = new Intent(VehiclesActivity.this, AddVehiclesActivity.class);
                 intent.putExtra("orign", "AddVehicle");
                 startActivity(intent);
@@ -96,13 +94,23 @@ public class VehiclesActivity extends AppCompatActivity {
                 if(response.code() == 200){
                     hideLoadingDialog();
                     allVehicleList = response.body().getAllVehicles();
-                    VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(VehiclesActivity.this, allVehicleList, new DeleteVehcile() {
-                        @Override
-                        public void DeleteVehcile(String id) {
-                             RemoveVechile(id);
-                        }
-                    });
-                    recyclerViewVehicle.setAdapter(vehicleListAdapter);
+                    if(allVehicleList.size()>0){
+                        noData.setVisibility(View.GONE);
+                        recyclerViewVehicle.setVisibility(View.VISIBLE);
+                        VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(VehiclesActivity.this, allVehicleList, new DeleteVehcile() {
+                            @Override
+                            public void DeleteVehcile(String id) {
+                                RemoveVechile(id);
+                            }
+                        });
+                        recyclerViewVehicle.setAdapter(vehicleListAdapter);
+                    }
+
+                    else{
+                        noData.setVisibility(View.VISIBLE);
+                        recyclerViewVehicle.setVisibility(View.GONE);
+                    }
+
                 }
                 else  {
                     hideLoadingDialog();

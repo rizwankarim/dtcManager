@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.LocationListAdapter;
@@ -41,6 +42,7 @@ public class SearchLoactionsActivity extends AppCompatActivity {
     List<AllLocation> allLocationList = new ArrayList<>();
     Toolbar ChildProfiletoolbar;
     String manager_id;
+    TextView noData;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
 
@@ -63,6 +65,7 @@ public class SearchLoactionsActivity extends AppCompatActivity {
     private void initview() {
         progressBar1 = findViewById(R.id.progressBar1);
         addlocationbtn = findViewById(R.id.addlocation);
+        noData=findViewById(R.id.noData);
         recyclerViewaddresslist = findViewById(R.id.location_recycler);
         recyclerViewaddresslist.setHasFixedSize(true);
         recyclerViewaddresslist.setLayoutManager(new LinearLayoutManager(this));
@@ -92,16 +95,22 @@ public class SearchLoactionsActivity extends AppCompatActivity {
 
                 if (response.code() == 200) {
                     allLocationList = response.body().getAllLocations();
-
-                    LocationListAdapter locationListAdapter = new LocationListAdapter(SearchLoactionsActivity.this,
-                            allLocationList, new Removelocation() {
-                        @Override
-                        public void Removelocation(String id) {
-                            RemoveLocation(id);
-                        }
-                    });
-                    recyclerViewaddresslist.setAdapter(locationListAdapter);
-
+                    if(allLocationList.size()>0){
+                        noData.setVisibility(View.GONE);
+                        recyclerViewaddresslist.setVisibility(View.VISIBLE);
+                        LocationListAdapter locationListAdapter = new LocationListAdapter(SearchLoactionsActivity.this,
+                                allLocationList, new Removelocation() {
+                            @Override
+                            public void Removelocation(String id) {
+                                RemoveLocation(id);
+                            }
+                        });
+                        recyclerViewaddresslist.setAdapter(locationListAdapter);
+                    }
+                    else{
+                        noData.setVisibility(View.VISIBLE);
+                        recyclerViewaddresslist.setVisibility(View.GONE);
+                    }
                 }
                 else  {
 

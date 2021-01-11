@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.AllProjectAdapter;
@@ -40,6 +41,7 @@ public class ProjectsActivity extends AppCompatActivity {
     List<AllProject> allProjectList = new ArrayList<>();
     ProgressBar progressBar1;
     RecyclerView ProjctRecylerView;
+    TextView noData;
     AlertDialog loadingDialog;
 
     @Override
@@ -48,23 +50,35 @@ public class ProjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_projects);
         Paper.init(this);
         manager_id = Paper.book().read("user_id");
+        try{
+            initView();
+            Clickble();
+        }
+        catch (Exception e){
+            Toast.makeText(ProjectsActivity.this, "No projects found", Toast.LENGTH_SHORT).show();
+        }
 
-        initView();
-        Clickble();
     }
 
 
 
     private void initView() {
-        addproject = findViewById(R.id.addproject);
-        ChildProfiletoolbar = findViewById(R.id.ChildProfiletoolbar);
-        ChildProfiletoolbar.setTitle("");
-        setSupportActionBar(ChildProfiletoolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        progressBar1 = findViewById(R.id.progressBar1);
-        ProjctRecylerView = findViewById(R.id.ProjctRecylerView);
-        ProjctRecylerView.setHasFixedSize(false);
-        ProjctRecylerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        try{
+            addproject = findViewById(R.id.addproject);
+            ChildProfiletoolbar = findViewById(R.id.ChildProfiletoolbar);
+            ChildProfiletoolbar.setTitle("");
+            setSupportActionBar(ChildProfiletoolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            progressBar1 = findViewById(R.id.progressBar1);
+            ProjctRecylerView = findViewById(R.id.ProjctRecylerView);
+            ProjctRecylerView.setHasFixedSize(false);
+            noData= findViewById(R.id.noData);
+            ProjctRecylerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        }
+        catch (Exception e){
+            Toast.makeText(ProjectsActivity.this, "No projects found", Toast.LENGTH_SHORT).show();
+        }
 
     }
     private void Clickble() {
@@ -86,18 +100,34 @@ public class ProjectsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetAllProject> call, Response<GetAllProject> response) {
                 if(response.code() == 200){
-                    hideLoadingDialog();
-
-                    allProjectList = response.body().getAllProjects();
-                    AllProjectAdapter allProjectAdapter = new AllProjectAdapter(ProjectsActivity.this, allProjectList, new DeleteProject() {
-                        @Override
-                        public void DeleteProject(String id) {
-                            deleteProject(id);
-
-
+                    try
+                    {
+                        hideLoadingDialog();
+                        allProjectList = response.body().getAllProjects();
+                        if(allProjectList.size()>0){
+                            noData.setVisibility(View.GONE);
+                            ProjctRecylerView.setVisibility(View.VISIBLE);
+                            AllProjectAdapter allProjectAdapter = new AllProjectAdapter(ProjectsActivity.this, allProjectList, new DeleteProject() {
+                                @Override
+                                public void DeleteProject(String id) {
+                                    deleteProject(id);
+                                }
+                            });
+                            ProjctRecylerView.setAdapter(allProjectAdapter);
                         }
-                    });
-                    ProjctRecylerView.setAdapter(allProjectAdapter);
+
+                        else{
+                            noData.setVisibility(View.VISIBLE);
+                            ProjctRecylerView.setVisibility(View.GONE);
+                        }
+
+
+                    }
+                    catch (Exception e){
+                        Toast.makeText(ProjectsActivity.this, "No projects found", Toast.LENGTH_SHORT).show();
+                    }
+
+
 //                    Toast.makeText(ProjectsActivity.this, "aa", Toast.LENGTH_SHORT).show();
 
                 }

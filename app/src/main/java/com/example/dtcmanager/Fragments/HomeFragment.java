@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
@@ -71,6 +72,7 @@ public class HomeFragment extends Fragment {
     List<String> employeeList = new ArrayList<>();
     android.app.AlertDialog loadingDialog;
     EditText textNoti;
+    TextView noData;
     LinearLayout ReportssHomebtn;
 
 
@@ -96,7 +98,7 @@ public class HomeFragment extends Fragment {
         ReportssHomebtn = view.findViewById(R.id.ReportssHomebtn);
         employeeListSpinner = view.findViewById(R.id.employeeListSpinner);
         create_employee_btn = view.findViewById(R.id.create_employee_btn);
-
+        noData= view.findViewById(R.id.noData);
         textNoti = view.findViewById(R.id.textNoti);
         btnlogout = view.findViewById(R.id.btnlogout);
         AllEmploye();
@@ -239,24 +241,23 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<GetAllEmploye> call, Response<GetAllEmploye> response) {
                 if (response.code() == 200) {
                     allEmployeeList = response.body().getAllEmployees();
-                    if (allEmployeeList.size() > 0) {
 
-                     setLocationInSpinner(allEmployeeList);
-                    } else {
-                        Toast.makeText(requireContext(), "Please Add Employee", Toast.LENGTH_SHORT).show();
-                    }
+                        if (allEmployeeList.size()>0) {
+                            noData.setVisibility(View.GONE);
+                            employeeListSpinner.setVisibility(View.VISIBLE);
+                            setLocationInSpinner(allEmployeeList);
+                        }
 
-//                    spinnerevents(allEmployeeList);
-                } else if (response.code() == 404) {
-//                    progressBar1.setVisibility(View.GONE);
-//                    Toast.makeText(requireContext(), "Something Wrong", Toast.LENGTH_SHORT).show();
+                        else{
+                            noData.setVisibility(View.VISIBLE);
+                            employeeListSpinner.setVisibility(View.GONE);
+                        }
                 }
             }
 
             @Override
             public void onFailure(Call<GetAllEmploye> call, Throwable t) {
                 Toast.makeText(requireContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 

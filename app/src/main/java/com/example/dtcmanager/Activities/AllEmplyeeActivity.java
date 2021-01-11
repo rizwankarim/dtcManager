@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.EmployeeListAdapter;
@@ -42,6 +43,7 @@ public class AllEmplyeeActivity extends AppCompatActivity {
     AlertDialog loadingDialog;
     ImageButton addemployee;
     Toolbar ChildProfiletoolbar;
+    TextView noData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class AllEmplyeeActivity extends AppCompatActivity {
     private void initView() {
         addemployee = findViewById(R.id.addemployee);
         progressBar1 = findViewById(R.id.progressBar1);
+        noData= findViewById(R.id.noData);
         recyclerViewEmployees = findViewById(R.id.addemployee_recycler);
         recyclerViewEmployees.setHasFixedSize(false);
         recyclerViewEmployees.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -87,13 +90,22 @@ public class AllEmplyeeActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     hideLoadingDialog();
                     allEmployeeList = response.body().getAllEmployees();
-                    EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(AllEmplyeeActivity.this, allEmployeeList, new DeleteEmployee() {
-                        @Override
-                        public void DeleteEmployee(String id) {
-                            DeleteEmoployee(id);
-                        }
-                    });
-                    recyclerViewEmployees.setAdapter(employeeListAdapter);
+                    if(allEmployeeList.size()>0){
+                        noData.setVisibility(View.GONE);
+                        recyclerViewEmployees.setVisibility(View.VISIBLE);
+                        EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(AllEmplyeeActivity.this, allEmployeeList, new DeleteEmployee() {
+                            @Override
+                            public void DeleteEmployee(String id) {
+                                DeleteEmoployee(id);
+                            }
+                        });
+                        recyclerViewEmployees.setAdapter(employeeListAdapter);
+                    }
+                    else{
+                        noData.setVisibility(View.VISIBLE);
+                        recyclerViewEmployees.setVisibility(View.GONE);
+                    }
+
                 } else if (response.code() == 404) {
                     hideLoadingDialog();
 //                    Toast.makeText(AllEmplyeeActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
