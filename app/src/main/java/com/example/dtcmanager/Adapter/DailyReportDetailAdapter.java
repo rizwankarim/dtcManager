@@ -38,7 +38,7 @@ public class DailyReportDetailAdapter extends RecyclerView.Adapter<DailyReportDe
     @Override
     public void onBindViewHolder(@NonNull DailyReportDetailAdapter.ViewHolder holder, int position) {
         final ReportImage reportImage = reportImageList.get(position);
-        String image = "http://test.proglabs.org/DTC/api/Employee/Report_Image/"+reportImage.getImage();
+        String image = "http://dtc.anstm.com/dtcAdmin/api/Employee/Report_Image/"+reportImage.getImage();
 
 
         holder.txtidFile.setOnClickListener(new View.OnClickListener() {

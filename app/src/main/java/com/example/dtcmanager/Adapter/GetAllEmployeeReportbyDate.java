@@ -43,13 +43,7 @@ public class GetAllEmployeeReportbyDate extends RecyclerView.Adapter<GetAllEmplo
         holder.txtProblems.setText(employeeDailyReport.getProblems());
         holder.txtDateTime.setText(employeeDailyReport.getDateTime());
 
-        String image = "http://test.proglabs.org/DTC/api/Employee/Report_Image/"+employeeDailyReport.getReportImage();
-        //String image ="http://test.proglabs.org/BabyRon/api/Babysitter/Babysitter_Profile_Image/" + babySitter.getProfileImage();
-
-//            Picasso.get().load("http://test.proglabs.org/DTC/api/Employee/Report_Image/".concat(dailyReport.getReportImage()))
-//                    .placeholder(R.drawable.place_holder).error(R.drawable.place_holder).into(holder.imgReport);
-//        }
-
+        String image = "http://dtc.anstm.com/dtcAdmin/api/Employee/Report_Image/"+employeeDailyReport.getReportImage();
 
         Picasso.get().load(image).into(holder.imgReport, new com.squareup.picasso.Callback() {
             @Override

@@ -199,6 +199,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     public void showEmployeeTab() {
 
         Fragment newFragment = new EmployeesFragment();
