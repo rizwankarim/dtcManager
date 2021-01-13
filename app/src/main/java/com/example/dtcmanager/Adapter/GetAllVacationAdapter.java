@@ -70,7 +70,7 @@ LeaveApplicationInterface leaveApplicationInterface;
             @Override
             public void onClick(View v) {
                 Common.status = "Rejected";
-                leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId());
+                leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId(),employeeVacation.getEmpId());
             }
         });
 
@@ -78,7 +78,7 @@ LeaveApplicationInterface leaveApplicationInterface;
             @Override
             public void onClick(View v) {
                 Common.status = "Accepted";
-                leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId());
+                leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId(),employeeVacation.getEmpId());
             }
         });
     }

@@ -19,6 +19,7 @@ import com.example.dtcmanager.AddVehiclesActivity;
 import com.example.dtcmanager.CreateLocationActivity;
 import com.example.dtcmanager.Interface.Removelocation;
 import com.example.dtcmanager.ModelClass.GetAllLocation.AllLocation;
+import com.example.dtcmanager.ModelClass.GetAllVehcile.AllVehicle;
 import com.example.dtcmanager.Models.ModelClass;
 import com.example.dtcmanager.R;
 
@@ -89,9 +90,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
             }
         });
 
-
-
-
     }
 
     @Override
@@ -99,6 +97,10 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         return allLocationList.size();
     }
 
+    public void filterlist(ArrayList<AllLocation> filteredlist){
+        allLocationList=filteredlist;
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

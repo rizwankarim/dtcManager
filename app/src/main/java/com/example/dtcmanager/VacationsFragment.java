@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.GetAllVacationAdapter;
@@ -39,6 +40,7 @@ public class VacationsFragment extends Fragment {
 
     AlertDialog loadingDialog;
     String manager_id;
+    TextView noData;
     List<EmployeeVacation> employeeVacationList = new ArrayList<>();
 
     @Override
@@ -60,6 +62,7 @@ public class VacationsFragment extends Fragment {
         manager_id = Paper.book().read("user_id");
         GetData();
         AllVacationRecylerView = view.findViewById(R.id.AllVacationRecylerView);
+        noData= view.findViewById(R.id.noData);
         AllVacationRecylerView.setHasFixedSize(false);
         AllVacationRecylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
@@ -78,43 +81,52 @@ public class VacationsFragment extends Fragment {
                     hideLoadingDialog();
 
                     employeeVacationList = response.body().getEmployeeVacations();
+                    if(employeeVacationList.size()>0){
 
-                    GetAllVacationAdapter getAllVacationAdapter = new GetAllVacationAdapter(requireContext(),
-                            employeeVacationList, new LeaveApplicationInterface() {
-                        @Override
-                        public void LeaveApplicationInterface(String id) {
-                            showLoadingDialog();
-                            Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id, Common.status);
-                            call.enqueue(new Callback<ChangeStatus>() {
-                                @Override
-                                public void onResponse(Call<ChangeStatus> call, Response<ChangeStatus> response) {
-                                    if (response.code() == 200) {
-                                        hideLoadingDialog();
+                        noData.setVisibility(View.GONE);
+                        AllVacationRecylerView.setVisibility(View.VISIBLE);
+
+                        GetAllVacationAdapter getAllVacationAdapter = new GetAllVacationAdapter(requireContext(),
+                                employeeVacationList, new LeaveApplicationInterface() {
+                            @Override
+                            public void LeaveApplicationInterface(String id, String emp_id) {
+                                showLoadingDialog();
+                                Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id,emp_id, Common.status);
+                                call.enqueue(new Callback<ChangeStatus>() {
+                                    @Override
+                                    public void onResponse(Call<ChangeStatus> call, Response<ChangeStatus> response) {
+                                        if (response.code() == 200) {
+                                            hideLoadingDialog();
 //                                        Toast.makeText(requireContext(), "" + Common.status, Toast.LENGTH_SHORT).show();
-                                        employeeVacationList.clear();
-                                        GetData();
-                                        hideLoadingDialog();
+                                            employeeVacationList.clear();
+                                            GetData();
+                                            hideLoadingDialog();
 
 
-                                    } else if (response.code() == 400) {
-                                        hideLoadingDialog();
-                                        Toast.makeText(requireContext(), "Something Wrong", Toast.LENGTH_SHORT).show();
+                                        } else if (response.code() == 400) {
+                                            hideLoadingDialog();
+                                            Toast.makeText(requireContext(), "Something Wrong", Toast.LENGTH_SHORT).show();
+                                            hideLoadingDialog();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ChangeStatus> call, Throwable t) {
+
+                                        Toast.makeText(requireContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                                         hideLoadingDialog();
                                     }
-                                }
+                                });
 
-                                @Override
-                                public void onFailure(Call<ChangeStatus> call, Throwable t) {
+                            }
+                        });
 
-                                    Toast.makeText(requireContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                    hideLoadingDialog();
-                                }
-                            });
-
-                        }
-                    });
-
-                    AllVacationRecylerView.setAdapter(getAllVacationAdapter);
+                        AllVacationRecylerView.setAdapter(getAllVacationAdapter);
+                    }
+                    else{
+                        noData.setVisibility(View.VISIBLE);
+                        AllVacationRecylerView.setVisibility(View.GONE);
+                    }
                 } else if (response.code() == 400) {
                     hideLoadingDialog();
 
@@ -136,10 +148,10 @@ public class VacationsFragment extends Fragment {
 
     }
 
-    private void ChangeStatus(String id) {
+    private void ChangeStatus(String id, String emp_id) {
         showLoadingDialog();
 
-        Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id, Common.status);
+        Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id, emp_id ,Common.status);
         call.enqueue(new Callback<ChangeStatus>() {
             @Override
             public void onResponse(Call<ChangeStatus> call, Response<ChangeStatus> response) {

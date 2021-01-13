@@ -20,6 +20,7 @@ import com.example.dtcmanager.Activities.ViewVehicleActivity;
 import com.example.dtcmanager.AddVehiclesActivity;
 import com.example.dtcmanager.Interface.DeleteVehcile;
 import com.example.dtcmanager.Interface.EditvehcileInterface;
+import com.example.dtcmanager.ModelClass.GetAllProject.AllProject;
 import com.example.dtcmanager.ModelClass.GetAllVehcile.AllVehicle;
 import com.example.dtcmanager.Models.ModelClass;
 import com.example.dtcmanager.R;
@@ -134,16 +135,16 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                 dialog.show();
             }
         });
-
-
-
-
-
     }
 
     @Override
     public int getItemCount() {
         return allVehicleList.size();
+    }
+
+    public void filterlist(ArrayList<AllVehicle> filteredlist){
+        allVehicleList=filteredlist;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

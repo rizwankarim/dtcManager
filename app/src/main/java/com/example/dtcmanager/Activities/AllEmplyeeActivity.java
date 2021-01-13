@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.example.dtcmanager.ModelClass.GetAllEmployee.GetAllEmploye;
 import com.example.dtcmanager.ModelClass.RemoveEmployee.RemoveEmployee;
 import com.example.dtcmanager.R;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,9 @@ public class AllEmplyeeActivity extends AppCompatActivity {
     AlertDialog loadingDialog;
     ImageButton addemployee;
     Toolbar ChildProfiletoolbar;
+    EmployeeListAdapter employeeListAdapter;
     TextView noData;
+    MaterialSearchBar searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class AllEmplyeeActivity extends AppCompatActivity {
         addemployee = findViewById(R.id.addemployee);
         progressBar1 = findViewById(R.id.progressBar1);
         noData= findViewById(R.id.noData);
+        searchBar= findViewById(R.id.searchBars);
         recyclerViewEmployees = findViewById(R.id.addemployee_recycler);
         recyclerViewEmployees.setHasFixedSize(false);
         recyclerViewEmployees.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -80,7 +86,35 @@ public class AllEmplyeeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
     }
+
+    private void filter(String text) {
+        ArrayList<AllEmployee> allEmployees= new ArrayList<>();
+        for(AllEmployee emp : allEmployeeList){
+            if(emp.getUserName().toLowerCase().contains(text.toLowerCase())){
+                allEmployees.add(emp);
+            }
+        }
+        employeeListAdapter.filterlist(allEmployees);
+    }
+
     private void getInfo() {
         showLoadingDialog();
         Call<GetAllEmploye> call = RetrofitClientClass.getInstance().getInterfaceInstance().GetAllEmployee(manager_id);
@@ -93,7 +127,8 @@ public class AllEmplyeeActivity extends AppCompatActivity {
                     if(allEmployeeList.size()>0){
                         noData.setVisibility(View.GONE);
                         recyclerViewEmployees.setVisibility(View.VISIBLE);
-                        EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(AllEmplyeeActivity.this, allEmployeeList, new DeleteEmployee() {
+                        searchBar.setEnabled(true);
+                        employeeListAdapter = new EmployeeListAdapter(AllEmplyeeActivity.this, allEmployeeList, new DeleteEmployee() {
                             @Override
                             public void DeleteEmployee(String id) {
                                 DeleteEmoployee(id);
@@ -104,6 +139,7 @@ public class AllEmplyeeActivity extends AppCompatActivity {
                     else{
                         noData.setVisibility(View.VISIBLE);
                         recyclerViewEmployees.setVisibility(View.GONE);
+                        searchBar.setEnabled(false);
                     }
 
                 } else if (response.code() == 404) {

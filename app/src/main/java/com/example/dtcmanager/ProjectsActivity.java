@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +22,12 @@ import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.AllProjectAdapter;
 import com.example.dtcmanager.Interface.DeleteProject;
+import com.example.dtcmanager.ModelClass.GetAllEmployee.AllEmployee;
 import com.example.dtcmanager.ModelClass.GetAllProject.AllProject;
 import com.example.dtcmanager.ModelClass.GetAllProject.GetAllProject;
 import com.example.dtcmanager.ModelClass.RemoveProject.RemoveProject;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +40,10 @@ import retrofit2.Response;
 public class ProjectsActivity extends AppCompatActivity {
 
     ImageButton addproject, backbtn;
+    MaterialSearchBar searchBar;
     Toolbar ChildProfiletoolbar;
     String manager_id = "";
+    AllProjectAdapter allProjectAdapter;
     List<AllProject> allProjectList = new ArrayList<>();
     ProgressBar progressBar1;
     RecyclerView ProjctRecylerView;
@@ -69,6 +75,7 @@ public class ProjectsActivity extends AppCompatActivity {
             ChildProfiletoolbar.setTitle("");
             setSupportActionBar(ChildProfiletoolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            searchBar=findViewById(R.id.searchBars);
             progressBar1 = findViewById(R.id.progressBar1);
             ProjctRecylerView = findViewById(R.id.ProjctRecylerView);
             ProjctRecylerView.setHasFixedSize(false);
@@ -90,6 +97,32 @@ public class ProjectsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    filter(s.toString());
+            }
+        });
+    }
+    private void filter(String text) {
+        ArrayList<AllProject> allProjects= new ArrayList<>();
+        for(AllProject pro : allProjectList){
+            if(pro.getName().toLowerCase().contains(text.toLowerCase())){
+                allProjects.add(pro);
+            }
+        }
+        allProjectAdapter.filterlist(allProjects);
     }
 
 
@@ -107,7 +140,8 @@ public class ProjectsActivity extends AppCompatActivity {
                         if(allProjectList.size()>0){
                             noData.setVisibility(View.GONE);
                             ProjctRecylerView.setVisibility(View.VISIBLE);
-                            AllProjectAdapter allProjectAdapter = new AllProjectAdapter(ProjectsActivity.this, allProjectList, new DeleteProject() {
+                            searchBar.setEnabled(true);
+                            allProjectAdapter = new AllProjectAdapter(ProjectsActivity.this, allProjectList, new DeleteProject() {
                                 @Override
                                 public void DeleteProject(String id) {
                                     deleteProject(id);
@@ -119,6 +153,7 @@ public class ProjectsActivity extends AppCompatActivity {
                         else{
                             noData.setVisibility(View.VISIBLE);
                             ProjctRecylerView.setVisibility(View.GONE);
+                            searchBar.setEnabled(false);
                         }
 
 

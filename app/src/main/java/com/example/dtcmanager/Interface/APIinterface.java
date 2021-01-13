@@ -332,6 +332,7 @@ public interface APIinterface {
     @POST("change_status.php")
     Call<ChangeStatus> changeStatus(
             @Query("id") String id,
+            @Query("emp_id") String emp_id,
             @Query("status") String status
     );
 

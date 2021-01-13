@@ -19,9 +19,11 @@ import com.example.dtcmanager.Activities.ViewProjectDetail;
 import com.example.dtcmanager.AddVehiclesActivity;
 import com.example.dtcmanager.CreateNewProjectActivity;
 import com.example.dtcmanager.Interface.DeleteProject;
+import com.example.dtcmanager.ModelClass.GetAllEmployee.AllEmployee;
 import com.example.dtcmanager.ModelClass.GetAllProject.AllProject;
 import com.example.dtcmanager.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllProjectAdapter extends RecyclerView.Adapter<AllProjectAdapter.ViewHolder> {
@@ -97,6 +99,11 @@ public class AllProjectAdapter extends RecyclerView.Adapter<AllProjectAdapter.Vi
     @Override
     public int getItemCount() {
         return allProjectList.size();
+    }
+
+    public void filterlist(ArrayList<AllProject> filteredlist){
+        allProjectList=filteredlist;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

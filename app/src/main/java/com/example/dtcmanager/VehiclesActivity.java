@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +22,13 @@ import android.widget.Toast;
 
 import com.example.dtcmanager.Adapter.VehicleListAdapter;
 import com.example.dtcmanager.Interface.DeleteVehcile;
+import com.example.dtcmanager.ModelClass.GetAllProject.AllProject;
 import com.example.dtcmanager.ModelClass.GetAllVehcile.AllVehicle;
 import com.example.dtcmanager.ModelClass.GetAllVehcile.GetAllVechile;
 import com.example.dtcmanager.ModelClass.Removevehicle.Removevehcile;
 import com.example.dtcmanager.Models.ModelClass;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +42,13 @@ public class VehiclesActivity extends AppCompatActivity {
 
     ImageButton backbtn;
     ImageButton addvehicle;
+    MaterialSearchBar searchBar;
     RecyclerView recyclerViewVehicle;
     List<ModelClass> modelClassList = new ArrayList<>();
     Toolbar ChildProfiletoolbar;
     List<AllVehicle> allVehicleList = new ArrayList<>();
     String manager_id;
+    VehicleListAdapter vehicleListAdapter;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
     TextView noData;
@@ -53,7 +59,6 @@ public class VehiclesActivity extends AppCompatActivity {
         Paper.init(this);
 
         manager_id = Paper.book().read("user_id");
-
 
         initviews();
         clickevents();
@@ -68,6 +73,7 @@ public class VehiclesActivity extends AppCompatActivity {
         progressBar1 = findViewById(R.id.progressBar1);
         noData= findViewById(R.id.noData);
         recyclerViewVehicle = findViewById(R.id.vehicles_recycler);
+        searchBar= findViewById(R.id.searchBars);
         recyclerViewVehicle.setHasFixedSize(false);
         recyclerViewVehicle.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
@@ -83,6 +89,33 @@ public class VehiclesActivity extends AppCompatActivity {
 
             }
         });
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        ArrayList<AllVehicle> allVehicles= new ArrayList<>();
+        for(AllVehicle veh : allVehicleList){
+            if(veh.getModel().toLowerCase().contains(text.toLowerCase())){
+                allVehicles.add(veh);
+            }
+        }
+        vehicleListAdapter.filterlist(allVehicles);
     }
 
     private void recylerviews() {
@@ -97,7 +130,8 @@ public class VehiclesActivity extends AppCompatActivity {
                     if(allVehicleList.size()>0){
                         noData.setVisibility(View.GONE);
                         recyclerViewVehicle.setVisibility(View.VISIBLE);
-                        VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(VehiclesActivity.this, allVehicleList, new DeleteVehcile() {
+                        searchBar.setEnabled(true);
+                        vehicleListAdapter = new VehicleListAdapter(VehiclesActivity.this, allVehicleList, new DeleteVehcile() {
                             @Override
                             public void DeleteVehcile(String id) {
                                 RemoveVechile(id);
@@ -109,6 +143,7 @@ public class VehiclesActivity extends AppCompatActivity {
                     else{
                         noData.setVisibility(View.VISIBLE);
                         recyclerViewVehicle.setVisibility(View.GONE);
+                        searchBar.setEnabled(false);
                     }
 
                 }

@@ -73,11 +73,18 @@ public class NotificationsFragment extends Fragment {
             public void onResponse(Call<GetNotificationManager> call, Response<GetNotificationManager> response) {
                 if(response.code() == 200){
                     hideLoadingDialog();
-                    noData_layout.setVisibility(View.GONE);
-                    notificationList = response.body().getNotification();
 
-                    GetAllNotifactiondapter getAllNotifactiondapter = new GetAllNotifactiondapter(requireContext(),notificationList);
-                    NotificationRecylerView.setAdapter(getAllNotifactiondapter);
+                    notificationList = response.body().getNotification();
+                    if(notificationList.size()>0){
+                        noData_layout.setVisibility(View.GONE);
+                        GetAllNotifactiondapter getAllNotifactiondapter = new GetAllNotifactiondapter(requireContext(),notificationList);
+                        NotificationRecylerView.setAdapter(getAllNotifactiondapter);
+                    }
+                    else{
+                        noData_layout.setVisibility(View.VISIBLE);
+                    }
+
+
 
                 }
                 else if(response.code() ==404 ){

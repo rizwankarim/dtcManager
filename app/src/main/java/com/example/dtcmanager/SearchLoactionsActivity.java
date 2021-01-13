@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +24,11 @@ import com.example.dtcmanager.Adapter.LocationListAdapter;
 import com.example.dtcmanager.Interface.Removelocation;
 import com.example.dtcmanager.ModelClass.GetAllLocation.AllLocation;
 import com.example.dtcmanager.ModelClass.GetAllLocation.GettAllLocation;
+import com.example.dtcmanager.ModelClass.GetAllVehcile.AllVehicle;
 import com.example.dtcmanager.ModelClass.RemoveLocation.RemoveLocation;
 import com.example.dtcmanager.Models.ModelClass;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +45,10 @@ public class SearchLoactionsActivity extends AppCompatActivity {
     List<ModelClass> modelClassList = new ArrayList<>();
     List<AllLocation> allLocationList = new ArrayList<>();
     Toolbar ChildProfiletoolbar;
+    LocationListAdapter locationListAdapter;
     String manager_id;
     TextView noData;
+    MaterialSearchBar searchBar;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
 
@@ -66,6 +72,7 @@ public class SearchLoactionsActivity extends AppCompatActivity {
         progressBar1 = findViewById(R.id.progressBar1);
         addlocationbtn = findViewById(R.id.addlocation);
         noData=findViewById(R.id.noData);
+        searchBar= findViewById(R.id.searchBars);
         recyclerViewaddresslist = findViewById(R.id.location_recycler);
         recyclerViewaddresslist.setHasFixedSize(true);
         recyclerViewaddresslist.setLayoutManager(new LinearLayoutManager(this));
@@ -81,6 +88,33 @@ public class SearchLoactionsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        ArrayList<AllLocation> allLocations= new ArrayList<>();
+        for(AllLocation loc : allLocationList){
+            if(loc.gettitle().toLowerCase().contains(text.toLowerCase())){
+                allLocations.add(loc);
+            }
+        }
+        locationListAdapter.filterlist(allLocations);
     }
 
     private void getData() {
@@ -98,7 +132,8 @@ public class SearchLoactionsActivity extends AppCompatActivity {
                     if(allLocationList.size()>0){
                         noData.setVisibility(View.GONE);
                         recyclerViewaddresslist.setVisibility(View.VISIBLE);
-                        LocationListAdapter locationListAdapter = new LocationListAdapter(SearchLoactionsActivity.this,
+                        searchBar.setEnabled(true);
+                        locationListAdapter = new LocationListAdapter(SearchLoactionsActivity.this,
                                 allLocationList, new Removelocation() {
                             @Override
                             public void Removelocation(String id) {
@@ -110,6 +145,7 @@ public class SearchLoactionsActivity extends AppCompatActivity {
                     else{
                         noData.setVisibility(View.VISIBLE);
                         recyclerViewaddresslist.setVisibility(View.GONE);
+                        searchBar.setEnabled(false);
                     }
                 }
                 else  {

@@ -1005,8 +1005,10 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 if (response.code() == 200) {
                     allEmployeeList = response.body().getAllEmployees();
                     if (allEmployeeList.size() > 0) {
+                        employeeListSpinner.setEnabled(true);
                         setLocationInSpinner(allEmployeeList);
                     } else {
+                        employeeListSpinner.setEnabled(false);
                         Toast.makeText(CreateNewEmployeeActivity.this, "Please Add Employee", Toast.LENGTH_SHORT).show();
                     }
 

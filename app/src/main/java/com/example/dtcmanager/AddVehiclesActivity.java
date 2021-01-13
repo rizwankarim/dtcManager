@@ -238,7 +238,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
                     edtInsuranceEndDate.setText(response.body().getVehicleDetails().get(0).getInsuranceDateEnd());
                     edtLicenseEndDate.setText(response.body().getVehicleDetails().get(0).getLicenseDateEnd());
                     edtExaminDate.setText(response.body().getVehicleDetails().get(0).getExaminationDate());
-                    String image = "http://test.proglabs.org/DTC/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
+                    String image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
                     Log.i("TAG", "onBindViewHolder:" + image);
 
                     if (response.body().getVehicleDetails().get(0).getEmployee().size() > 0) {
@@ -536,14 +536,12 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
 //                    progressBar1.setVisibility(View.GONE);
 //                    Toast.makeText(AddVehiclesActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
 
-
                 }
             }
 
             @Override
             public void onFailure(Call<GetAllEmploye> call, Throwable t) {
 //                Toast.makeText(AddVehiclesActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -651,8 +649,6 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
             }
 
         }
-
-
     }
 
     public static String getRealPath(Context context, Uri fileUri) {

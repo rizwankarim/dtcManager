@@ -78,14 +78,17 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 //                    progressBar1.setVisibility(View.GONE);
                         hideLoadingDialog();
-                        String user_id = response.body().getManagerId().get(0).getId();
-                        Paper.book().write("user_id", user_id);
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
+                        if(response.body().getMsg().equals("Login Failed")){
+                            Toast.makeText(LoginActivity.this, "Login failed. Userid or password is incorrect", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            String user_id = response.body().getManagerId().get(0).getId();
+                            Paper.book().write("user_id", user_id);
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        }
 
                     } else if (response.code() == 404) {
                         hideLoadingDialog();
-//                        Toast.makeText(LoginActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
 
                     }
                 }

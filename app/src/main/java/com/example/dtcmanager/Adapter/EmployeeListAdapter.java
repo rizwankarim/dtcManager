@@ -23,6 +23,7 @@ import com.example.dtcmanager.ModelClass.GetAllEmployee.AllEmployee;
 import com.example.dtcmanager.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -117,6 +118,11 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
     @Override
     public int getItemCount() {
         return allEmployeeList.size();
+    }
+
+    public void filterlist(ArrayList<AllEmployee> filteredlist){
+        allEmployeeList=filteredlist;
+        notifyDataSetChanged();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView employee_name;
