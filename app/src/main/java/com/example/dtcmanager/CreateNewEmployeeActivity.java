@@ -297,9 +297,9 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         } else if (expenses.isEmpty()) {
             edtexpense.setError("Please enter Password");
             edtexpense.requestFocus();
-        } /*else if (employeeList.size() < 0) {
+        } else if (employeeList.size() < 0) {
             Toast.makeText(this, "Please Select Sub Employee", Toast.LENGTH_SHORT).show();
-        }*/ else if (imageUri == null) {
+        } else if (imageUri == null) {
             Toast.makeText(this, "Please Add Image", Toast.LENGTH_SHORT).show();
         } else if (imageUri1 == null) {
             Toast.makeText(this, "Please Add ID File", Toast.LENGTH_SHORT).show();
