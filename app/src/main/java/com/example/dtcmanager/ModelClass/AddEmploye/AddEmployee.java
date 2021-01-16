@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AddEmployee {
-
     @SerializedName("Status")
     @Expose
     private String status;

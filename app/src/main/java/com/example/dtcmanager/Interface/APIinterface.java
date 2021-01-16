@@ -109,7 +109,8 @@ public interface APIinterface {
             @Query("file_Id") String file_Id,
             @Query("file_Joining") String file_Joining,
             @Query("file_Passport") String file_Passport,
-            @Query("file_image") String file_image
+            @Query("file_image") String file_image,
+            @Query("is_login") String is_login
     );
 
 

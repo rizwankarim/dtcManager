@@ -251,17 +251,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
     }
 
     private void AddEmploye() {
-//        edtUsername = findViewById(R.id.edtUsername);
-//        edtPasword = findViewById(R.id.edtPasword);
-//        edtPostion = findViewById(R.id.edtPostion);
-//        edtPhone = findViewById(R.id.edtPhone);
-//        edtId = findViewById(R.id.edtId);
-//        edtendDate = findViewById(R.id.edtendDate);
-//        edtPassportnumber = findViewById(R.id.edtPassportnumber);
-//        edtPassortEndDate = findViewById(R.id.edtPassortEndDate);
-//        edtJoinging = findViewById(R.id.edtJoinging);
-//        edtBasic = findViewById(R.id.edtBasic);
-//        edtexpense = findViewById(R.id.edtexpense);
+
         String user_name = edtUsername.getText().toString();
         String password = edtPasword.getText().toString();
         String position = edtPostion.getText().toString();
@@ -327,7 +317,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             Call<AddEmployee> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddEmployee(manager_id, user_name, password, position,
                     phone, basic_salary, expenses, String.valueOf(over_time), unique_id, end_date, passport_no,
                     passport_end_date, joining_date, employeeList, "nullimage", "nulltoken",
-                    "nullfile", "nulljoin", "nullpass", "nullimage");
+                    "nullfile", "nulljoin", "nullpass", "nullimage","false");
 
             call.enqueue(new Callback<AddEmployee>() {
                 @Override
