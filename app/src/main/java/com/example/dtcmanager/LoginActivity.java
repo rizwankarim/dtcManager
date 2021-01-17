@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             String user_id = response.body().getManagerId().get(0).getId();
                             Paper.book().write("user_id", user_id);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
                         }
 
                     } else if (response.code() == 404) {

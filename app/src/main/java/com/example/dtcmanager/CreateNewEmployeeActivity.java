@@ -110,7 +110,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         originCheck = getIntent().getStringExtra("orign");
         manager_id = Paper.book().read("user_id");
 
-
         intView();
         Clickble();
         AllEmploye();
@@ -120,8 +119,8 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             create_employee_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Toast.makeText(CreateNewEmployeeActivity.this, "mm", Toast.LENGTH_SHORT).show();
-                    AddEmploye();
+                    String user_name = edtUsername.getText().toString();
+                    checkDuplicateEmployee(manager_id,user_name);
                 }
             });
 
@@ -248,6 +247,36 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             ActivityCompat.requestPermissions(CreateNewEmployeeActivity.this, permissions, 2857);
 
         }
+    }
+
+    private void checkDuplicateEmployee(String m_id, String user_name) {
+        Call<GetAllEmploye> call = RetrofitClientClass.getInstance().getInterfaceInstance().GetAllEmployee(m_id);
+        call.enqueue(new Callback<GetAllEmploye>() {
+            @Override
+            public void onResponse(Call<GetAllEmploye> call, Response<GetAllEmploye> response) {
+                if (response.code() == 200) {
+                    allEmployeeList = response.body().getAllEmployees();
+                    for (int i=0;i<allEmployeeList.size();i++){
+                        if(allEmployeeList.get(i).getUserName().equals(user_name)){
+                            Toast.makeText(CreateNewEmployeeActivity.this, "Same user name is already exist. Try with a new one..", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            AddEmploye();
+                        }
+                        break;
+                    }
+
+                }
+                else if (response.code() == 404) {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetAllEmploye> call, Throwable t) {
+//                Toast.makeText(CreateNewEmployeeActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void AddEmploye() {
@@ -1001,13 +1030,11 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                         employeeListSpinner.setEnabled(false);
                         Toast.makeText(CreateNewEmployeeActivity.this, "Please Add Employee", Toast.LENGTH_SHORT).show();
                     }
-
-//                    spinnerevents(allEmployeeList);
                 } else if (response.code() == 404) {
-//                    progressBar1.setVisibility(View.GONE);
-//                    Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
+
                 }
             }
+
 
             @Override
             public void onFailure(Call<GetAllEmploye> call, Throwable t) {
@@ -1015,8 +1042,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
             }
         });
-
-
     }
 
     private void setLocationInSpinner(List<AllEmployee> allEmployeeList) {
