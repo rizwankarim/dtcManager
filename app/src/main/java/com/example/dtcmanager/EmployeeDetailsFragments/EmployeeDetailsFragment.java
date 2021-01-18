@@ -1,10 +1,16 @@
 package com.example.dtcmanager.EmployeeDetailsFragments;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +41,12 @@ import retrofit2.Response;
 
 public class EmployeeDetailsFragment extends Fragment {
 
-    TextView txtUserName, txtPassword, txtposition, txtPhone, txtUiqueId, txtUniqueID, txtPassportNumber, txtPassportEndDate, txtJoiningDate, txtBasicSalary,
+    public TextView txtUserName, txtPassword, txtposition, txtPhone, txtUiqueId, txtUniqueID, txtPassportNumber, txtPassportEndDate, txtJoiningDate, txtBasicSalary,
             txtExpenses, txtOverTime;
     RecyclerView SubemployeeRecylerView;
     List<SubEmployee> subEmployeeList = new ArrayList<>();
 
-    Button txtidFile, txtJoiningFile, txtImage, txtPassportFile;
+    Button txtidFile, txtJoiningFile, txtImage, txtPassportFile, callemployee;
 
     public EmployeeDetailsFragment() {
         // Required empty public constructor
@@ -69,6 +75,7 @@ public class EmployeeDetailsFragment extends Fragment {
         txtBasicSalary = view.findViewById(R.id.txtBasicSalary);
         txtExpenses = view.findViewById(R.id.txtExpenses);
         txtOverTime = view.findViewById(R.id.txtOverTime);
+        callemployee=view.findViewById(R.id.callbutton);
 
         SubemployeeRecylerView = view.findViewById(R.id.SubemployeeRecylerView);
         SubemployeeRecylerView.setHasFixedSize(true);
@@ -114,16 +121,18 @@ public class EmployeeDetailsFragment extends Fragment {
                     String Image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/Joining_Image/" + response.body().getEmployeeDetail().get(0).getImage();
                     String Passport_File = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/PassPort/" + response.body().getEmployeeDetail().get(0).getPassportFile();
 
-//                    Button txtidFile,txtJoiningFile,txtImage,txtPassportFile;
-
+                    callemployee.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                           makePhoneCall(txtPhone.getText().toString());
+                        }
+                    });
 
                     txtidFile.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (File1 == null || File1.equals("")){
-
                                 Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
-
                             }
                             else {
                                 Intent intent = new Intent(getContext(), ViewerActivity.class);
@@ -180,7 +189,6 @@ public class EmployeeDetailsFragment extends Fragment {
                             }
                             else {
 
-
                                 Intent intent = new Intent(getContext(), ViewerActivity.class);
                                 intent.putExtra("orign", Passport_File);
                                 startActivity(intent);
@@ -208,5 +216,31 @@ public class EmployeeDetailsFragment extends Fragment {
 
             }
         });
+    }
+
+    public void makePhoneCall(String number){
+        if(number.trim().length()>0){
+            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(requireActivity(),new String[]{
+                        Manifest.permission.CALL_PHONE
+                },1);
+            }
+            else{
+                 String dial= "tel:"+number;
+                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            }
+        }
+        else{
+            Toast.makeText(requireContext(), "No phone number here..", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode==1){
+            if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                makePhoneCall(txtPhone.getText().toString());
+            }
+        }
     }
 }
