@@ -1,8 +1,11 @@
 package com.example.dtcmanager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,7 +63,16 @@ public class VacationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         manager_id = Paper.book().read("user_id");
-        GetData();
+
+        if(checkConnection())
+        {
+            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            GetData();
+        }else
+        {
+            Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+        }
+
         AllVacationRecylerView = view.findViewById(R.id.AllVacationRecylerView);
         noData= view.findViewById(R.id.noData);
         AllVacationRecylerView.setHasFixedSize(false);
@@ -157,7 +169,14 @@ public class VacationsFragment extends Fragment {
             public void onResponse(Call<ChangeStatus> call, Response<ChangeStatus> response) {
                 if (response.code() == 200) {
                     Toast.makeText(requireContext(), "" + Common.status, Toast.LENGTH_SHORT).show();
-                    GetData();
+
+                    if(checkConnection())
+                    {
+                        GetData();
+                    }else
+                    {
+
+                    }
                     hideLoadingDialog();
 
 
@@ -184,7 +203,12 @@ public class VacationsFragment extends Fragment {
         loadingDialog.show();
 
     }
+    private boolean checkConnection(){
+        ConnectivityManager connectivityManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
 
+        return networkInfo !=null && networkInfo.isConnected();
+    }
     public void hideLoadingDialog() {
         loadingDialog.dismiss();
     }

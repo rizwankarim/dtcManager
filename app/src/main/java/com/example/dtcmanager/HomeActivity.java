@@ -1,5 +1,8 @@
 package com.example.dtcmanager;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +43,26 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initviews();
-        clickevents();
+        if(checkConnection())
+        {
+            Toast.makeText(this, "Connected to Internet", Toast.LENGTH_SHORT).show();
+            initviews();
+            clickevents();
+        }
+        else
+        {
+            initviews();
+            clickevents();
+            Toast.makeText(this, "Internet Not Available", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private boolean checkConnection(){
+        ConnectivityManager connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+
+        return networkInfo !=null && networkInfo.isConnected();
     }
     private void initviews() {
 
@@ -65,18 +86,26 @@ public class HomeActivity extends AppCompatActivity {
         txtmovments = findViewById(R.id.txtmovments);
         txthome = findViewById(R.id.txthome);
 
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.i("Hello", "getInstanceId failed", task.getException());
-                            return;
+        if(checkConnection())
+        {
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.i("Hello", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                            Log.i("Hello", "onComplete: "+task.getResult().getToken());
+                            UpdateToken(task.getResult().getToken());
                         }
-                        Log.i("Hello", "onComplete: "+task.getResult().getToken());
-                        UpdateToken(task.getResult().getToken());
-                    }
-                });
+                    });
+        }
+        else
+            {
+
+            }
+
 
     }
 

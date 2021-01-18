@@ -1,9 +1,12 @@
 package com.example.dtcmanager.Fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -100,7 +103,16 @@ public class HomeFragment extends Fragment {
         noData= view.findViewById(R.id.noData);
         textNoti = view.findViewById(R.id.textNoti);
         btnlogout = view.findViewById(R.id.btnlogout);
-        AllEmploye();
+
+        if(checkConnection())
+        {
+            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            AllEmploye();
+        }else
+        {
+            Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+        }
+
 
         layoutEmployeeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,7 +330,12 @@ public class HomeFragment extends Fragment {
         loadingDialog.show();
 
     }
+    private boolean checkConnection(){
+        ConnectivityManager connectivityManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
 
+        return networkInfo !=null && networkInfo.isConnected();
+    }
     public void hideLoadingDialog() {
         loadingDialog.dismiss();
     }

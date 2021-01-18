@@ -1,10 +1,13 @@
 package com.example.dtcmanager.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -165,7 +168,14 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+        if(checkConnection())
+        {
+            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            getData();
+        }else
+        {
+            Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getData() {
@@ -272,11 +282,26 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
 
         String date = edtDate.getText().toString();
         if (!date.isEmpty()) {
-            getData();
+
+            if(checkConnection())
+            {
+                getData();
+            }else
+            {
+
+            }
         }
         String datefirs = edtDate1.getText().toString();
         String datelast = edtDate2.getText().toString();
-        getAllEmployeecheckOutByDate();
+        if(checkConnection())
+        {
+            getAllEmployeecheckOutByDate();
+        }
+        else
+        {
+
+        }
+
 
 
     }
@@ -336,6 +361,12 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
 
     }
 
+    private boolean checkConnection(){
+        ConnectivityManager connectivityManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+
+        return networkInfo !=null && networkInfo.isConnected();
+    }
     public void hideLoadingDialog() {
         loadingDialog.dismiss();
     }
