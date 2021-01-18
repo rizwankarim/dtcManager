@@ -494,7 +494,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
         for (int i = 0; i < allLocationList.size(); i++) {
             KeyPairBoolData boolData = new KeyPairBoolData();
             boolData.setId(Integer.parseInt(allLocationList.get(i).getId()));
-            boolData.setName(allLocationList.get(i).getName());
+            boolData.setName(allLocationList.get(i).gettitle());
             boolData.setSelected(false);
 
             for (int j = 0; j < locationIdList.size(); j++) {

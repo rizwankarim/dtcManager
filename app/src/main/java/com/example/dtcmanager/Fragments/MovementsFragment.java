@@ -99,7 +99,7 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
         edtDate2 =  view.findViewById(R.id.edtDate2);
         DateRange =  view.findViewById(R.id.DateRange);
         daily =  view.findViewById(R.id.daily);
-        SelctSechDateModule =  view.findViewById(R.id.SelctSechDateModule);
+        //SelctSechDateModule =  view.findViewById(R.id.SelctSechDateModule);
         String currentDate1 = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
 //        Toast.makeText(requireContext(), ""+currentDate1, Toast.LENGTH_SHORT).show();
         edtDate.setText(currentDate1);
@@ -132,31 +132,31 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
         });
 
 
-        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
-                dialog.setMessage("What do you Want to Do?");
-                dialog.setPositiveButton("Daily", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        daily.setVisibility(View.VISIBLE);
-                        DateRange.setVisibility(View.GONE);
-                    }
-                });
-
-
-                dialog.setNeutralButton("Date Range", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        daily.setVisibility(View.GONE);
-                        DateRange.setVisibility(View.VISIBLE);
-                    }
-                });
-                dialog.show();
-            }
-
-        });
+//        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+//                dialog.setMessage("What do you Want to Do?");
+//                dialog.setPositiveButton("Daily", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        daily.setVisibility(View.VISIBLE);
+//                        DateRange.setVisibility(View.GONE);
+//                    }
+//                });
+//
+//
+//                dialog.setNeutralButton("Date Range", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        daily.setVisibility(View.GONE);
+//                        DateRange.setVisibility(View.VISIBLE);
+//                    }
+//                });
+//                dialog.show();
+//            }
+//
+//        });
     }
 
 
@@ -165,7 +165,7 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
         super.onResume();
         if(checkConnection())
         {
-            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
             getData();
         }else
         {

@@ -48,6 +48,22 @@
              </LinearLayout>
 
          </androidx.appcompat.widget.Toolbar>
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingTop="10dp"
+             android:paddingBottom="10dp"
+             android:gravity="center">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="All Employee Vacation Request"
+                 android:textSize="22sp"
+                 android:textColor="@color/black"
+                 android:gravity="center"/>
+         </LinearLayout>
+
          <LinearLayout
              android:layout_width="match_parent"
              android:layout_height="match_parent"

@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
 
         if(checkConnection())
         {
-            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
             AllEmploye();
         }else
         {

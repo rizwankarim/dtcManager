@@ -21,53 +21,53 @@
             android:src="@drawable/logo_high" />
     </androidx.appcompat.widget.Toolbar>
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:fontFamily="@font/helveticaneue_light"-->
+<!--            android:text="Archive:"-->
+<!--            android:textSize="16sp" />-->
+<!--    </LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/helveticaneue_light"
-            android:text="Archive:"
-            android:textSize="16sp" />
-    </LinearLayout>
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:orientation="vertical">-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/SelctSechDateModule"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/red_rectangle"
-                    android:fontFamily="@font/helvetica_neu_bold"
-                    android:shadowColor="@color/Red"
-                    android:text="Archive"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+<!--                <Button-->
+<!--                    android:id="@+id/SelctSechDateModule"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_marginEnd="20dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:background="@drawable/red_rectangle"-->
+<!--                    android:fontFamily="@font/helvetica_neu_bold"-->
+<!--                    android:shadowColor="@color/Red"-->
+<!--                    android:text="Archive"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="16sp" />-->
 
 
-            </LinearLayout>
-        </RelativeLayout>
+<!--            </LinearLayout>-->
+<!--        </RelativeLayout>-->
 
 
         <RelativeLayout

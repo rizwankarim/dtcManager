@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/colorAppMain"
+    android:layout_height="wrap_content">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:background="@color/white"
     android:orientation="vertical"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
@@ -17,9 +26,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:textStyle="bold"
             android:text="Booking #"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
@@ -27,9 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-
+            android:textStyle="bold"
             android:text="123456"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -51,10 +60,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginStart="10dp"
 
                 android:text="Name:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -68,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
@@ -91,8 +101,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:textStyle="bold"
                 android:text="Starting Date:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -106,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
@@ -127,8 +138,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:textStyle="bold"
                 android:text="End Date:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -143,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -165,9 +177,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-
+                android:textStyle="bold"
                 android:text="Reason:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -181,9 +193,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
-
 
         </LinearLayout>
     </LinearLayout>
@@ -244,3 +255,5 @@
 
     </LinearLayout>
 </LinearLayout>
+
+</androidx.cardview.widget.CardView>

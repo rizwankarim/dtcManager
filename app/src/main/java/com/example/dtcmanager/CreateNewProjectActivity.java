@@ -693,7 +693,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         List<String> locationList = new ArrayList<>();
 
         for (int w = 0; w < allLocationList.size(); w++) {
-            locationList.add(allLocationList.get(w).getName());
+            locationList.add(allLocationList.get(w).gettitle());
         }
 
 //        spinnerArrayAdapter = new ArrayAdapter<String>

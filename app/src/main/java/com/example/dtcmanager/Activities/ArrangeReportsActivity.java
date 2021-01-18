@@ -76,7 +76,7 @@ public class ArrangeReportsActivity extends AppCompatActivity implements DatePic
 
         rvReports =  findViewById(R.id.rvReports);
         rvReportsFilter =  findViewById(R.id.rvReportsFilter);
-        SelctSechDateModule =  findViewById(R.id.SelctSechDateModule);
+//        SelctSechDateModule =  findViewById(R.id.SelctSechDateModule);
         DateRange =  findViewById(R.id.DateRange);
         daily =  findViewById(R.id.daily);
         rvReports.setHasFixedSize(true);
@@ -94,31 +94,31 @@ public class ArrangeReportsActivity extends AppCompatActivity implements DatePic
 //        edtDate.setText(currentDate1);
         clickAble();
 
-        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ArrangeReportsActivity.this);
-                dialog.setMessage("What do you Want to Do?");
-                dialog.setPositiveButton("Daily", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        daily.setVisibility(View.VISIBLE);
-                        DateRange.setVisibility(View.GONE);
-                    }
-                });
-
-
-                dialog.setNeutralButton("Date Range", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        daily.setVisibility(View.GONE);
-                        DateRange.setVisibility(View.VISIBLE);
-                    }
-                });
-                dialog.show();
-            }
-
-        });
+//        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(ArrangeReportsActivity.this);
+//                dialog.setMessage("What do you Want to Do?");
+//                dialog.setPositiveButton("Daily", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        daily.setVisibility(View.VISIBLE);
+//                        DateRange.setVisibility(View.GONE);
+//                    }
+//                });
+//
+//
+//                dialog.setNeutralButton("Date Range", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        daily.setVisibility(View.GONE);
+//                        DateRange.setVisibility(View.VISIBLE);
+//                    }
+//                });
+//                dialog.show();
+//            }
+//
+//        });
     }
 
     private void clickAble() {
