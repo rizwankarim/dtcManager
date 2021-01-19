@@ -35,6 +35,7 @@ import com.example.dtcmanager.ModelClass.RemoveEmployee.RemoveEmployee;
 import com.example.dtcmanager.ModelClass.RemoveLocation.RemoveLocation;
 import com.example.dtcmanager.ModelClass.RemoveProject.RemoveProject;
 import com.example.dtcmanager.ModelClass.Removevehicle.Removevehcile;
+import com.example.dtcmanager.ModelClass.SignIn.ManagerId;
 import com.example.dtcmanager.ModelClass.SignIn.SignIn;
 import com.example.dtcmanager.ModelClass.UpdateProject.UpdateProject;
 import com.example.dtcmanager.ModelClass.UploadID.UploadID;
@@ -63,7 +64,14 @@ public interface APIinterface {
     @POST("Sign_In.php")
     Call<SignIn> SignIn(
             @Query("user_name") String user_name,
-            @Query("password") String password
+            @Query("password") String password,
+            @Query("imei_number") String imei_number
+    );
+
+    @POST("update_login_status.php")
+    Call<ManagerId> updateloginstatus(
+            @Query("manager_id") String manager_id,
+            @Query("imei_number") String imei_number
     );
 
     @POST("get_all_employee.php")
