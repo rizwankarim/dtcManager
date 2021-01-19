@@ -64,9 +64,21 @@ public class EmployeeDetail_ {
     @SerializedName("Passport_End_Date")
     @Expose
     private String passportEndDate;
+    @SerializedName("l_status")
+    @Expose
+    private String l_status;
+
     @SerializedName("Sub_Employee")
     @Expose
     private List<SubEmployee> subEmployee = null;
+
+    public String getL_status() {
+        return l_status;
+    }
+
+    public void setL_status(String l_status) {
+        this.l_status = l_status;
+    }
 
     public String getId() {
         return id;

@@ -13,6 +13,7 @@ import com.example.dtcmanager.ModelClass.EditVehicle.EditVehicle;
 import com.example.dtcmanager.ModelClass.EmployeeAttendanceModel.GetEmployeeAttendance;
 import com.example.dtcmanager.ModelClass.EmployeeDailyReportModel.GetEmployeeDailyReport;
 import com.example.dtcmanager.ModelClass.EmployeeDetailMax.EmployeeDetail;
+import com.example.dtcmanager.ModelClass.EmployeeDetailMax.EmployeeDetail_;
 import com.example.dtcmanager.ModelClass.GetAllEmployee.GetAllEmploye;
 import com.example.dtcmanager.ModelClass.GetAllEmployeeAttendence.GetAllEmployeeAttendence;
 import com.example.dtcmanager.ModelClass.GetAllEmployeecheckOutByDate.GetAllEmployeeCheckOutByDate;
@@ -312,6 +313,11 @@ public interface APIinterface {
     @POST("get_employee_detail.php")
     Call<EmployeeDetail> EmployeeDetailMax(
             @Query("id") String id
+    );
+
+    @POST("update_l_status.php")
+    Call<EmployeeDetail_> updatel_status(
+            @Query("emp_id") String emp_id
     );
 
     @POST("get_employee_attendence_report.php")

@@ -28,6 +28,7 @@ import com.example.dtcmanager.Activities.ViewerActivity;
 import com.example.dtcmanager.Adapter.ViewSubEmployeeAdapter;
 import com.example.dtcmanager.Comon.Comon;
 import com.example.dtcmanager.ModelClass.EmployeeDetailMax.EmployeeDetail;
+import com.example.dtcmanager.ModelClass.EmployeeDetailMax.EmployeeDetail_;
 import com.example.dtcmanager.ModelClass.EmployeeDetailMax.SubEmployee;
 import com.example.dtcmanager.R;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
@@ -46,7 +47,7 @@ public class EmployeeDetailsFragment extends Fragment {
     RecyclerView SubemployeeRecylerView;
     List<SubEmployee> subEmployeeList = new ArrayList<>();
 
-    Button txtidFile, txtJoiningFile, txtImage, txtPassportFile, callemployee;
+    Button txtidFile, txtJoiningFile, txtImage, txtPassportFile, callemployee, resetPhone;
 
     public EmployeeDetailsFragment() {
         // Required empty public constructor
@@ -76,6 +77,7 @@ public class EmployeeDetailsFragment extends Fragment {
         txtExpenses = view.findViewById(R.id.txtExpenses);
         txtOverTime = view.findViewById(R.id.txtOverTime);
         callemployee=view.findViewById(R.id.callbutton);
+        resetPhone= view.findViewById(R.id.resetphone);
 
         SubemployeeRecylerView = view.findViewById(R.id.SubemployeeRecylerView);
         SubemployeeRecylerView.setHasFixedSize(true);
@@ -125,6 +127,13 @@ public class EmployeeDetailsFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                            makePhoneCall(txtPhone.getText().toString());
+                        }
+                    });
+
+                    resetPhone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resetEmployeeDevice(id);
                         }
                     });
 
@@ -233,6 +242,21 @@ public class EmployeeDetailsFragment extends Fragment {
         else{
             Toast.makeText(requireContext(), "No phone number here..", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void resetEmployeeDevice(String id){
+        Call<EmployeeDetail_> call = RetrofitClientClass.getInstance().getInterfaceInstance().updatel_status(id);
+        call.enqueue(new Callback<EmployeeDetail_>() {
+            @Override
+            public void onResponse(Call<EmployeeDetail_> call, Response<EmployeeDetail_> response) {
+                Toast.makeText(requireContext(), "Employee phone reset successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeDetail_> call, Throwable t) {
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

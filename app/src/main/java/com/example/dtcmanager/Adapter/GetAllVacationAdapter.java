@@ -49,6 +49,7 @@ LeaveApplicationInterface leaveApplicationInterface;
         holder.txtEndDate.setText(employeeVacation.getEndingDate());
         holder.txtReason.setText(employeeVacation.getReason());
         holder.txtbooking_number.setText(employeeVacation.getId());
+        holder.txtname.setText(employeeVacation.getEmp_name());
 
         if(employeeVacation.getStatus().equals("Accepted")){
             holder.btnAccept.setVisibility(View.VISIBLE);
@@ -89,12 +90,13 @@ LeaveApplicationInterface leaveApplicationInterface;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtEmployeeName,txtStartingDate,txtEndDate,txtReason,txtbooking_number;
+        TextView txtname,txtEmployeeName,txtStartingDate,txtEndDate,txtReason,txtbooking_number;
 
         Button btnReject,btnAccept;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtEmployeeName = itemView.findViewById(R.id.txtEmployeeName);
+            txtname=itemView.findViewById(R.id.name);
             txtStartingDate = itemView.findViewById(R.id.txtStartingDate);
             txtEndDate = itemView.findViewById(R.id.txtEndDate);
             txtReason = itemView.findViewById(R.id.txtReason);
