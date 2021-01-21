@@ -66,8 +66,6 @@ public class ProjectsActivity extends AppCompatActivity {
 
     }
 
-
-
     private void initView() {
         try{
             addproject = findViewById(R.id.addproject);

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -200,7 +202,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 permissions[1]) == PackageManager.PERMISSION_GRANTED) {
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
+            intent.setType("*/*");
             startActivityForResult(intent, requestCode);
 
         } else {
@@ -451,17 +453,82 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             if (checkfile == 1) {
                 String FilePath = data.getData().getPath();
                 imageUri = data.getData();
-                txtSchedulefile.setText("File Attached");
-                txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                try{
+                    String ext= getfileExtension(imageUri);
+                    Log.d("URI",ext);
+                    if(ext.equals("pdf")){
+                        txtSchedulefile.setText("File Attached");
+                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext.equals("docx")){
+                        txtSchedulefile.setText("File Attached");
+                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext.equals("png")){
+                        txtSchedulefile.setText("File Attached");
+                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext.equals("jpg")){
+                        txtSchedulefile.setText("File Attached");
+                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext.equals("jpeg")){
+                        txtSchedulefile.setText("File Attached");
+                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else{
+                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+                }
+
 
             } else if (checkfile == 2) {
                 String FilePathOne = data.getData().getPath();
                 imageUri1 = data.getData();
-                txtContractfile.setText("File Attached");
-                txtContractfile.setTextColor(Color.parseColor("#68F965"));
-
+                try{
+                    String ext1= getfileExtension(imageUri1);
+                    Log.d("URI",ext1);
+                    if(ext1.equals("pdf")){
+                        txtContractfile.setText("File Attached");
+                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext1.equals("docx")){
+                        txtContractfile.setText("File Attached");
+                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext1.equals("png")){
+                        txtContractfile.setText("File Attached");
+                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext1.equals("jpg")){
+                        txtContractfile.setText("File Attached");
+                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else if(ext1.equals("jpeg")){
+                        txtContractfile.setText("File Attached");
+                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+                    }
+                    else{
+                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+                }
             }
         }
+    }
+
+    private String getfileExtension(Uri uri)
+    {
+        String extension;
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        extension= mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+        return extension;
     }
 
     private void EditProject(String id) {
@@ -658,11 +725,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         });
 
     }
-
-
     private void getData() {
-
-
         Call<GettAllLocation> call = RetrofitClientClass.getInstance().getInterfaceInstance().GetAllLocation(manager_id);
         call.enqueue(new Callback<GettAllLocation>() {
             @Override
@@ -711,7 +774,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             for (int w = 0; w < allLocationList.size(); w++) {
 
                 Log.i("TAG", "spinnerevents: " + ProjectLocationId);
-                if (ProjectLocationId.equals(allLocationList.get(w).getId())) {
+                if (ProjectLocationId.equals(allLocationList.get(w).gettitle())) {
 
                     ProjectLocationSpinner.setSelection(spinnerArrayAdapter.getPosition(allLocationList.get(w).getName()));
                 }
@@ -724,7 +787,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 for (int w = 0; w < allLocationList.size(); w++) {
-                    if (allLocationList.get(w).getName().equals(adapterView.getSelectedItem())) {
+                    if (allLocationList.get(w).gettitle().equals(adapterView.getSelectedItem())) {
                         ProjectLocationId = allLocationList.get(w).getId();
                     }
                 }

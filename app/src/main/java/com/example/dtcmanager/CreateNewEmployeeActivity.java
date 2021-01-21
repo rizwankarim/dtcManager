@@ -256,14 +256,19 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             public void onResponse(Call<GetAllEmploye> call, Response<GetAllEmploye> response) {
                 if (response.code() == 200) {
                     allEmployeeList = response.body().getAllEmployees();
-                    for (int i=0;i<allEmployeeList.size();i++){
-                        if(allEmployeeList.get(i).getUserName().equals(user_name)){
-                            Toast.makeText(CreateNewEmployeeActivity.this, "Same user name is already exist. Try with a new one..", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            AddEmploye();
-                        }
-                        break;
+                    if(allEmployeeList.size()>0){
+                        for (int i=0;i<allEmployeeList.size();i++){
+                            if(allEmployeeList.get(i).getUserName().equals(user_name)){
+                                Toast.makeText(CreateNewEmployeeActivity.this, "Same user name is already exist. Try with a new one..", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                AddEmploye();
+                            }
+                            break;
+                         }
+                    }
+                    else{
+                        AddEmploye();
                     }
 
                 }
@@ -326,9 +331,9 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         } else if (expenses.isEmpty()) {
             edtexpense.setError("Please enter Password");
             edtexpense.requestFocus();
-        } else if (employeeList.size() < 0) {
+        } /*else if (employeeList.size() < 0) {
             Toast.makeText(this, "Please Select Sub Employee", Toast.LENGTH_SHORT).show();
-        } else if (imageUri == null) {
+        }*/ else if (imageUri == null) {
             Toast.makeText(this, "Please Add Image", Toast.LENGTH_SHORT).show();
         } else if (imageUri1 == null) {
             Toast.makeText(this, "Please Add ID File", Toast.LENGTH_SHORT).show();
@@ -1025,11 +1030,11 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     allEmployeeList = response.body().getAllEmployees();
                     if (allEmployeeList.size() > 0) {
                         employeeListSpinner.setEnabled(true);
-                        setLocationInSpinner(allEmployeeList);
                     } else {
-                        employeeListSpinner.setEnabled(false);
+                        employeeListSpinner.setEnabled(true);
                         Toast.makeText(CreateNewEmployeeActivity.this, "Please Add Employee", Toast.LENGTH_SHORT).show();
                     }
+                    setLocationInSpinner(allEmployeeList);
                 } else if (response.code() == 404) {
 
                 }

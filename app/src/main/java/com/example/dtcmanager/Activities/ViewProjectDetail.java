@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,9 +104,10 @@ public class ViewProjectDetail extends AppCompatActivity {
                     txtschedule_file.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
-                            intent.putExtra("orign", Schedule_file);
-                            startActivity(intent);
+                            //Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
+                            Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Schedule_file));
+                            browsefile.putExtra("orign", Schedule_file);
+                            startActivity(browsefile);
 
                         }
                     });
@@ -115,9 +117,10 @@ public class ViewProjectDetail extends AppCompatActivity {
                     txtcontract_file.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
-                            intent.putExtra("orign", Contractfile);
-                            startActivity(intent);
+                            //Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
+                            Intent browsefile= new Intent(Intent.ACTION_VIEW,Uri.parse(Contractfile));
+                            browsefile.putExtra("orign", Contractfile);
+                            startActivity(browsefile);
                         }
                     });
 
