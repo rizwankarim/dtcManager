@@ -2,6 +2,7 @@ package com.example.dtcmanager.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +45,10 @@ public class DailyReportDetailAdapter extends RecyclerView.Adapter<DailyReportDe
         holder.txtidFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ViewerActivity.class);
-                intent.putExtra("orign", image);
-                context.startActivity(intent);
+                //Intent intent = new Intent(context, ViewerActivity.class);
+                Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(image));
+                browsefile.putExtra("orign", image);
+                context.startActivity(browsefile);
 
             }
         });

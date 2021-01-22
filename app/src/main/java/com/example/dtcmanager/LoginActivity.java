@@ -76,9 +76,9 @@ public class LoginActivity extends AppCompatActivity {
         progressBar1 = findViewById(R.id.progressBar1);
         edtUserName = findViewById(R.id.edtUserName);
         edtPassword = findViewById(R.id.edtPassword);
-        Imei_Number=getDeviceId(getApplicationContext());
-        Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
-        //checkPhonePermission();
+        //Imei_Number=getDeviceId(getApplicationContext());
+        //Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
+        checkPhonePermission();
     }
 
     public static String getDeviceId(Context context) {
@@ -108,9 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Signin();
-
             }
         });
     }
@@ -188,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
         } else {
-            Imei_Number=telephonyManager.getDeviceId();
+            Imei_Number=getDeviceId(this);
             Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
         }
     }
@@ -198,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_READ_PHONE_STATE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Imei_Number=telephonyManager.getDeviceId();
+                    Imei_Number=getDeviceId(this);
                     Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
                 }
                 break;
