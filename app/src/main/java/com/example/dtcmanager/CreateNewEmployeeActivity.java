@@ -1088,7 +1088,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
     }
 
-    private void DatePicker() {
+    private void  DatePicker() {
         now = Calendar.getInstance();
         dpd = DatePickerDialog.newInstance(
                 CreateNewEmployeeActivity.this,

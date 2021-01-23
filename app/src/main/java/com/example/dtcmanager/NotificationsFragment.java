@@ -116,7 +116,7 @@ public class NotificationsFragment extends Fragment {
         super.onResume();
         if(checkConnection())
         {
-            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
             getData(manager_id);
         }else
         {

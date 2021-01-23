@@ -66,7 +66,7 @@ public class VacationsFragment extends Fragment {
 
         if(checkConnection())
         {
-            Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
             GetData();
         }else
         {
@@ -79,7 +79,6 @@ public class VacationsFragment extends Fragment {
         AllVacationRecylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
     }
-
 
 
     private void GetData() {
@@ -145,8 +144,6 @@ public class VacationsFragment extends Fragment {
                     Toast.makeText(requireContext(), "Something Wrong", Toast.LENGTH_SHORT).show();
 
                 }
-
-
             }
 
             @Override

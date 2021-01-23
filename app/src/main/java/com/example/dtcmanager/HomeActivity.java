@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
     private boolean checkConnection(){
         ConnectivityManager connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();

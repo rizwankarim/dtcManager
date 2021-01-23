@@ -54,12 +54,13 @@ LeaveApplicationInterface leaveApplicationInterface;
         if(employeeVacation.getStatus().equals("Accepted")){
             holder.btnAccept.setVisibility(View.VISIBLE);
             holder.btnAccept.setText("Accepted");
+            holder.btnAccept.setEnabled(false);
             holder.btnReject.setVisibility(View.GONE);
 
         }
          else if(employeeVacation.getStatus().equals( "Rejected")){
               holder.btnReject.setVisibility(View.VISIBLE);
-
+              holder.btnReject.setEnabled(false);
               holder.btnReject.setText("Rejected");
             holder.btnAccept.setVisibility(View.GONE);
         }
