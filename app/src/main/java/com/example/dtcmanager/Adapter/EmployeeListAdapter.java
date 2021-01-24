@@ -101,7 +101,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
             }
         });
         String Image =  allEmployee.getProfileImage();
-        Picasso.get().load("http://test.proglabs.org/DTC/Manager/Profile_Image/" + Image)
+        Picasso.get().load("http://dtc.anstm.com//dtcAdmin/api/Manager/Profile_Image/" + Image)
                 .into(holder.employee_image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {

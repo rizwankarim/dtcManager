@@ -12,22 +12,22 @@ public class ReportDetail {
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("emp_id")
+    @SerializedName("User_Name")
     @Expose
     private String empId;
-    @SerializedName("project_id")
+    @SerializedName("Project_Name")
     @Expose
     private String projectId;
-    @SerializedName("target")
+    @SerializedName("Target")
     @Expose
     private String target;
-    @SerializedName("achievement")
+    @SerializedName("Achievement")
     @Expose
     private String achievement;
-    @SerializedName("problems")
+    @SerializedName("Problems")
     @Expose
     private String problems;
-    @SerializedName("date_time")
+    @SerializedName("Date_Time")
     @Expose
     private String dateTime;
     @SerializedName("Report_Image")
@@ -97,5 +97,4 @@ public class ReportDetail {
     public void setReportImage(List<ReportImage> reportImage) {
         this.reportImage = reportImage;
     }
-
 }
