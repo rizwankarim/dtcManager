@@ -65,15 +65,11 @@ public class ReportFragment extends Fragment implements DatePickerDialog.OnDateS
         rvReports.setHasFixedSize(true);
         rvReports.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-//
-
-
         Calendar currentDate = Calendar.getInstance();
         date = currentDate.getTime();
-        String currentDate1 = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
-
-
-//        edtDate.setText(currentDate1);
+        SimpleDateFormat sdp = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        String current_date = sdp.format(date);
+        edtDate.setText(current_date);
 
 
         edtDate.setOnClickListener(new View.OnClickListener() {

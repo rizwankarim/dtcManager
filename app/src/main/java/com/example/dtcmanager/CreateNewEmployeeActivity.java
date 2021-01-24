@@ -81,7 +81,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
     MultiSpinnerSearch employeeListSpinner;
     TextView txtidAttach, txtPassportAttach, txtContractAttach, txtAttachPhoto;
     EditText edtUsername, edtPasword, edtPostion, edtPhone, edtId, edtendDate,
-            edtPassportnumber, edtPassortEndDate, edtJoinging, edtBasic, edtexpense;
+            edtPassportnumber, edtPassortEndDate, edtJoinging, edtBasic, edtexpense,contract_end;
     Toolbar ChildProfiletoolbar;
     private static final int PICKFILE_RESULT_CODE = 2856;
     private static final int PICKPHOTO_RESULT_CODE = 2857;
@@ -159,6 +159,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         edtJoinging = findViewById(R.id.edtJoinging);
         edtBasic = findViewById(R.id.edtBasic);
         edtexpense = findViewById(R.id.edtexpense);
+        contract_end=findViewById(R.id.edtContractDate);
         ChildProfiletoolbar = findViewById(R.id.ChildProfiletoolbar);
         ChildProfiletoolbar.setTitle("");
         setSupportActionBar(ChildProfiletoolbar);
@@ -196,7 +197,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 check = 3;
                 requestCode = 2856;
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
+                intent.setType("application/pdf");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
             }
         });
@@ -230,6 +231,14 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 datecheck = 3;
                 DatePicker();
 
+            }
+        });
+
+        contract_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datecheck = 4;
+                DatePicker();
             }
         });
     }
@@ -295,6 +304,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         String passport_no = edtPassportnumber.getText().toString();
         String passport_end_date = edtPassortEndDate.getText().toString();
         String joining_date = edtJoinging.getText().toString();
+        String contract_end_date= contract_end.getText().toString();
         String basic_salary = edtBasic.getText().toString();
         String expenses = edtexpense.getText().toString();
 
@@ -305,31 +315,34 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             edtPasword.setError("Please enter Password");
             edtPasword.requestFocus();
         } else if (position.isEmpty()) {
-            edtPostion.setError("Please enter Password");
+            edtPostion.setError("Please enter Position");
             edtPostion.requestFocus();
         } else if (phone.isEmpty()) {
-            edtPhone.setError("Please enter Password");
+            edtPhone.setError("Please enter Contact Details");
             edtPhone.requestFocus();
         } else if (unique_id.isEmpty()) {
-            edtId.setError("Please enter Password");
+            edtId.setError("Please enter Iqama or DTC Id");
             edtId.requestFocus();
         } else if (end_date.isEmpty()) {
-            edtendDate.setError("Please enter Password");
+            edtendDate.setError("Please enter End Date");
             edtendDate.requestFocus();
         } else if (passport_no.isEmpty()) {
-            edtPassportnumber.setError("Please enter Password");
+            edtPassportnumber.setError("Please enter Passport No");
             edtPassportnumber.requestFocus();
         } else if (passport_end_date.isEmpty()) {
-            edtPassortEndDate.setError("Please enter Password");
+            edtPassortEndDate.setError("Please enter Passport End Date");
             edtPassortEndDate.requestFocus();
         } else if (joining_date.isEmpty()) {
-            edtJoinging.setError("Please enter Password");
+            edtJoinging.setError("Please enter Joining Date");
+            edtJoinging.requestFocus();
+        }else if (contract_end_date.isEmpty()) {
+            edtJoinging.setError("Please enter Contract End Date");
             edtJoinging.requestFocus();
         } else if (basic_salary.isEmpty()) {
-            edtBasic.setError("Please enter Password");
+            edtBasic.setError("Please enter Basic Salary");
             edtBasic.requestFocus();
         } else if (expenses.isEmpty()) {
-            edtexpense.setError("Please enter Password");
+            edtexpense.setError("Please enter Allowances");
             edtexpense.requestFocus();
         } /*else if (employeeList.size() < 0) {
             Toast.makeText(this, "Please Select Sub Employee", Toast.LENGTH_SHORT).show();
@@ -350,7 +363,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
             Call<AddEmployee> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddEmployee(manager_id, user_name, password, position,
                     phone, basic_salary, expenses, String.valueOf(over_time), unique_id, end_date, passport_no,
-                    passport_end_date, joining_date, employeeList, "nullimage", "nulltoken",
+                    passport_end_date, joining_date,contract_end_date, employeeList, "nullimage", "nulltoken",
                     "nullfile", "nulljoin", "nullpass", "nullimage","false");
 
             call.enqueue(new Callback<AddEmployee>() {
@@ -400,6 +413,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     String passportnumber = response.body().getEmployeeDetail().get(0).getPassportNo();
                     String passportEndDate = response.body().getEmployeeDetail().get(0).getPassportEndDate();
                     String joining_date = response.body().getEmployeeDetail().get(0).getJoiningDate();
+                    String contract_end_date=response.body().getEmployeeDetail().get(0).getContract_end_date();
                     String basic_salary = response.body().getEmployeeDetail().get(0).getBasicSalary();
                     String expenses = response.body().getEmployeeDetail().get(0).getExpenses();
                     if (response.body().getEmployeeDetail().get(0).getOverTime().equals("1")) {
@@ -419,9 +433,12 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     edtPassportnumber.setText(passportEndDate);
                     edtPassportnumber.setText(passportnumber);
                     edtJoinging.setText(joining_date);
+                    contract_end.setText(contract_end_date);
                     edtBasic.setText(basic_salary);
                     edtexpense.setText(expenses);
                     edtPassortEndDate.setText(passportEndDate);
+
+                    edtUsername.setEnabled(false);
 
                     if (response.body().getEmployeeDetail().get(0).getSubEmployee().size() > 0) {
                         for (int i = 0; i < response.body().getEmployeeDetail().get(0).getSubEmployee().size(); i++) {
@@ -1139,6 +1156,8 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             edtPassortEndDate.setText(sdf.format(selectedDate));
         } else if (datecheck == 3) {
             edtJoinging.setText(sdf.format(selectedDate));
+        } else if(datecheck == 4){
+            contract_end.setText(sdf.format(selectedDate));
         }
     }
 

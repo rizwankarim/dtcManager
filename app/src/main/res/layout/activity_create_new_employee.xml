@@ -47,6 +47,16 @@
                 android:textColor="@color/colorAppMain"
                 android:textSize="20sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/txtCheck"
+                android:fontFamily="@font/helveticaneue_light"
+                android:text="Create employee by a unique username"
+                android:textSize="16sp" />
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -247,7 +257,7 @@
                         android:layout_weight="7"
                         android:background="@color/white"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:hint="Phone"
+                        android:hint="Contact Details"
                         android:inputType="phone"
                         android:textColor="@color/colorAppMain"
                         android:textSize="16sp" />
@@ -294,7 +304,7 @@
                             android:layout_gravity="center"
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/helveticaneue_light"
-                            android:hint="ID"
+                            android:hint="Iqama or DTC Id"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textColor="@color/colorAppMain"
@@ -324,7 +334,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:text="Attach file"
+                        android:text="Iqama Image"
                         android:textSize="11sp" />
 
                     <ImageButton
@@ -416,7 +426,7 @@
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/helveticaneue_light"
                             android:hint="Passport No."
-                            android:inputType="number"
+                            android:inputType="textWebPassword"
                             android:textAlignment="center"
                             android:textColor="@color/colorAppMain"
                             android:textSize="16sp" />
@@ -444,7 +454,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:text="Attach file"
+                        android:text="Passport Image"
                         android:textSize="11sp" />
 
                     <ImageButton
@@ -542,11 +552,11 @@
                             android:textColor="@color/colorAppMain"
                             android:textSize="16sp" />
 
-
                     </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>
+
 
                 <View
                     android:layout_width="0dp"
@@ -565,7 +575,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:text="Attach file"
+                        android:text="Contract File"
                         android:textSize="11sp" />
 
                     <ImageButton
@@ -586,10 +596,60 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5" />
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="3.5"
+                    android:background="@drawable/white_rounded_rectangle"
+                    app:cardCornerRadius="20dp"
+                    tools:ignore="NestedWeights">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+
+                        <EditText
+                            android:id="@+id/edtContractDate"
+                            android:layout_width="wrap_content"
+                            android:focusable="false"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/helveticaneue_light"
+                            android:hint="Contract End"
+                            android:clickable="false"
+                            android:inputType="datetime"
+                            android:textColor="@color/colorAppMain"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:weightSum="10">
+
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -612,6 +672,14 @@
 
 
                 </LinearLayout>
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -647,7 +715,7 @@
                             android:layout_gravity="center_horizontal"
                             android:background="@color/white"
                             android:fontFamily="@font/helveticaneue_light"
-                            android:hint="Basic Sallary"
+                            android:hint="Basic Salary"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textColor="@color/colorAppMain"
@@ -658,7 +726,6 @@
 
 
                 </androidx.cardview.widget.CardView>
-
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
@@ -685,7 +752,7 @@
                             android:layout_gravity="center_horizontal"
                             android:background="@color/white"
                             android:fontFamily="@font/helveticaneue_light"
-                            android:hint="Expenses"
+                            android:hint="Allowances"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textColor="@color/colorAppMain"

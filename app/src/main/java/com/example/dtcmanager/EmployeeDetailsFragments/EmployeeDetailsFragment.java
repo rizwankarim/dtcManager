@@ -43,7 +43,7 @@ import retrofit2.Response;
 public class EmployeeDetailsFragment extends Fragment {
 
     public TextView txtUserName, txtPassword, txtposition, txtPhone, txtUiqueId, txtUniqueID, txtPassportNumber, txtPassportEndDate, txtJoiningDate, txtBasicSalary,
-            txtExpenses, txtOverTime;
+            txtExpenses, txtOverTime, txtContractDate;
     RecyclerView SubemployeeRecylerView;
     List<SubEmployee> subEmployeeList = new ArrayList<>();
 
@@ -73,6 +73,7 @@ public class EmployeeDetailsFragment extends Fragment {
         txtPassportNumber = view.findViewById(R.id.txtPassportNumber);
         txtPassportEndDate = view.findViewById(R.id.txtPassportEndDate);
         txtJoiningDate = view.findViewById(R.id.txtJoiningDate);
+        txtContractDate=view.findViewById(R.id.txtContractDate);
         txtBasicSalary = view.findViewById(R.id.txtBasicSalary);
         txtExpenses = view.findViewById(R.id.txtExpenses);
         txtOverTime = view.findViewById(R.id.txtOverTime);
@@ -110,6 +111,7 @@ public class EmployeeDetailsFragment extends Fragment {
                     txtPassportNumber.setText(response.body().getEmployeeDetail().get(0).getPassportNo());
                     txtPassportEndDate.setText(response.body().getEmployeeDetail().get(0).getPassportEndDate());
                     txtJoiningDate.setText(response.body().getEmployeeDetail().get(0).getJoiningDate());
+                    txtContractDate.setText(response.body().getEmployeeDetail().get(0).getContract_end_date());
                     txtBasicSalary.setText(response.body().getEmployeeDetail().get(0).getBasicSalary());
                     txtExpenses.setText(response.body().getEmployeeDetail().get(0).getExpenses());
                     String File1 = response.body().getEmployeeDetail().get(0).getFile();

@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:id="@+id/btnlogout"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_group_127" />
+                android:src="@drawable/logout_icon" />
 
             <View
                 android:layout_width="0dp"

@@ -112,6 +112,7 @@ public interface APIinterface {
             @Query("passport_no") String passport_no,
             @Query("passport_end_date") String passport_end_date,
             @Query("joining_date") String joining_date,
+            @Query("contract_end_date") String contract_end,
             @Field("sub_emp_id[]") List<String> sub_emp_id,
             @Query("profile_image") String profile_image,
             @Query("device_token") String device_token,

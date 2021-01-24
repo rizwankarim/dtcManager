@@ -155,8 +155,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-                dialog.setMessage("Are you sure?");
-                dialog.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                dialog.setMessage("Do you really want to logout?");
+                dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Paper.book().destroy();
@@ -165,6 +165,14 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+
+                dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
                 dialog.show();
             }
         });

@@ -49,6 +49,11 @@ public class EmployeeDetail_ {
     @SerializedName("Joining_Date")
     @Expose
     private String joiningDate;
+
+    @SerializedName("Contract_End_Date")
+    @Expose
+    private String contract_end_date;
+
     @SerializedName("Joining_File")
     @Expose
     private String joiningFile;
@@ -71,6 +76,14 @@ public class EmployeeDetail_ {
     @SerializedName("Sub_Employee")
     @Expose
     private List<SubEmployee> subEmployee = null;
+
+    public String getContract_end_date() {
+        return contract_end_date;
+    }
+
+    public void setContract_end_date(String contract_end_date) {
+        this.contract_end_date = contract_end_date;
+    }
 
     public String getL_status() {
         return l_status;

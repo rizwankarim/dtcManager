@@ -407,6 +407,47 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
+                            android:text="Contract End Date:"
+                            android:textColor="@color/colorlightBlack"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.3"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            android:id="@+id/txtContractDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+
+                            android:text=" "
+                            android:textColor="@color/colorlightBlack"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
                             android:text="Basic Salary:"
                             android:textColor="@color/colorlightBlack"
                             android:textSize="16sp" />

@@ -69,11 +69,21 @@ public class ArrangeReportsActivity extends AppCompatActivity implements DatePic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arrange_reports);
         Paper.init(this);
+        initViews();
+        Calendar currentDate = Calendar.getInstance();
+        date = currentDate.getTime();
+        SimpleDateFormat sdp = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        String current_date = sdp.format(date);
+        edtDate.setText(current_date);
+
+        clickAble();
+    }
+
+    public void initViews(){
         noData =  findViewById(R.id.noData);
         edtDate =  findViewById(R.id.edtDate);
         edtDate1 =  findViewById(R.id.edtDate1);
         edtDate2 =  findViewById(R.id.edtDate2);
-
         rvReports =  findViewById(R.id.rvReports);
         rvReportsFilter =  findViewById(R.id.rvReportsFilter);
 //        SelctSechDateModule =  findViewById(R.id.SelctSechDateModule);
@@ -88,37 +98,6 @@ public class ArrangeReportsActivity extends AppCompatActivity implements DatePic
         manager_id = Paper.book().read("user_id");
         setSupportActionBar(ChildProfiletoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Calendar currentDate = Calendar.getInstance();
-        date = currentDate.getTime();
-        String currentDate1 = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
-//        edtDate.setText(currentDate1);
-        clickAble();
-
-//        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder dialog = new AlertDialog.Builder(ArrangeReportsActivity.this);
-//                dialog.setMessage("What do you Want to Do?");
-//                dialog.setPositiveButton("Daily", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        daily.setVisibility(View.VISIBLE);
-//                        DateRange.setVisibility(View.GONE);
-//                    }
-//                });
-//
-//
-//                dialog.setNeutralButton("Date Range", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        daily.setVisibility(View.GONE);
-//                        DateRange.setVisibility(View.VISIBLE);
-//                    }
-//                });
-//                dialog.show();
-//            }
-//
-//        });
     }
 
     private void clickAble() {
