@@ -12,8 +12,6 @@
         android:orientation="vertical">
 
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/ChildProfiletoolbar"
         android:layout_width="match_parent"
@@ -63,6 +61,14 @@
                     android:textColor="@color/colorAppMain"
                     android:textSize="20sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Vehicle Number"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -84,6 +90,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5" />
+
+
 
                         <EditText
                             android:id="@+id/edtVechilenumber"
@@ -109,6 +117,70 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Vehicle Name"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/white_rounded_rectangle"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5" />
+
+
+
+                        <EditText
+                            android:id="@+id/edtVehiclename"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="9"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/helveticaneue_light"
+                            android:hint="Vehicle Name"
+                            android:inputType="text"
+                            android:textDirection="ltr"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Vehicle Model"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -154,6 +226,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Kilometers"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -199,6 +279,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Insurance Date Start"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -245,6 +333,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Insurance Date End"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -291,6 +387,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Licence Date End"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -336,6 +440,15 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/helveticaneue_light"
+                    android:text="Examination Date"
+                    android:textColor="@color/colorAppMain"
+                    android:textSize="15sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -389,7 +502,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:text="Choose employee (Single)"
+                        android:text="Issued to: (Single)"
                         android:textSize="12sp" />
 
                     <Spinner
@@ -415,7 +528,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:text="Choose Locations (Multiple)"
+                        android:text="Assigned Location (Multiple)"
                         android:textSize="12sp" />
 
 

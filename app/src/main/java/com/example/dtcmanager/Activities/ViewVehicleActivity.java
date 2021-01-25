@@ -41,7 +41,7 @@ public class ViewVehicleActivity extends AppCompatActivity {
     String id;
     AlertDialog loadingDialog;
     Toolbar ChildProfiletoolbar;
-    TextView txtVehicleNumber, txtModel, txtKilometer, txtInsuranceDateStart, txtInsuranceEndStart, txtLicenseDate, txtExamineDate, txtEmployee;
+    TextView txtVehicleNumber, txtModel, txtKilometer, txtInsuranceDateStart, txtInsuranceEndStart, txtLicenseDate, txtExamineDate, txtEmployee,txtVehicleName;
     ImageView VehicleImage;
     RecyclerView VehicleRecylerView;
     ProgressBar progressBar1;
@@ -64,6 +64,7 @@ public class ViewVehicleActivity extends AppCompatActivity {
         txtLicenseDate = findViewById(R.id.txtLicenseDate);
         txtExamineDate = findViewById(R.id.txtExamineDate);
         txtEmployee = findViewById(R.id.txtEmployee);
+        txtVehicleName= findViewById(R.id.txtVehicleName);
         VehicleImage = findViewById(R.id.VehicleImage);
         progressBar1 = findViewById(R.id.progressBar1);
         VehicleRecylerView = findViewById(R.id.VehicleRecylerView);
@@ -83,6 +84,7 @@ public class ViewVehicleActivity extends AppCompatActivity {
                     hideLoadingDialog();
                     locationList = response.body().getVehicleDetails().get(0).getLocation();
                     txtVehicleNumber.setText(response.body().getVehicleDetails().get(0).getVehicleNumber());
+                    txtVehicleName.setText(response.body().getVehicleDetails().get(0).getVehicleName());
                     txtModel.setText(response.body().getVehicleDetails().get(0).getModel());
                     txtKilometer.setText(response.body().getVehicleDetails().get(0).getKilometers());
                     txtInsuranceDateStart.setText(response.body().getVehicleDetails().get(0).getInsuranceDateStart());

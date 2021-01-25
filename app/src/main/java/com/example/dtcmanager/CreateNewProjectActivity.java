@@ -202,7 +202,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 permissions[1]) == PackageManager.PERMISSION_GRANTED) {
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*");
+            intent.setType("application/pdf");
             startActivityForResult(intent, requestCode);
 
         } else {

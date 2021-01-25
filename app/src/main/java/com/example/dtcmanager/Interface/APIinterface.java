@@ -137,6 +137,7 @@ public interface APIinterface {
     Call<AddVechile> AddVechile(
             @Query("manager_id") String manager_id,
             @Query("vehicle_number") String vehicle_number,
+            @Query("vehicle_name") String vehicle_name,
             @Query("model") String model,
             @Query("kilometers") String kilometers,
             @Query("insurance_date_start") String insurance_date_start,
@@ -275,6 +276,7 @@ public interface APIinterface {
             @Query("passport_no") String passport_no,
             @Query("passport_end_date") String passport_end_date,
             @Query("joining_date") String joining_date,
+            @Query("contract_end_date") String contract_end_date,
             @Field("sub_emp_id[]") List<String> sub_emp_id
     );
 
@@ -284,6 +286,7 @@ public interface APIinterface {
     Call<EditVehicle> EditVehcile(
             @Query("id") String id,
             @Query("vehicle_number") String vehicle_number,
+            @Query("vehicle_name") String vehicle_name,
             @Query("model") String model,
             @Query("kilometers") String kilometers,
             @Query("insurance_date_start") String insurance_date_start,

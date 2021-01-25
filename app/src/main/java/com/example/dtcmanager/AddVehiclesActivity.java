@@ -83,7 +83,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
     Uri imageUri;
     ProgressBar progressBar2;
     ImageView imgParent;
-    EditText edtExaminDate, edtLicenseEndDate, edtInsuranceEndDate, edtInsuranceStartDate, edtKilometer, edtModel, edtVechilenumber;
+    EditText edtExaminDate, edtLicenseEndDate, edtInsuranceEndDate, edtInsuranceStartDate, edtKilometer, edtModel, edtVechilenumber,edtVehicleName;
     Toolbar ChildProfiletoolbar;
     Calendar now;
     private DatePickerDialog dpd;
@@ -172,6 +172,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
         edtLicenseEndDate = findViewById(R.id.edtLicenseEndDate);
         edtInsuranceEndDate = findViewById(R.id.edtInsuranceEndDate);
         edtInsuranceStartDate = findViewById(R.id.edtInsuranceStartDate);
+        edtVehicleName= findViewById(R.id.edtVehiclename);
         edtKilometer = findViewById(R.id.edtKilometer);
         edtModel = findViewById(R.id.edtModel);
         edtVechilenumber = findViewById(R.id.edtVechilenumber);
@@ -232,6 +233,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
                     hideLoadingDialog();
 
                     edtVechilenumber.setText(response.body().getVehicleDetails().get(0).getVehicleNumber());
+                    edtVehicleName.setText(response.body().getVehicleDetails().get(0).getVehicleName());
                     edtModel.setText(response.body().getVehicleDetails().get(0).getModel());
                     edtKilometer.setText(response.body().getVehicleDetails().get(0).getKilometers());
                     edtInsuranceStartDate.setText(response.body().getVehicleDetails().get(0).getInsuranceDateStart());
@@ -299,6 +301,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
         String license_date_end = edtLicenseEndDate.getText().toString();
         String examination_date = edtExaminDate.getText().toString();
         String employee_id = employeeId;
+        String vehicle_name= edtVehicleName.getText().toString();
 
         if (vehicle_number.isEmpty()) {
             edtVechilenumber.setError("Please Enter Vehicle Number");
@@ -324,7 +327,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
             edtExaminDate.requestFocus();
         } else {
             showLoadingDialog();
-            Call<AddVechile> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddVechile(manager_id, vehicle_number, model, kilometers, insurance_date_start,
+            Call<AddVechile> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddVechile(manager_id, vehicle_number,vehicle_name, model, kilometers, insurance_date_start,
                     insurance_date_end, license_date_end, examination_date, employee_id,"nullimage", (ArrayList<String>) locationIdList);
 
             call.enqueue(new Callback<AddVechile>() {
@@ -355,6 +358,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
     private void EditVehicle(String id) {
         String vehicle_number = edtVechilenumber.getText().toString();
         String model = edtModel.getText().toString();
+        String vehicle_name= edtVehicleName.getText().toString();
         String kilometers = edtKilometer.getText().toString();
         String insurance_date_start = edtInsuranceStartDate.getText().toString();
         String insurance_date_end = edtInsuranceEndDate.getText().toString();
@@ -386,7 +390,7 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
         } else {
             showLoadingDialog();
 
-            Call<EditVehicle> call = RetrofitClientClass.getInstance().getInterfaceInstance().EditVehcile(String.valueOf(id), vehicle_number, model, kilometers, insurance_date_start, insurance_date_end,
+            Call<EditVehicle> call = RetrofitClientClass.getInstance().getInterfaceInstance().EditVehcile(String.valueOf(id), vehicle_number,vehicle_name, model, kilometers, insurance_date_start, insurance_date_end,
                     license_date_end, examination_date, employee_id, (ArrayList<String>) locationIdList);
             call.enqueue(new Callback<EditVehicle>() {
                 @Override
@@ -877,11 +881,8 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
 //        dpd.setMinDate(now);
         if (check == 3) {
             dpd.setMinDate(now);
-
         } else if (check == 4) {
             dpd.setMinDate(now);
-        } else if (check == 5) {
-            dpd.setMaxDate(now);
         }
         dpd.setThemeDark(true);
         dpd.setVersion(DatePickerDialog.Version.VERSION_1);
@@ -914,7 +915,6 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
 
         if (check == 2) {
             edtInsuranceStartDate.setText(sdf.format(selectedDate));
-
         } else if (check == 3) {
             edtInsuranceEndDate.setText(sdf.format(selectedDate));
         } else if (check == 4) {

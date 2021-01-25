@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void updateLoginStatus(String manager_id, String imei_Number){
-        Call<ManagerId> call = RetrofitClientClass.getInstance().getInterfaceInstance().updateloginstatus(manager_id,imei_Number);
+        Call<ManagerId> call = RetrofitClientClass.getInstance().getInterfaceInstance().updateloginstatus(manager_id,"false");
         call.enqueue(new Callback<ManagerId>() {
             @Override
             public void onResponse(Call<ManagerId> call, Response<ManagerId> response) {

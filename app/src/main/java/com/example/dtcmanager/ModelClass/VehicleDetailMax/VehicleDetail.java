@@ -16,6 +16,12 @@ public class VehicleDetail {
     @SerializedName("vehicle_number")
     @Expose
     private String vehicleNumber;
+    @SerializedName("vehicle_name")
+    @Expose
+    private String vehicleName;
+
+
+
     @SerializedName("model")
     @Expose
     private String model;
@@ -58,6 +64,13 @@ public class VehicleDetail {
 
     public void setManagerId(String managerId) {
         this.managerId = managerId;
+    }
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
+    public void setVehicleName(String vehicleName) {
+        this.vehicleName = vehicleName;
     }
 
     public String getVehicleNumber() {

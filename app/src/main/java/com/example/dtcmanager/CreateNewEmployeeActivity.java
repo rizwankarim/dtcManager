@@ -490,6 +490,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
         String passport_no = edtPassportnumber.getText().toString();
         String passport_end_date = edtPassortEndDate.getText().toString();
         String joining_date = edtJoinging.getText().toString();
+        String contract_end_date= contract_end.getText().toString();
         String basic_salary = edtBasic.getText().toString();
         String expenses = edtexpense.getText().toString();
 
@@ -546,7 +547,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 //            progressBar1.setVisibility(View.VISIBLE);
             showLoadingDialog();
             Call<EditEmployee> call = RetrofitClientClass.getInstance().getInterfaceInstance().Editemployee(id, user_name, password, position,
-                    phone, basic_salary, expenses, "1", unique_id, end_date, passport_no, passport_end_date, joining_date, employeeList);
+                    phone, basic_salary, expenses, "1", unique_id, end_date, passport_no, passport_end_date, joining_date,contract_end_date, employeeList);
             call.enqueue(new Callback<EditEmployee>() {
                 @Override
                 public void onResponse(Call<EditEmployee> call, Response<EditEmployee> response) {
