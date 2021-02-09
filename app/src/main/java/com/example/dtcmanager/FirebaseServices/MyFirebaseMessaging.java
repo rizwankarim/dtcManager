@@ -2,7 +2,9 @@ package com.example.dtcmanager.FirebaseServices;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.Ringtone;
@@ -14,6 +16,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.dtcmanager.HomeActivity;
 import com.example.dtcmanager.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -77,7 +80,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new
                 NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID);
-
+        Intent openIntent = new Intent(getApplicationContext(), HomeActivity.class);
+        PendingIntent myIntent= PendingIntent.getActivity(this,0,openIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setAutoCancel(true)
                 .setSound(uri)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
@@ -86,6 +90,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.logo_high)
                 .setContentTitle(title)
                 .setContentText(body)
+                .setContentIntent(myIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setStyle(new NotificationCompat.BigTextStyle()

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -58,7 +59,10 @@ import com.example.dtcmanager.ModelClass.UploadPassport.UploadPassport;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,6 +94,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
     Button create_employee_btn;
     int check, requestCode, code, datecheck;
     String originCheck, id;
+    String encodePDF;
     String manager_id;
     Uri imageUri, imageUri1, imageUri2, imageUri3;
     Calendar now;
@@ -374,7 +379,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 //                        hideLoadingDialog();
                         int id = response.body().getAddEmployeeId();
                         String emp_id = String.valueOf(id);
-
                         UPloadId(emp_id);
                         //Toast.makeText(CreateNewEmployeeActivity.this, "Employee Add", Toast.LENGTH_SHORT).show();
 
@@ -592,9 +596,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
         MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
 //        progressBar1.setVisibility(View.VISIBLE);
-
-        showLoadingDialog();
-
         Call<UploadID> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadId(emp_id, files);
         call.enqueue(new Callback<UploadID>() {
             @Override
@@ -605,7 +606,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     if (originCheck.equals("AddEmployee")) {
                         UploadPassport(emp_id);
                     }
-
 
                 } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
@@ -634,7 +634,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
         MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
 //        progressBar1.setVisibility(View.VISIBLE);
-        showLoadingDialog();
         Call<UploadPassport> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadPassport(emp_id, files);
         call.enqueue(new Callback<UploadPassport>() {
             @Override
@@ -665,39 +664,42 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
     }
 
     private void UploadJoiningfile(String emp_id) {
-        File file = new File(fileUtils.getRealPath(this, imageUri3));
 
-        RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri3)), file);
-
-        MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
-//        progressBar1.setVisibility(View.VISIBLE);
-//        showLoadingDialog();
-        Call<UploadJoingFile> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadJoiningfile(emp_id, files);
-        call.enqueue(new Callback<UploadJoingFile>() {
-            @Override
-            public void onResponse(Call<UploadJoingFile> call, Response<UploadJoingFile> response) {
-                if (response.code() == 200) {
-                    //progressBar1.setVisibility(View.GONE);
-                    if (originCheck.equals("AddEmployee")) {
-                        //hideLoadingDialog();
-                        UploadJoiningImage(emp_id);
-                    }
-                } else if (response.code() == 404) {
+        try{
+            File file = new File(fileUtils.getRealPath(this, imageUri3));
+            String filename= file.getName();
+            Call<UploadJoingFile> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadJoiningfile(emp_id, filename,encodePDF);
+            call.enqueue(new Callback<UploadJoingFile>() {
+                @Override
+                public void onResponse(Call<UploadJoingFile> call, Response<UploadJoingFile> response) {
+                    if (response.code() == 200) {
+                        //progressBar1.setVisibility(View.GONE);
+                        if (originCheck.equals("AddEmployee")) {
+                            //hideLoadingDialog();
+                            UploadJoiningImage(emp_id);
+                        }
+                    } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
-                    hideLoadingDialog();
-                    Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong ", Toast.LENGTH_SHORT).show();
-                    finish();
+                        hideLoadingDialog();
+                        Toast.makeText(CreateNewEmployeeActivity.this, "Something Wrong ", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UploadJoingFile> call, Throwable t) {
+                @Override
+                public void onFailure(Call<UploadJoingFile> call, Throwable t) {
 //                progressBar1.setVisibility(View.GONE);
-                hideLoadingDialog();
-                Toast.makeText(CreateNewEmployeeActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    hideLoadingDialog();
+                    Toast.makeText(CreateNewEmployeeActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                }
+            });
+        }
+        catch(Exception e){
+            hideLoadingDialog();
+            Toast.makeText(this, "File should be selected from phone directory", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void UploadJoiningImage(String emp_id) {
@@ -707,7 +709,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
         MultipartBody.Part picture = MultipartBody.Part.createFormData("picture", file.getName(), image);
 //        progressBar1.setVisibility(View.VISIBLE);
-        showLoadingDialog();
         Call<UploadJoingImages> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadJoingImage(emp_id, picture);
         call.enqueue(new Callback<UploadJoingImages>() {
             @Override
@@ -719,8 +720,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                         Toast.makeText(CreateNewEmployeeActivity.this, "Employee Added Successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-
-
                 } else if (response.code() == 404) {
 //                    progressBar1.setVisibility(View.GONE);
                     hideLoadingDialog();
@@ -796,8 +795,8 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 }
             } else if (check == 3) {
                 if (data != null) {
-                    String FilePath = data.getData().getPath();
                     imageUri3 = data.getData();
+                    encodePDF= getStringPdf(imageUri3);
                     txtContractAttach.setText("File Attached");
                     txtContractAttach.setTextColor(Color.parseColor("#68F965"));
                 } else {
@@ -823,6 +822,36 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 
         }
 
+    }
+
+    public String getStringPdf (Uri filepath){
+        InputStream inputStream = null;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            inputStream =  getContentResolver().openInputStream(filepath);
+
+            byte[] buffer = new byte[1024];
+            byteArrayOutputStream = new ByteArrayOutputStream();
+
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        byte[] pdfByteArray = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(pdfByteArray, Base64.DEFAULT);
     }
 
 

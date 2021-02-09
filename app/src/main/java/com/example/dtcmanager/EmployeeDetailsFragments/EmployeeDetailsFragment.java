@@ -163,10 +163,9 @@ public class EmployeeDetailsFragment extends Fragment {
 
                             }
                             else {
-
-                                Intent intent = new Intent(getContext(), ViewerActivity.class);
-                                intent.putExtra("orign", Joining_File);
-                                startActivity(intent);
+                                Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Joining_File));
+                                browsefile.putExtra("orign", Joining_File);
+                                startActivity(browsefile);
                             }
                         }
                     });
@@ -180,7 +179,6 @@ public class EmployeeDetailsFragment extends Fragment {
 
                             }
                             else {
-
 
                                 Intent intent = new Intent(getContext(), ViewerActivity.class);
                                 intent.putExtra("orign", Image);
@@ -267,6 +265,17 @@ public class EmployeeDetailsFragment extends Fragment {
             if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 makePhoneCall(txtPhone.getText().toString());
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try{
+            EmployeeDetail(Comon.employeeId);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

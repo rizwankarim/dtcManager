@@ -198,17 +198,21 @@ public interface APIinterface {
             // @Query("child_id") String child_id
     );
 
-    @Multipart
-    @POST("Upload_project_schedule_file.php")
+    @FormUrlEncoded
+    @POST("upload_schedule_file_new.php")
     Call<Uploadprojectschedul> UploadSchedual(
             @Query("id") String id,
-            @Part MultipartBody.Part files
+            @Query("file_name") String file_name,
+            //@Part MultipartBody.Part files
+            @Field("encoded_pdf") String encoded_pdf
     );
-    @Multipart
-    @POST("Upload_project_contract_file.php")
+
+    @FormUrlEncoded
+    @POST("upload_contract_file_new.php")
     Call<UploadprojectContract> UploadContract(
             @Query("id") String id,
-            @Part MultipartBody.Part files
+            @Query("file_name") String file_name,
+            @Field ("encoded_pdf") String encoded_pdf
     );
 
     @FormUrlEncoded
@@ -247,11 +251,12 @@ public interface APIinterface {
             @Query("emp_id") String emp_id,
             @Part MultipartBody.Part files
     );
-    @Multipart
-    @POST("Upload_joining_file.php")
+    @FormUrlEncoded
+    @POST("upload_joining_file_new.php")
     Call<UploadJoingFile> UploadJoiningfile(
             @Query("emp_id") String emp_id,
-            @Part MultipartBody.Part files
+            @Query("file_name") String file_name,
+            @Field("encoded_pdf") String encoded_pdf
     );
     @Multipart
     @POST("Upload_joining_image.php")

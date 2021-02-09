@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
     RecyclerView recyclerViewEmployeesAttendence;
     String manager_id;
     AlertDialog loadingDialog;
-
+    ImageButton refresh;
     TextView textnodata;
 
     List<EmployeeAttendenceReport> employeeAttendenceReportList = new ArrayList<>();
@@ -96,6 +97,7 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
         date = currentDate.getTime();
         edtDate =  view.findViewById(R.id.edtDate);
         edtDate1 =  view.findViewById(R.id.edtDate1);
+        refresh= view.findViewById(R.id.refresh);
         edtDate2 =  view.findViewById(R.id.edtDate2);
         DateRange =  view.findViewById(R.id.DateRange);
         daily =  view.findViewById(R.id.daily);
@@ -128,6 +130,20 @@ public class MovementsFragment extends Fragment  implements DatePickerDialog.OnD
                 check = 3;
                 DatePicker();
 
+            }
+        });
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkConnection())
+                {
+                    //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+                    getData();
+                }else
+                {
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -44,7 +44,7 @@ public  class EmployeeReportsAdapter extends RecyclerView.Adapter<EmployeeReport
         holder.txtProblems.setText(dailyReport.getProblems());
         holder.txtDateTime.setText(dailyReport.getDateTime());
         if(dailyReport.getReportImage().size() >0){
-        String image = "http://dtc.anstm.com/dtcAdmin/api/Employee/Report_Image/"+dailyReport.getReportImage().get(0);
+        String image = "http://dtc.anstm.com/dtcAdmin/api/Employee/Report_Image/"+dailyReport.getReportImage().get(0).getImage();
        //String image ="http://test.proglabs.org/BabyRon/api/Babysitter/Babysitter_Profile_Image/" + babySitter.getProfileImage();
         if (dailyReport.getReportImage() != null) {
 //            Picasso.get().load("http://test.proglabs.org/DTC/api/Employee/Report_Image/".concat(dailyReport.getReportImage()))

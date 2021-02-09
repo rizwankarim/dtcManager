@@ -65,6 +65,7 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
     RecyclerView recyclerViewEmployees;
     ProgressBar progressBar1;
     String manager_id;
+    ImageButton refresh;
     AlertDialog loadingDialog;
     Date date;
     private DatePickerDialog dpd;
@@ -95,7 +96,7 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
 
         textnodata = view.findViewById(R.id.textnodata);
         edtDate = view.findViewById(R.id.edtDate);
-
+        refresh= view.findViewById(R.id.refresh);
         edtDate = view.findViewById(R.id.edtDate);
         edtDate1 = view.findViewById(R.id.edtDate1);
         edtDate2 = view.findViewById(R.id.edtDate2);
@@ -137,6 +138,19 @@ public class EmployeesFragment extends Fragment implements DatePickerDialog.OnDa
             }
         });
 
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkConnection())
+                {
+                    //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+                    getData();
+                }else
+                {
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 //        SelctSechDateModule.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ import retrofit2.Response;
 public class VacationsFragment extends Fragment {
 
     RecyclerView AllVacationRecylerView;
-
+    ImageButton refresh;
     AlertDialog loadingDialog;
     String manager_id;
     TextView noData;
@@ -75,9 +76,24 @@ public class VacationsFragment extends Fragment {
 
         AllVacationRecylerView = view.findViewById(R.id.AllVacationRecylerView);
         noData= view.findViewById(R.id.noData);
+        refresh= view.findViewById(R.id.refresh);
         AllVacationRecylerView.setHasFixedSize(false);
         AllVacationRecylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkConnection())
+                {
+                    //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+                    GetData();
+                }else
+                {
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 

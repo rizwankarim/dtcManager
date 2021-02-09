@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class NotificationsFragment extends Fragment {
 
     RecyclerView NotificationRecylerView;
     String manager_id;
+    ImageButton refresh;
     LinearLayout noData_layout;
     List<Notification> notificationList = new ArrayList<>();
     AlertDialog loadingDialog;
@@ -60,9 +63,24 @@ public class NotificationsFragment extends Fragment {
         Paper.init(requireContext());
         manager_id = Paper.book().read("user_id");
         noData_layout = view.findViewById(R.id.noData_layout);
+        refresh= view.findViewById(R.id.refresh);
         NotificationRecylerView = view.findViewById(R.id.NotificationRecylerView);
         NotificationRecylerView.setHasFixedSize(true);
         NotificationRecylerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkConnection())
+                {
+                    //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+                    getData(manager_id);
+                }else
+                {
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
     }

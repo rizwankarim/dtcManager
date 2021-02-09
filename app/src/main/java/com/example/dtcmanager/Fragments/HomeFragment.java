@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
     MultiSpinnerSearch employeeListSpinner;
     String manager_id, employee_id;
     Button create_employee_btn,btnArchive;
+    ImageButton refresh;
     Window window;
     Timer timer;
     List<AllEmployee> allEmployeeList = new ArrayList<>();
@@ -101,6 +102,7 @@ public class HomeFragment extends Fragment {
         employeeListSpinner = view.findViewById(R.id.employeeListSpinner);
         create_employee_btn = view.findViewById(R.id.create_employee_btn);
         noData= view.findViewById(R.id.noData);
+        refresh= view.findViewById(R.id.refresh);
         textNoti = view.findViewById(R.id.textNoti);
         btnlogout = view.findViewById(R.id.btnlogout);
 
@@ -108,11 +110,42 @@ public class HomeFragment extends Fragment {
         {
             //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
             AllEmploye();
+            noData.setVisibility(View.GONE);
+            employeeListSpinner.setVisibility(View.VISIBLE);
+            textNoti.setVisibility(View.VISIBLE);
+            create_employee_btn.setVisibility(View.VISIBLE);
         }else
         {
             Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+            noData.setVisibility(View.VISIBLE);
+            employeeListSpinner.setVisibility(View.GONE);
+            textNoti.setVisibility(View.GONE);
+            create_employee_btn.setVisibility(View.GONE);
         }
 
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkConnection())
+                {
+                    //Toast.makeText(getActivity(), "Connected to Internet", Toast.LENGTH_SHORT).show();
+                    AllEmploye();
+                    noData.setVisibility(View.GONE);
+                    employeeListSpinner.setVisibility(View.VISIBLE);
+                    textNoti.setVisibility(View.VISIBLE);
+                    create_employee_btn.setVisibility(View.VISIBLE);
+                }else
+                {
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+                    noData.setVisibility(View.VISIBLE);
+                    employeeListSpinner.setVisibility(View.GONE);
+                    textNoti.setVisibility(View.GONE);
+                    create_employee_btn.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
         layoutEmployeeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

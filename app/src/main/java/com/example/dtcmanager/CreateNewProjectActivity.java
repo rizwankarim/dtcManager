@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,7 +52,10 @@ import com.example.dtcmanager.ModelClass.UploadSchdualProject.Uploadprojectsched
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,6 +75,8 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
     Toolbar ChildProfiletoolbar;
     ImageButton back;
     Button saveProject;
+    String encodePDF;
+    String encodePDF2;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
     Uri imageUri, imageUri1;
@@ -203,6 +209,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("application/pdf");
+            intent= Intent.createChooser(intent,"Choose a PDF File");
             startActivityForResult(intent, requestCode);
 
         } else {
@@ -354,63 +361,56 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 }
             });
         }
-
-
     }
 
     private void Uploadschedule(String id) {
+        try{
+            File file = new File(fileUtils.getRealPath(this, imageUri));
+            String filename= file.getName();
+            Call<Uploadprojectschedul> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadSchedual(id, filename ,encodePDF);
+            call.enqueue(new Callback<Uploadprojectschedul>() {
+                @Override
+                public void onResponse(Call<Uploadprojectschedul> call, Response<Uploadprojectschedul> response) {
+                    if (response.code() == 200) {
+                        if ((originCheck.equals("AddProject"))) {
+                            UploadContract(id);
+                        }
+                        else if ((originCheck.equals("EditProject"))) {
+                            hideLoadingDialog();
+                            finish();
+                        }
 
-        File file = new File(fileUtils.getRealPath(this, imageUri));
-
-        RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri)), file);
-
-        MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
-//        showLoadingDialog();
-        Call<Uploadprojectschedul> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadSchedual(id, files);
-        call.enqueue(new Callback<Uploadprojectschedul>() {
-            @Override
-            public void onResponse(Call<Uploadprojectschedul> call, Response<Uploadprojectschedul> response) {
-                if (response.code() == 200) {
-                    if ((originCheck.equals("AddProject"))) {
-                        UploadContract(id);
-                    } else if ((originCheck.equals("EditProject"))) {
+                    } else if (response.code() == 404) {
                         hideLoadingDialog();
-//                    Toast.makeText(CreateNewProjectActivity.this, "Addedd1", Toast.LENGTH_SHORT).show();
-                        finish();
                     }
-//                    Toast.makeText(CreateNewProjectActivity.this, "Addedd1", Toast.LENGTH_SHORT).show();
-//                    UploadContract(id);
-
-
-                } else if (response.code() == 404) {
-                    hideLoadingDialog();
-//                    Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
-
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Uploadprojectschedul> call, Throwable t) {
-                progressBar1.setVisibility(View.GONE);
-//                Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(Call<Uploadprojectschedul> call, Throwable t) {
+                    progressBar1.setVisibility(View.GONE);
+                    Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception e){
+            hideLoadingDialog();
+            Toast.makeText(this, "Project is saved without uploaded files. Update files in project from your phone directory", Toast.LENGTH_SHORT).show();
+        }
 
-            }
-        });
+
 
     }
 
     private void UploadContract(String id) {
         try {
             File file = new File(fileUtils.getRealPath(this, imageUri1));
-            RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri1)), file);
-            MultipartBody.Part files = MultipartBody.Part.createFormData("files", file.getName(), image);
-            Call<UploadprojectContract> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadContract(id, files);
+            String filename2= file.getName();
+            Call<UploadprojectContract> call = RetrofitClientClass.getInstance().getInterfaceInstance().UploadContract(id, filename2,encodePDF2);
             call.enqueue(new Callback<UploadprojectContract>() {
                 @Override
                 public void onResponse(Call<UploadprojectContract> call, Response<UploadprojectContract> response) {
                     if (response.code() == 200) {
                         hideLoadingDialog();
-                        finish();
 
                         if ((originCheck.equals("AddProject"))) {
                             hideLoadingDialog();
@@ -419,8 +419,6 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
 
                         } else if ((originCheck.equals("EditProject"))) {
                             hideLoadingDialog();
-//                    Toast.makeText(CreateNewProjectActivity.this, "Addedd1", Toast.LENGTH_SHORT).show();
-                            finish();
                         }
 
                     } else if (response.code() == 404) {
@@ -437,10 +435,43 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
 
                 }
             });
-        } catch (Exception e) {
-            Log.d("ErrorImage", e.getMessage());
+        }
+        catch (Exception e) {
+            hideLoadingDialog();
+            //Log.d("ErrorImage", e.getMessage());
+            Toast.makeText(this, "Project is saved without uploaded files. Update files in project from your phone directory", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
+    }
+    public String getStringPdf (Uri filepath){
+        InputStream inputStream = null;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            inputStream =  getContentResolver().openInputStream(filepath);
+
+            byte[] buffer = new byte[1024];
+            byteArrayOutputStream = new ByteArrayOutputStream();
+
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        byte[] pdfByteArray = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(pdfByteArray, Base64.DEFAULT);
     }
 
 
@@ -449,7 +480,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && data!=null ) {
             if (checkfile == 1) {
                 String FilePath = data.getData().getPath();
                 imageUri = data.getData();
@@ -457,6 +488,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     String ext= getfileExtension(imageUri);
                     Log.d("URI",ext);
                     if(ext.equals("pdf")){
+                        encodePDF= getStringPdf(imageUri);
                         txtSchedulefile.setText("File Attached");
                         txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
                     }
@@ -492,6 +524,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     String ext1= getfileExtension(imageUri1);
                     Log.d("URI",ext1);
                     if(ext1.equals("pdf")){
+                        encodePDF2=getStringPdf(imageUri1);
                         txtContractfile.setText("File Attached");
                         txtContractfile.setTextColor(Color.parseColor("#68F965"));
                     }
@@ -580,8 +613,6 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                             UploadContract(id);
                         }
                         Toast.makeText(CreateNewProjectActivity.this, "Project Update Successfully", Toast.LENGTH_SHORT).show();
-
-                        finish();
                     } else if (response.code() == 400) {
                         hideLoadingDialog();
 //                        Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
