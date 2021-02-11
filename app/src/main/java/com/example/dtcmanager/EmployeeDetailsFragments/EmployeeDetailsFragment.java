@@ -121,7 +121,7 @@ public class EmployeeDetailsFragment extends Fragment {
 
 
                     String File = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/ID/" + response.body().getEmployeeDetail().get(0).getFile();
-                    String Joining_File = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/Joining_file/" + response.body().getEmployeeDetail().get(0).getJoiningFile();
+                    String Joining_File = response.body().getEmployeeDetail().get(0).getJoiningFile();
                     String Image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/Joining_Image/" + response.body().getEmployeeDetail().get(0).getImage();
                     String Passport_File = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/PassPort/" + response.body().getEmployeeDetail().get(0).getPassportFile();
 

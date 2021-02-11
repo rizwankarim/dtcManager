@@ -365,7 +365,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="8">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/txtSchedulefile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -373,9 +373,9 @@
                                 android:fontFamily="@font/helveticaneue_light"
                                 android:gravity="center"
                                 android:layoutDirection="rtl"
-
-                                android:text="Attach Time Schedule file"
-                                android:textDirection="rtl"
+                                android:background="@android:color/transparent"
+                                android:hint="Place Time Schedule file link"
+                                android:textDirection="ltr"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -423,19 +423,19 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="8">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/txtContractfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="8"
                                 android:fontFamily="@font/helveticaneue_light"
                                 android:gravity="center"
+                                android:background="@android:color/transparent"
                                 android:layoutDirection="rtl"
-                                android:text="Attach Time Contract file"
-                                android:textDirection="rtl"
+                                android:hint="Place Time Contract file link"
+                                android:textDirection="ltr"
                                 android:textSize="14sp" />
                         </LinearLayout>
-
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

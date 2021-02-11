@@ -99,7 +99,7 @@ public class ViewProjectDetail extends AppCompatActivity {
                     EmployeeRecylerViewl.setAdapter(projectEmployeeAdapter);
 
 
-                    String  Schedule_file = "http://dtc.anstm.com/dtcAdmin/api/Manager/Project/schedule/"+ response.body().getProjectDetail().get(0).getScheduleFile();
+                    String  Schedule_file = response.body().getProjectDetail().get(0).getScheduleFile();
 
                     txtschedule_file.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -111,7 +111,7 @@ public class ViewProjectDetail extends AppCompatActivity {
 
                         }
                     });
-                    String Contractfile = "http://dtc.anstm.com/dtcAdmin/api/Manager/Project/contract/" + response.body().getProjectDetail().get(0).getContractFile();
+                    String Contractfile = response.body().getProjectDetail().get(0).getContractFile();
 
                     Log.i("TAG", "onResponse: "+ Contractfile);
                     txtcontract_file.setOnClickListener(new View.OnClickListener() {

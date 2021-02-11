@@ -223,6 +223,8 @@ public interface APIinterface {
             @Query("value") String value,
             @Query("start_date") String start_date,
             @Query("dead_line") String dead_line,
+            @Query("schedule_file") String schedule_file,
+            @Query("contract_file") String contract_file,
             @Query("location_id") String ProjectLocationId,
             @Field("vehicle_id[]") List<String> vehicleIdList,
             @Field("employee_id[]") List<String> employeeidList
@@ -251,12 +253,11 @@ public interface APIinterface {
             @Query("emp_id") String emp_id,
             @Part MultipartBody.Part files
     );
-    @FormUrlEncoded
+
     @POST("upload_joining_file_new.php")
     Call<UploadJoingFile> UploadJoiningfile(
             @Query("emp_id") String emp_id,
-            @Query("file_name") String file_name,
-            @Field("encoded_pdf") String encoded_pdf
+            @Query("file_name") String file_name
     );
     @Multipart
     @POST("Upload_joining_image.php")

@@ -80,7 +80,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
     Uri imageUri, imageUri1;
-    TextView txtSchedulefile, txtContractfile;
+    EditText txtSchedulefile, txtContractfile;
     private static final int PICKFILE_RESULT_CODE = 1;
     private static final int PICKFILE_RESULT_CODEOne = 2;
     EditText edtProjectName, edtProjectValue, edtStartDate, edtDeadline;
@@ -165,23 +165,23 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
 
     private void Cliclble() {
 
-        txtSchedulefile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO Auto-generated method stub
-                checkfile = 1;
-                verifyPermissions(PICKFILE_RESULT_CODE);
-
-            }
-        });
-        txtContractfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkfile = 2;
-
-                verifyPermissions(PICKFILE_RESULT_CODEOne);
-            }
-        });
+//        txtSchedulefile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // TODO Auto-generated method stub
+//                checkfile = 1;
+//                verifyPermissions(PICKFILE_RESULT_CODE);
+//
+//            }
+//        });
+//        txtContractfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                checkfile = 2;
+//
+//                verifyPermissions(PICKFILE_RESULT_CODEOne);
+//            }
+//        });
         edtStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,6 +230,8 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     edtProjectValue.setText(response.body().getProjectDetail().get(0).getValue());
                     edtStartDate.setText(response.body().getProjectDetail().get(0).getStartDate());
                     edtDeadline.setText(response.body().getProjectDetail().get(0).getDeadLine());
+                    txtContractfile.setText(response.body().getProjectDetail().get(0).getContractFile());
+                    txtSchedulefile.setText(response.body().getProjectDetail().get(0).getScheduleFile());
 
                     if (response.body().getProjectDetail().get(0).getLocation().size() > 0) {
                         ProjectLocationId = response.body().getProjectDetail().get(0).getLocation().get(0).getId();
@@ -300,9 +302,17 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         String value = edtProjectValue.getText().toString();
         String start_date = edtStartDate.getText().toString();
         String dead_line = edtDeadline.getText().toString();
+        String schedulefilelink= txtSchedulefile.getText().toString();
+        String contractfilelink= txtContractfile.getText().toString();
         if (name.isEmpty()) {
             edtProjectName.setError("Please Enter Project Name");
             edtProjectName.requestFocus();
+        }else if (schedulefilelink.isEmpty()) {
+            txtSchedulefile.setError("Please Enter Project Name");
+            txtSchedulefile.requestFocus();
+        }else if (contractfilelink.isEmpty()) {
+            txtContractfile.setError("Please Enter Project Name");
+            txtContractfile.requestFocus();
         } else if (value.isEmpty()) {
             edtProjectValue.setError("Please enter Project Price");
             edtProjectValue.requestFocus();
@@ -322,9 +332,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         /*else if (imageUri == null) {
             Toast.makeText(this, "Please Select Schedule File", Toast.LENGTH_SHORT).show();
         }*/
-        else if (imageUri1 == null) {
-            Toast.makeText(this, "Please Select Contract File", Toast.LENGTH_SHORT).show();
-        } else {
+       else {
             showLoadingDialog();
 
             Log.i("TAG", "SaveProject: " + ProjectLocationId + "\n" + employee_id + "\n" + vehicleIdList);
@@ -332,7 +340,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             Call<AddProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProject(manager_id, name,
                     value, start_date,
                     dead_line, ProjectLocationId,
-                    "nullfile", "nullfile",
+                    schedulefilelink, contractfilelink,
                     vehicleIdList, employee_id);
             call.enqueue(new Callback<AddProject>() {
                 @Override
@@ -340,11 +348,9 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     if (response.code() == 200) {
                         int id1 = response.body().getAddProjectId();
                         String id = String.valueOf(id1);
-//                        Toast.makeText(CreateNewProjectActivity.this, "Addedd", Toast.LENGTH_SHORT).show();
-                        Uploadschedule(id);
-//                        UploadContract(id);
-//                        Toast.makeText(CreateNewProjectActivity.this, "AddEdd", Toast.LENGTH_SHORT).show();
-
+                          hideLoadingDialog();
+                          Toast.makeText(CreateNewProjectActivity.this, "Project Added Succesfully..", Toast.LENGTH_SHORT).show();
+                          finish();
 
                     } else if (response.code() == 404) {
                         hideLoadingDialog();
@@ -569,10 +575,19 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         String value = edtProjectValue.getText().toString();
         String start_date = edtStartDate.getText().toString();
         String dead_line = edtDeadline.getText().toString();
+        String schedulefilelink= txtSchedulefile.getText().toString();
+        String contractfilelink= txtContractfile.getText().toString();
+
         if (name.isEmpty()) {
             edtProjectName.setError("Please Enter Project Name");
             edtProjectName.requestFocus();
-        } else if (value.isEmpty()) {
+        }else if (schedulefilelink.isEmpty()) {
+            txtSchedulefile.setError("Please Enter Project Name");
+            txtSchedulefile.requestFocus();
+        }else if (contractfilelink.isEmpty()) {
+            txtContractfile.setError("Please Enter Project Name");
+            txtContractfile.requestFocus();
+        }else if (value.isEmpty()) {
             edtProjectValue.setError("Please enter Project Price");
             edtProjectValue.requestFocus();
         } else if (start_date.isEmpty()) {
@@ -601,18 +616,14 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             showLoadingDialog();
 
             Call<UpdateProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().UpdateProject(id, name, value,
-                    start_date, dead_line, ProjectLocationId, vehicleIdList, employee_id);
+                    start_date, dead_line,schedulefilelink,contractfilelink, ProjectLocationId, vehicleIdList, employee_id);
             call.enqueue(new Callback<UpdateProject>() {
                 @Override
                 public void onResponse(Call<UpdateProject> call, Response<UpdateProject> response) {
                     if (response.code() == 200) {
-//                        Toast.makeText(CreateNewProjectActivity.this, "Addedd", Toast.LENGTH_SHORT).show();
-                        if (imageUri != null) {
-                            Uploadschedule(id);
-                        } else if (imageUri1 != null) {
-                            UploadContract(id);
-                        }
-                        Toast.makeText(CreateNewProjectActivity.this, "Project Update Successfully", Toast.LENGTH_SHORT).show();
+                       hideLoadingDialog();
+                           Toast.makeText(CreateNewProjectActivity.this, "Project Updated Succesfully..", Toast.LENGTH_SHORT).show();
+                       finish();
                     } else if (response.code() == 400) {
                         hideLoadingDialog();
 //                        Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
