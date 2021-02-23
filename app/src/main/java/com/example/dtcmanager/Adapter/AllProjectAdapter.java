@@ -22,6 +22,7 @@ import com.example.dtcmanager.Interface.DeleteProject;
 import com.example.dtcmanager.ModelClass.GetAllEmployee.AllEmployee;
 import com.example.dtcmanager.ModelClass.GetAllProject.AllProject;
 import com.example.dtcmanager.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,22 @@ public class AllProjectAdapter extends RecyclerView.Adapter<AllProjectAdapter.Vi
         holder.txtProjectName.setText(allProject.getName());
         holder.txt_date_start.setText(allProject.getStartDate());
         holder.txt_date_end.setText(allProject.getDeadLine());
+        String Image =  allProject.getImage();
+
+        Picasso.get().load("http://dtc.anstm.com/dtcAdmin/api/Manager/Project_Image/" + Image)
+                .into(holder.projectImage, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        if (holder.progressBar1 != null) {
+                            holder.progressBar1.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
         holder.Project_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +125,7 @@ public class AllProjectAdapter extends RecyclerView.Adapter<AllProjectAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView navigation_img,btnMore;
+        ImageView projectImage;
         TextView txtProjectName,txt_date_start,txt_date_end;
         ProgressBar progressBar1;
         LinearLayout Project_layout;
@@ -121,6 +139,7 @@ public class AllProjectAdapter extends RecyclerView.Adapter<AllProjectAdapter.Vi
             progressBar1 = itemView.findViewById(R.id.progressBar1);
             btnMore =itemView.findViewById(R.id.btnMore);
             Project_layout = itemView.findViewById(R.id.Project_layout);
+            projectImage= itemView.findViewById(R.id.pro_image);
         }
     }
 }

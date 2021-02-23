@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.example.dtcmanager.ModelClass.GetProjectDetail.Location;
 import com.example.dtcmanager.ModelClass.GetProjectDetail.Vehicle;
 import com.example.dtcmanager.R;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ import retrofit2.Response;
 
 public class ViewProjectDetail extends AppCompatActivity {
     String id;
+    ImageView project_image;
     TextView txtProjectName,txtProjectValue,txtStartDate,txtEndDate,txtLocation;
              Button txtschedule_file,txtcontract_file;
     RecyclerView VehicleRecylerView,EmployeeRecylerViewl;
@@ -52,6 +55,7 @@ public class ViewProjectDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_project_detail);
         id = getIntent().getStringExtra("id");
+        project_image= findViewById(R.id.project_image);
         txtProjectName = findViewById(R.id.txtProjectName);
         txtProjectValue = findViewById(R.id.txtProjectValue);
         txtStartDate = findViewById(R.id.txtStartDate);
@@ -89,7 +93,7 @@ public class ViewProjectDetail extends AppCompatActivity {
 //
 //                    txtschedule_file.setText(response.body().getProjectDetail().get(0).getScheduleFile());
                     if(response.body().getProjectDetail().get(0).getLocation().size() > 0){
-                        txtLocation.setText(response.body().getProjectDetail().get(0).getLocation().get(0).getName());
+                        txtLocation.setText(response.body().getProjectDetail().get(0).getLocation().get(0).getTitle());
                     }
                     employeeList = response.body().getProjectDetail().get(0).getEmployee();
                     vehicleList = response.body().getProjectDetail().get(0).getVehicle();
@@ -100,14 +104,33 @@ public class ViewProjectDetail extends AppCompatActivity {
 
 
                     String  Schedule_file = response.body().getProjectDetail().get(0).getScheduleFile();
+                    String projectImage= "http://dtc.anstm.com/dtcAdmin/api/Manager/Project_Image/"+response.body().getProjectDetail().get(0).getImage();
 
                     txtschedule_file.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
-                            Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Schedule_file));
-                            browsefile.putExtra("orign", Schedule_file);
-                            startActivity(browsefile);
+                            try{
+                                Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Schedule_file));
+                                browsefile.putExtra("orign", Schedule_file);
+                                startActivity(browsefile);
+                            }
+                            catch (Exception e){
+                                Toast.makeText(ViewProjectDetail.this, "Something goes wrong", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    });
+
+                    Picasso.get().load(projectImage).into(project_image, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
 
                         }
                     });
@@ -118,9 +141,15 @@ public class ViewProjectDetail extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             //Intent intent = new Intent(ViewProjectDetail.this, ViewerActivity.class);
-                            Intent browsefile= new Intent(Intent.ACTION_VIEW,Uri.parse(Contractfile));
-                            browsefile.putExtra("orign", Contractfile);
-                            startActivity(browsefile);
+                            try{
+                                Intent browsefile= new Intent(Intent.ACTION_VIEW,Uri.parse(Contractfile));
+                                browsefile.putExtra("orign", Contractfile);
+                                startActivity(browsefile);
+                            }
+                            catch (Exception e){
+                                Toast.makeText(ViewProjectDetail.this, "Something goes wrong", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     });
 

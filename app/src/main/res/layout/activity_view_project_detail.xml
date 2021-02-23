@@ -1,357 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activities.ViewProjectDetail">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="10"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:orientation="horizontal">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/ChildProfiletoolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:theme="@style/ToolbarWhiteArrow">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Project details"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorlightBlack"
-                    android:textSize="18sp" />
-            </androidx.appcompat.widget.Toolbar>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9.2"
-            android:padding="10dp"
-            android:orientation="vertical">
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="72dp"
+                        android:gravity="center"
+                        android:text="Project Detail"
+                        android:textColor="@color/colorAppMain"
+                        android:textStyle="bold"
+                        android:textSize="22sp"
+                        android:layout_weight="1.5"
+                        />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:scaleType="fitCenter"
+                        android:layout_height="72dp"
+                        android:layout_gravity="right"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/logo_high"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:id="@+id/txtProjectName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="Project Name"
+                        android:textColor="@color/colorAppMain"
+                        android:textSize="22sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="2"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
+                        <ImageView
+                            android:layout_margin="10dp"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="120dp"
                             android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Project Name:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
+                            android:scaleType="fitXY"
+                            android:background="@color/colorAppMain"
+                            android:id="@+id/project_image"/>
 
                         <LinearLayout
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/txtProjectName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text=" "
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Project Value:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/txtProjectValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text=" "
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:text="Start Date:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical">
-
-
-                            <TextView
-                                android:id="@+id/txtStartDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-
-                                android:text=" "
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="End Date:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical">
-
-
-                            <TextView
-                                android:id="@+id/txtEndDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-
-                                android:text=" "
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Location:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical">
-
-
-                            <TextView
-                                android:id="@+id/txtLocation"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text=" "
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Schedule File:"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical">
-
-
-                            <Button
-                                android:id="@+id/txtschedule_file"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                android:text="View Schedule File "
-                                android:background="@drawable/view_button_drawable"
-                                android:textColor="@color/white"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Contract File::"
-                                android:textColor="@color/colorlightBlack"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3"
-                            android:gravity="center_vertical">
-                            <Button
-                                android:id="@+id/txtcontract_file"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="10dp"
-                                android:text="View Contract File "
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                android:background="@drawable/view_button_drawable"
-                                android:textColor="@color/white"
-                                android:textSize="12sp" />
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="16sp"
-                                android:text="Vehicles Name:"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:layout_weight="1.3">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_weight="0.5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="Location: "
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_weight="1.5"
+                                    android:id="@+id/txtLocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Location"
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_weight="0.5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="Deadline: "
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_weight="1.5"
+                                    android:id="@+id/txtEndDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Deadline"
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_weight="0.3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="Project Value: "
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_weight="1.7"
+                                    android:id="@+id/txtProjectValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text=" "
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.3"
+                                    android:textStyle="bold"
+                                    android:text="Start Date:"
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/txtStartDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1.7"
+                                    android:text=" "
+                                    android:textColor="@color/colorlightBlack"
+                                    android:textSize="16sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/txtidFile"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="center"
+                            android:text="View ID"
+                            android:visibility="gone"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/view_button_drawable"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text="Assigned Vehicles:"
+                                android:layout_weight="0.3"
+                                android:textColor="@color/colorlightBlack"
+                                android:textSize="16sp" />
+
                             <androidx.recyclerview.widget.RecyclerView
+                                android:layout_weight="1.7"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/VehicleRecylerView"/>
-
                         </LinearLayout>
 
                     </LinearLayout>
@@ -359,43 +271,60 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:orientation="vertical">
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:weightSum="2">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="16sp"
-                                android:text="Employee Name:"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.3">
+                                android:textStyle="bold"
+                                android:text="Assigned Employees:"
+                                android:layout_weight="0.3"
+                                android:textColor="@color/colorlightBlack"
+                                android:textSize="16sp" />
+
                             <androidx.recyclerview.widget.RecyclerView
+                                android:layout_weight="1.7"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/EmployeeRecylerView"/>
-
                         </LinearLayout>
 
                     </LinearLayout>
 
+                    <Button
+                        android:id="@+id/txtschedule_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="Project Schedule"
+                        android:background="@drawable/view_button_drawable"
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
 
-
+                    <Button
+                        android:id="@+id/txtcontract_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="Project Contract"
+                        android:background="@drawable/view_button_drawable"
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
-            </ScrollView>
+
+        </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
-
-
-
-    </LinearLayout>
-
-
-    </ScrollView>
-</RelativeLayout>
+</LinearLayout>

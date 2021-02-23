@@ -58,18 +58,18 @@ public class ViewVehicleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         txtVehicleNumber = findViewById(R.id.txtVehicleNumber);
         txtModel = findViewById(R.id.txtModel);
-        txtKilometer = findViewById(R.id.txtKilometer);
-        txtInsuranceDateStart = findViewById(R.id.txtInsuranceDateStart);
+        //txtKilometer = findViewById(R.id.txtKilometer);
+        //txtInsuranceDateStart = findViewById(R.id.txtInsuranceDateStart);
         txtInsuranceEndStart = findViewById(R.id.txtInsuranceEndStart);
         txtLicenseDate = findViewById(R.id.txtLicenseDate);
         txtExamineDate = findViewById(R.id.txtExamineDate);
-        txtEmployee = findViewById(R.id.txtEmployee);
+        //txtEmployee = findViewById(R.id.txtEmployee);
         txtVehicleName= findViewById(R.id.txtVehicleName);
-        VehicleImage = findViewById(R.id.VehicleImage);
+        VehicleImage = findViewById(R.id.vehicle_image);
         progressBar1 = findViewById(R.id.progressBar1);
-        VehicleRecylerView = findViewById(R.id.VehicleRecylerView);
-        VehicleRecylerView.setHasFixedSize(true);
-        VehicleRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        //VehicleRecylerView = findViewById(R.id.VehicleRecylerView);
+        //VehicleRecylerView.setHasFixedSize(true);
+        //VehicleRecylerView.setLayoutManager(new LinearLayoutManager(this));
         id = getIntent().getStringExtra("id");
         VehicleDetail(id);
     }
@@ -86,17 +86,17 @@ public class ViewVehicleActivity extends AppCompatActivity {
                     txtVehicleNumber.setText(response.body().getVehicleDetails().get(0).getVehicleNumber());
                     txtVehicleName.setText(response.body().getVehicleDetails().get(0).getVehicleName());
                     txtModel.setText(response.body().getVehicleDetails().get(0).getModel());
-                    txtKilometer.setText(response.body().getVehicleDetails().get(0).getKilometers());
-                    txtInsuranceDateStart.setText(response.body().getVehicleDetails().get(0).getInsuranceDateStart());
+                    //txtKilometer.setText(response.body().getVehicleDetails().get(0).getKilometers());
+                    //txtInsuranceDateStart.setText(response.body().getVehicleDetails().get(0).getInsuranceDateStart());
                     txtInsuranceEndStart.setText(response.body().getVehicleDetails().get(0).getInsuranceDateEnd());
                     txtLicenseDate.setText(response.body().getVehicleDetails().get(0).getLicenseDateEnd());
                     txtExamineDate.setText(response.body().getVehicleDetails().get(0).getExaminationDate());
 
                     if (response.body().getVehicleDetails().get(0).getEmployee().size() > 0) {
-                        txtEmployee.setText(response.body().getVehicleDetails().get(0).getEmployee().get(0).getUserName());
+                        //txtEmployee.setText(response.body().getVehicleDetails().get(0).getEmployee().get(0).getUserName());
                     }
                     ViewVehicleLocationAdapter viewVehicleLocationAdapter = new ViewVehicleLocationAdapter(ViewVehicleActivity.this, locationList);
-                    VehicleRecylerView.setAdapter(viewVehicleLocationAdapter);
+                    //VehicleRecylerView.setAdapter(viewVehicleLocationAdapter);
                       iamgeurl = response.body().getVehicleDetails().get(0).getImage();
                     String image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Vehicle_Image/" + response.body().getVehicleDetails().get(0).getImage();
                     Log.i("TAG", "onBindViewHolder:" + image);

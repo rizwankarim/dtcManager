@@ -35,11 +35,6 @@ public class ViewerActivity extends AppCompatActivity {
         webview.getSettings().setUseWideViewPort(true);
         webview.setInitialScale(1);
 
-
-
-
-
-
         webview.setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url){

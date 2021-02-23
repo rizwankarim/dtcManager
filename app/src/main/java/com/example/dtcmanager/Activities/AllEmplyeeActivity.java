@@ -177,11 +177,12 @@ public class AllEmplyeeActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        getInfo();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideLoadingDialog();
+        getInfo();
+    }
 
     public void showLoadingDialog() {
         loadingDialog = new AlertDialog.Builder(this).create();

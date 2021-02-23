@@ -1,8 +1,10 @@
 package com.example.dtcmanager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -27,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +42,8 @@ import com.example.dtcmanager.Adapter.VehicleListAdapter;
 import com.example.dtcmanager.Common.FileUtils;
 import com.example.dtcmanager.Interface.DeleteVehcile;
 import com.example.dtcmanager.ModelClass.AddProject.AddProject;
+import com.example.dtcmanager.ModelClass.AddProjectImage.AddProjectImage;
+import com.example.dtcmanager.ModelClass.AddVechileImage.AddVechileImage;
 import com.example.dtcmanager.ModelClass.GetAllEmployee.AllEmployee;
 import com.example.dtcmanager.ModelClass.GetAllEmployee.GetAllEmploye;
 import com.example.dtcmanager.ModelClass.GetAllLocation.AllLocation;
@@ -50,6 +55,7 @@ import com.example.dtcmanager.ModelClass.UpdateProject.UpdateProject;
 import com.example.dtcmanager.ModelClass.UploadProjectContract.UploadprojectContract;
 import com.example.dtcmanager.ModelClass.UploadSchdualProject.Uploadprojectschedul;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.ByteArrayOutputStream;
@@ -76,6 +82,8 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
     ImageButton back;
     Button saveProject;
     String encodePDF;
+    CardView addPhoto;
+    ImageView imgParent;
     String encodePDF2;
     ProgressBar progressBar1;
     AlertDialog loadingDialog;
@@ -161,6 +169,8 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         progressBar1 = findViewById(R.id.progressBar1);
         txtSchedulefile = findViewById(R.id.txtSchedulefile);
         txtContractfile = findViewById(R.id.txtContractfile);
+        addPhoto= findViewById(R.id.add_photo);
+        imgParent= findViewById(R.id.imgParent);
     }
 
     private void Cliclble() {
@@ -197,6 +207,13 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
             }
         });
 
+        addPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifyPermissions();
+            }
+        });
+
     }
 
     private void verifyPermissions(int requestCode) {
@@ -218,6 +235,27 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         }
     }
 
+    public void verifyPermissions(){
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+            openGallery();
+
+        } else {
+            ActivityCompat.requestPermissions(CreateNewProjectActivity.this, permissions, 2857);
+
+        }
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, 2857);
+    }
+
     private void GetProjectDetail(String id) {
 
         Call<GetProjectDetail> call = RetrofitClientClass.getInstance().getInterfaceInstance().GetProjectDetail(id);
@@ -232,6 +270,7 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                     edtDeadline.setText(response.body().getProjectDetail().get(0).getDeadLine());
                     txtContractfile.setText(response.body().getProjectDetail().get(0).getContractFile());
                     txtSchedulefile.setText(response.body().getProjectDetail().get(0).getScheduleFile());
+                    String image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Project_Image/" + response.body().getProjectDetail().get(0).getImage();
 
                     if (response.body().getProjectDetail().get(0).getLocation().size() > 0) {
                         ProjectLocationId = response.body().getProjectDetail().get(0).getLocation().get(0).getId();
@@ -254,10 +293,25 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                         recylerviews();
 
                     }
+                    Picasso.get().load(image).into(imgParent, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            if (progressBar1 != null) {
+                                progressBar1.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                    });
 
                 } else if (response.code() == 400) {
 //                    Toast.makeText(CreateNewProjectActivity.this, "Something Wrong ", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
@@ -322,50 +376,54 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         } else if (dead_line.isEmpty()) {
             edtDeadline.setError("Please Enter Deadline");
             edtDeadline.requestFocus();
-        } else if (ProjectLocationId.isEmpty()) {
+        }else if (imageUri==null){
+            Toast.makeText(this, "Please Select Image", Toast.LENGTH_SHORT).show();
+        }else if (ProjectLocationId.isEmpty()) {
             Toast.makeText(this, "Please Select Location", Toast.LENGTH_SHORT).show();
         } else if (employee_id.size() < 1) {
             Toast.makeText(this, "Please Select Employee", Toast.LENGTH_SHORT).show();
-        } else if (vehicleIdList.size() < 1) {
-            Toast.makeText(this, "Please Select Vehicles", Toast.LENGTH_SHORT).show();
-        }
-        /*else if (imageUri == null) {
-            Toast.makeText(this, "Please Select Schedule File", Toast.LENGTH_SHORT).show();
+        } /*else if (vehicleIdList.size() < 1) {
+//            Toast.makeText(this, "Please Select Vehicles", Toast.LENGTH_SHORT).show();
         }*/
+        else if (imageUri == null) {
+            Toast.makeText(this, "Please Select Project Image", Toast.LENGTH_SHORT).show();
+        }
        else {
-            showLoadingDialog();
+           try{showLoadingDialog();
 
-            Log.i("TAG", "SaveProject: " + ProjectLocationId + "\n" + employee_id + "\n" + vehicleIdList);
+               Log.i("TAG", "SaveProject: " + ProjectLocationId + "\n" + employee_id + "\n" + vehicleIdList);
 
-            Call<AddProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProject(manager_id, name,
-                    value, start_date,
-                    dead_line, ProjectLocationId,
-                    schedulefilelink, contractfilelink,
-                    vehicleIdList, employee_id);
-            call.enqueue(new Callback<AddProject>() {
-                @Override
-                public void onResponse(Call<AddProject> call, Response<AddProject> response) {
-                    if (response.code() == 200) {
-                        int id1 = response.body().getAddProjectId();
-                        String id = String.valueOf(id1);
-                          hideLoadingDialog();
-                          Toast.makeText(CreateNewProjectActivity.this, "Project Added Succesfully..", Toast.LENGTH_SHORT).show();
-                          finish();
+               Call<AddProject> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProject(manager_id, name,
+                       value, start_date,
+                       dead_line, ProjectLocationId,
+                       schedulefilelink, contractfilelink,
+                       vehicleIdList, employee_id,"null");
+               call.enqueue(new Callback<AddProject>() {
+                   @Override
+                   public void onResponse(Call<AddProject> call, Response<AddProject> response) {
+                       if (response.code() == 200) {
+                           int id1 = response.body().getAddProjectId();
+                           //String id = String.valueOf(id1);
+                           UploadProjectImage(id1);
 
-                    } else if (response.code() == 404) {
-                        hideLoadingDialog();
+                       } else if (response.code() == 404) {
+                           hideLoadingDialog();
 //                        Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
 
-                    }
-                }
+                       }
+                   }
 
-                @Override
-                public void onFailure(Call<AddProject> call, Throwable t) {
-                    hideLoadingDialog();
-//                    Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                   @Override
+                   public void onFailure(Call<AddProject> call, Throwable t) {
+                       hideLoadingDialog();
+                       Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-                }
-            });
+                   }
+               });
+           }
+           catch (Exception e) {
+               Toast.makeText(this, "Something happen wrong..", Toast.LENGTH_SHORT).show();
+           }
         }
     }
 
@@ -450,6 +508,40 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         }
 
     }
+
+    private void UploadProjectImage(int id) {
+
+        File file = new File(fileUtils.getRealPath(this, imageUri));
+
+        RequestBody image = RequestBody.create(MediaType.parse(getContentResolver().getType(imageUri)), file);
+
+        MultipartBody.Part filemulti = MultipartBody.Part.createFormData("picture", file.getName(), image);
+
+// /        RequestBody userID = RequestBody.create(MultipartBody.FORM, id);
+
+        Call<AddProjectImage> call = RetrofitClientClass.getInstance().getInterfaceInstance().AddProjectImage(String.valueOf(id), filemulti);
+        call.enqueue(new Callback<AddProjectImage>() {
+            @Override
+            public void onResponse(Call<AddProjectImage> call, Response<AddProjectImage> response) {
+                if (response.code() == 200) {
+                    hideLoadingDialog();
+                    Toast.makeText(CreateNewProjectActivity.this, "Project added Successfully", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                } else if (response.code() == 404) {
+                    hideLoadingDialog();
+//                    Toast.makeText(AddVehiclesActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddProjectImage> call, Throwable t) {
+                hideLoadingDialog();
+                Toast.makeText(CreateNewProjectActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
     public String getStringPdf (Uri filepath){
         InputStream inputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -480,86 +572,110 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
         return Base64.encodeToString(pdfByteArray, Base64.DEFAULT);
     }
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2857) {
 
-        if (resultCode == RESULT_OK && data!=null ) {
-            if (checkfile == 1) {
-                String FilePath = data.getData().getPath();
-                imageUri = data.getData();
-                try{
-                    String ext= getfileExtension(imageUri);
-                    Log.d("URI",ext);
-                    if(ext.equals("pdf")){
-                        encodePDF= getStringPdf(imageUri);
-                        txtSchedulefile.setText("File Attached");
-                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext.equals("docx")){
-                        txtSchedulefile.setText("File Attached");
-                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext.equals("png")){
-                        txtSchedulefile.setText("File Attached");
-                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext.equals("jpg")){
-                        txtSchedulefile.setText("File Attached");
-                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext.equals("jpeg")){
-                        txtSchedulefile.setText("File Attached");
-                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else{
-                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch(Exception e){
-                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+            if (resultCode == Activity.RESULT_OK) {
+
+                if (data != null) {
+
+                    imageUri = data.getData();
+                    imgParent.setImageURI(imageUri);
+
                 }
 
+            } else if (resultCode == Activity.RESULT_CANCELED) {
 
-            } else if (checkfile == 2) {
-                String FilePathOne = data.getData().getPath();
-                imageUri1 = data.getData();
-                try{
-                    String ext1= getfileExtension(imageUri1);
-                    Log.d("URI",ext1);
-                    if(ext1.equals("pdf")){
-                        encodePDF2=getStringPdf(imageUri1);
-                        txtContractfile.setText("File Attached");
-                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext1.equals("docx")){
-                        txtContractfile.setText("File Attached");
-                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext1.equals("png")){
-                        txtContractfile.setText("File Attached");
-                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext1.equals("jpg")){
-                        txtContractfile.setText("File Attached");
-                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else if(ext1.equals("jpeg")){
-                        txtContractfile.setText("File Attached");
-                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
-                    }
-                    else{
-                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch(Exception e){
-                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(CreateNewProjectActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                imgParent.setVisibility(View.GONE);
+
             }
+
         }
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        // TODO Auto-generated method stub
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK && data!=null ) {
+//            if (checkfile == 1) {
+//                String FilePath = data.getData().getPath();
+//                imageUri = data.getData();
+//                try{
+//                    String ext= getfileExtension(imageUri);
+//                    Log.d("URI",ext);
+//                    if(ext.equals("pdf")){
+//                        encodePDF= getStringPdf(imageUri);
+//                        txtSchedulefile.setText("File Attached");
+//                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext.equals("docx")){
+//                        txtSchedulefile.setText("File Attached");
+//                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext.equals("png")){
+//                        txtSchedulefile.setText("File Attached");
+//                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext.equals("jpg")){
+//                        txtSchedulefile.setText("File Attached");
+//                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext.equals("jpeg")){
+//                        txtSchedulefile.setText("File Attached");
+//                        txtSchedulefile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else{
+//                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                catch(Exception e){
+//                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            } else if (checkfile == 2) {
+//                String FilePathOne = data.getData().getPath();
+//                imageUri1 = data.getData();
+//                try{
+//                    String ext1= getfileExtension(imageUri1);
+//                    Log.d("URI",ext1);
+//                    if(ext1.equals("pdf")){
+//                        encodePDF2=getStringPdf(imageUri1);
+//                        txtContractfile.setText("File Attached");
+//                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext1.equals("docx")){
+//                        txtContractfile.setText("File Attached");
+//                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext1.equals("png")){
+//                        txtContractfile.setText("File Attached");
+//                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext1.equals("jpg")){
+//                        txtContractfile.setText("File Attached");
+//                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else if(ext1.equals("jpeg")){
+//                        txtContractfile.setText("File Attached");
+//                        txtContractfile.setTextColor(Color.parseColor("#68F965"));
+//                    }
+//                    else{
+//                        Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                catch(Exception e){
+//                    Toast.makeText(this, "Select jpg, jpeg, pdf or docx format..", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
     private String getfileExtension(Uri uri)
     {
@@ -621,9 +737,17 @@ public class CreateNewProjectActivity extends AppCompatActivity implements DateP
                 @Override
                 public void onResponse(Call<UpdateProject> call, Response<UpdateProject> response) {
                     if (response.code() == 200) {
-                       hideLoadingDialog();
-                           Toast.makeText(CreateNewProjectActivity.this, "Project Updated Succesfully..", Toast.LENGTH_SHORT).show();
-                       finish();
+                        if(imageUri!=null){
+                            int id1= Integer.parseInt(id);
+                            UploadProjectImage(id1);
+                        }
+                        else{
+                            hideLoadingDialog();
+                            Toast.makeText(CreateNewProjectActivity.this, "Project Updated Succesfully..", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+
                     } else if (response.code() == 400) {
                         hideLoadingDialog();
 //                        Toast.makeText(CreateNewProjectActivity.this, "Something Wrong", Toast.LENGTH_SHORT).show();

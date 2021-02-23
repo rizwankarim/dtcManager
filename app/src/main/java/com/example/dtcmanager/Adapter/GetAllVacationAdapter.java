@@ -17,11 +17,12 @@ import com.example.dtcmanager.R;
 
 import java.util.List;
 
+import io.paperdb.Paper;
+
 public class GetAllVacationAdapter extends RecyclerView.Adapter<GetAllVacationAdapter.ViewHolder> {
     Context context;
     List<EmployeeVacation> employeeVacationList;
 LeaveApplicationInterface leaveApplicationInterface;
-
 
     public GetAllVacationAdapter(Context context, List<EmployeeVacation> employeeVacationList, LeaveApplicationInterface leaveApplicationInterface) {
         this.context = context;
@@ -51,20 +52,20 @@ LeaveApplicationInterface leaveApplicationInterface;
         holder.txtbooking_number.setText(employeeVacation.getId());
         holder.txtname.setText(employeeVacation.getEmp_name());
 
-        if(employeeVacation.getStatus().equals("Accepted")){
+        if(employeeVacation.getStatus().contains("Accepted")){
             holder.btnAccept.setVisibility(View.VISIBLE);
             holder.btnAccept.setText("Accepted");
             holder.btnAccept.setEnabled(false);
             holder.btnReject.setVisibility(View.GONE);
 
         }
-         else if(employeeVacation.getStatus().equals( "Rejected")){
+         else if(employeeVacation.getStatus().contains("Rejected")){
               holder.btnReject.setVisibility(View.VISIBLE);
               holder.btnReject.setEnabled(false);
               holder.btnReject.setText("Rejected");
             holder.btnAccept.setVisibility(View.GONE);
         }
-        else if(employeeVacation.getStatus().equals( "pending")){
+        else if(employeeVacation.getStatus().equals("pending")){
             holder.btnReject.setVisibility(View.VISIBLE);
             holder.btnAccept.setVisibility(View.VISIBLE);
         }
@@ -72,6 +73,10 @@ LeaveApplicationInterface leaveApplicationInterface;
             @Override
             public void onClick(View v) {
                 Common.status = "Rejected";
+                holder.btnAccept.setVisibility(View.VISIBLE);
+                holder.btnAccept.setText("Accepted");
+                holder.btnAccept.setEnabled(false);
+                holder.btnReject.setVisibility(View.GONE);
                 leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId(),employeeVacation.getEmpId());
             }
         });
@@ -79,7 +84,12 @@ LeaveApplicationInterface leaveApplicationInterface;
         holder.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Common.status = "Accepted";
+                holder.btnReject.setVisibility(View.VISIBLE);
+                holder.btnReject.setEnabled(false);
+                holder.btnReject.setText("Rejected");
+                holder.btnAccept.setVisibility(View.GONE);
                 leaveApplicationInterface.LeaveApplicationInterface(employeeVacation.getId(),employeeVacation.getEmpId());
             }
         });

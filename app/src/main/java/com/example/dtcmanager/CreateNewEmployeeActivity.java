@@ -135,8 +135,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
             create_employee_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String user_name = edtUsername.getText().toString();
-                    checkDuplicateEmployee(manager_id,user_name);
+                    AddEmploye();
                 }
             });
 
@@ -149,6 +148,7 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                 @Override
                 public void onClick(View view) {
                     EditEmployee(id);
+
                 }
             });
         }
@@ -288,15 +288,25 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                         for (int i=0;i<allEmployeeList.size();i++){
                             if(allEmployeeList.get(i).getUserName().equals(user_name)){
                                 Toast.makeText(CreateNewEmployeeActivity.this, "Same user name is already exist. Try with a new one..", Toast.LENGTH_SHORT).show();
+                                break;
                             }
                             else{
-                                AddEmploye();
+                                if(originCheck.equals("Add Employee")){
+                                    AddEmploye();
+                                }
+                                else if(originCheck.equals("Edit Employee")){
+                                    EditEmployee(id);
+                                }
                             }
-                            break;
                          }
                     }
                     else{
-                        AddEmploye();
+                        if(originCheck.equals("Add Employee")){
+                            AddEmploye();
+                        }
+                        else if(originCheck.equals("Edit Employee")){
+                            EditEmployee(id);
+                        }
                     }
 
                 }
@@ -459,8 +469,6 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
                     edtexpense.setText(expenses);
                     edtPassortEndDate.setText(passportEndDate);
                     ContractFileLink.setText(C_file_link);
-
-                    edtUsername.setEnabled(false);
 
                     if (response.body().getEmployeeDetail().get(0).getSubEmployee().size() > 0) {
                         for (int i = 0; i < response.body().getEmployeeDetail().get(0).getSubEmployee().size(); i++) {
@@ -1204,10 +1212,10 @@ public class CreateNewEmployeeActivity extends AppCompatActivity implements Date
 //        dpd.setMinDate(now);
 //        dpd.setMinDate(now);
         if (datecheck == 1) {
-            dpd.setMinDate(now);
+            //dpd.setMinDate(now);
 
         } else if (datecheck == 2) {
-            dpd.setMinDate(now);
+            //dpd.setMinDate(now);
         }
 
         dpd.setThemeDark(true);

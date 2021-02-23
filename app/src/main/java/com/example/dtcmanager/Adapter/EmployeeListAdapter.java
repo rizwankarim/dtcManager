@@ -100,8 +100,8 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
                 dialog.show();
             }
         });
-        String Image =  allEmployee.getProfileImage();
-        Picasso.get().load("http://dtc.anstm.com//dtcAdmin/api/Manager/Profile_Image/" + Image)
+        String Image = allEmployee.getImage();
+        Picasso.get().load("http://dtc.anstm.com//dtcAdmin/api/Manager/Employee/Joining_Image/" + Image)
                 .into(holder.employee_image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -127,7 +127,8 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView employee_name;
         ImageView btnMore;
-        CircleImageView employee_image;
+        ImageView employee_image;
+        //CircleImageView employee_image;
         ProgressBar progressBar1;
         LinearLayout employee_layout;
 

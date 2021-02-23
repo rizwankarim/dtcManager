@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.example.dtcmanager.ModelClass.EmployeeDetailMax.EmployeeDetail_;
 import com.example.dtcmanager.ModelClass.EmployeeDetailMax.SubEmployee;
 import com.example.dtcmanager.R;
 import com.example.dtcmanager.RetrofitClient.RetrofitClientClass;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class EmployeeDetailsFragment extends Fragment {
     List<SubEmployee> subEmployeeList = new ArrayList<>();
 
     Button txtidFile, txtJoiningFile, txtImage, txtPassportFile, callemployee, resetPhone;
+    ImageView emp_image;
 
     public EmployeeDetailsFragment() {
         // Required empty public constructor
@@ -64,6 +67,7 @@ public class EmployeeDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        emp_image= view.findViewById(R.id.emp_image);
         txtUserName = view.findViewById(R.id.txtUserName);
         txtPassword = view.findViewById(R.id.txtPassword);
         txtposition = view.findViewById(R.id.txtposition);
@@ -86,7 +90,7 @@ public class EmployeeDetailsFragment extends Fragment {
 
         txtidFile = view.findViewById(R.id.txtidFile);
         txtJoiningFile = view.findViewById(R.id.txtJoiningFile);
-        txtImage = view.findViewById(R.id.txtImage);
+        //txtImage = view.findViewById(R.id.txtImage);
         txtPassportFile = view.findViewById(R.id.txtPassportFile);
 
         EmployeeDetail(Comon.employeeId);
@@ -125,6 +129,9 @@ public class EmployeeDetailsFragment extends Fragment {
                     String Image = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/Joining_Image/" + response.body().getEmployeeDetail().get(0).getImage();
                     String Passport_File = "http://dtc.anstm.com/dtcAdmin/api/Manager/Employee/PassPort/" + response.body().getEmployeeDetail().get(0).getPassportFile();
 
+                    Picasso.get().load(Image)
+                    .into(emp_image);
+
                     callemployee.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -142,66 +149,86 @@ public class EmployeeDetailsFragment extends Fragment {
                     txtidFile.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (File1 == null || File1.equals("")){
-                                Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
+
+                            try{
+                                if (File1 == null || File1.equals("")){
+                                    Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Intent intent = new Intent(getContext(), ViewerActivity.class);
+                                    intent.putExtra("orign", File);
+                                    startActivity(intent);
+                                }
                             }
-                            else {
-                                Intent intent = new Intent(getContext(), ViewerActivity.class);
-                                intent.putExtra("orign", File);
-                                startActivity(intent);
+                            catch(Exception e){
+                                Toast.makeText(getContext(), "Something goes wrong", Toast.LENGTH_SHORT).show();
                             }
+
                         }
                     });
 
                     txtJoiningFile.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            try{
+                                if (Joining_File1== null || Joining_File1.equals("")){
 
-                            if (Joining_File1== null || Joining_File1.equals("")){
+                                    Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
-
+                                }
+                                else {
+                                    Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Joining_File));
+                                    browsefile.putExtra("orign", Joining_File);
+                                    startActivity(browsefile);
+                                }
                             }
-                            else {
-                                Intent browsefile = new Intent(Intent.ACTION_VIEW, Uri.parse(Joining_File));
-                                browsefile.putExtra("orign", Joining_File);
-                                startActivity(browsefile);
+                            catch(Exception e){
+                                Toast.makeText(getContext(), "Something goes wrong", Toast.LENGTH_SHORT).show();
                             }
+
+
                         }
                     });
-                    txtImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (Image1== null|| Image1.equals("")){
-
-                                Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
-
-                            }
-                            else {
-
-                                Intent intent = new Intent(getContext(), ViewerActivity.class);
-                                intent.putExtra("orign", Image);
-                                startActivity(intent);
-                            }
-                        }
-                    });
+//                    txtImage.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            if (Image1== null|| Image1.equals("")){
+//
+//                                Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                            else {
+//
+//                                Intent intent = new Intent(getContext(), ViewerActivity.class);
+//                                intent.putExtra("orign", Image);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    });
 
                     txtPassportFile.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            if (Passport_File1== null  || Passport_File1.equals("")){
+                            try{
+                                if (Passport_File1== null  || Passport_File1.equals("")){
 
-                                Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireContext(), "No File Attached", Toast.LENGTH_SHORT).show();
 
+                                }
+                                else {
+
+                                    Intent intent = new Intent(getContext(), ViewerActivity.class);
+                                    intent.putExtra("orign", Passport_File);
+                                    startActivity(intent);
+                                }
                             }
-                            else {
-
-                                Intent intent = new Intent(getContext(), ViewerActivity.class);
-                                intent.putExtra("orign", Passport_File);
-                                startActivity(intent);
+                            catch (Exception e){
+                                Toast.makeText(getContext(), "Something goes wrong", Toast.LENGTH_SHORT).show();
                             }
+
+
                         }
                     });
 

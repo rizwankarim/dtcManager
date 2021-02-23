@@ -880,9 +880,9 @@ public class AddVehiclesActivity extends AppCompatActivity implements DatePicker
 //        dpd.setMinDate(now);
 //        dpd.setMinDate(now);
         if (check == 3) {
-            dpd.setMinDate(now);
+            //dpd.setMinDate(now);
         } else if (check == 4) {
-            dpd.setMinDate(now);
+            //dpd.setMinDate(now);
         }
         dpd.setThemeDark(true);
         dpd.setVersion(DatePickerDialog.Version.VERSION_1);

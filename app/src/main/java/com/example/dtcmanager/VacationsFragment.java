@@ -118,7 +118,7 @@ public class VacationsFragment extends Fragment {
                             @Override
                             public void LeaveApplicationInterface(String id, String emp_id) {
                                 showLoadingDialog();
-                                Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id,emp_id, Common.status);
+                                Call<ChangeStatus> call = RetrofitClientClass.getInstance().getInterfaceInstance().changeStatus(id,emp_id, Common.status+ " by "+Paper.book().read("manager_name"));
                                 call.enqueue(new Callback<ChangeStatus>() {
                                     @Override
                                     public void onResponse(Call<ChangeStatus> call, Response<ChangeStatus> response) {

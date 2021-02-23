@@ -43,7 +43,8 @@ dependencies {
 //    MaterialSearchbar
     implementation 'com.github.mancj:MaterialSearchBar:0.8.1'
 //    MultiSpinner
-    implementation 'com.github.pratikbutani:MultiSelectSpinner:-SNAPSHOT'
+    //implementation 'com.github.pratikbutani:MultiSelectSpinner:-SNAPSHOT'
+    implementation 'com.github.pratikbutani:MultiSelectSpinner:f47c0dadea'
 //    Google Maps
     implementation 'com.google.maps:google-maps-services:0.1.20'
     implementation 'com.google.android.libraries.places:places:2.3.0'

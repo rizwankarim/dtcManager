@@ -2,42 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
+
     android:background="@drawable/white_rectangle1"
     android:orientation="horizontal"
     android:id="@+id/employee_layout"
     android:weightSum="10">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight="1.5">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:id="@+id/employee_image"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/image2" />
-        <ProgressBar
-            android:id="@+id/progressBar1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/colorPrimary"
-            />
-    </RelativeLayout>
+        android:orientation="horizontal"
+        android:layout_weight="2.5">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="250dp"
+            app:cardBackgroundColor="@color/white">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
 
+                <ImageView
+                    android:id="@+id/employee_image"
+                    android:scaleType="fitXY"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/image3"/>
 
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:indeterminateTint="@color/colorPrimary"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
     <LinearLayout
+        android:layout_marginLeft="10dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="7.5"

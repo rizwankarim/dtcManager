@@ -70,6 +70,8 @@ public class HomeFragment extends Fragment {
     String manager_id, employee_id;
     Button create_employee_btn,btnArchive;
     ImageButton refresh;
+    TextView username;
+    String user_name;
     Window window;
     Timer timer;
     List<AllEmployee> allEmployeeList = new ArrayList<>();
@@ -85,7 +87,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         Paper.init(requireContext());
         manager_id = Paper.book().read("user_id");
-
+        user_name= Paper.book().read("manager_name");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -105,6 +107,9 @@ public class HomeFragment extends Fragment {
         refresh= view.findViewById(R.id.refresh);
         textNoti = view.findViewById(R.id.textNoti);
         btnlogout = view.findViewById(R.id.btnlogout);
+        username= view.findViewById(R.id.welcome);
+
+        username.setText("Welcome "+ user_name);
 
         if(checkConnection())
         {
@@ -246,13 +251,15 @@ public class HomeFragment extends Fragment {
 //                employee_id = employeeList.get(i);
 
             Call<Notification> call = RetrofitClientClass.getInstance().getInterfaceInstance()
-                    .CreateNotification(manager_id, employeeList.get(0), "Manager", notifications, date, time);
+                    .CreateNotification(manager_id, employeeList.get(0), Paper.book().read("manager_name")+ "(Manager)", notifications, date, time);
             call.enqueue(new Callback<Notification>() {
                 @Override
                 public void onResponse(Call<Notification> call, Response<Notification> response) {
                     if (response.code() == 200) {
                         hideLoadingDialog();
                         employeeList.remove(0);
+                        employeeListSpinner.getSelectedItems().clear();
+                        textNoti.getText().clear();
                         Toast.makeText(requireContext(), "Notification Sent Successfully", Toast.LENGTH_SHORT).show();
                         //sendNotificationToSubEmployee(notifications, date, time);
 

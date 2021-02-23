@@ -10,18 +10,43 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ChildProfiletoolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ToolbarWhiteArrow">
-        <ImageView
-            android:layout_width="122dp"
-            android:layout_height="72dp"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/logo_high" />
-    </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/ChildProfiletoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolbarWhiteArrow">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:text="Projects"
+                    android:textColor="@color/colorAppMain"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:layout_weight="1.5"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:scaleType="fitCenter"
+                    android:layout_height="72dp"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logo_high"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+
+
+        </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -118,7 +143,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/ProjctRecylerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/add_project_layout"/>
 
                 </LinearLayout>
 

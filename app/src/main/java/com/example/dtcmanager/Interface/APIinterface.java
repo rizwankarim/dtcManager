@@ -3,6 +3,7 @@ package com.example.dtcmanager.Interface;
 import com.example.dtcmanager.ModelClass.AddEmploye.AddEmployee;
 import com.example.dtcmanager.ModelClass.AddLocation.AddLocation;
 import com.example.dtcmanager.ModelClass.AddProject.AddProject;
+import com.example.dtcmanager.ModelClass.AddProjectImage.AddProjectImage;
 import com.example.dtcmanager.ModelClass.AddVechile.AddVechile;
 import com.example.dtcmanager.ModelClass.AddVechileImage.AddVechileImage;
 import com.example.dtcmanager.ModelClass.ChangeStatus.ChangeStatus;
@@ -131,6 +132,13 @@ public interface APIinterface {
             @Part MultipartBody.Part picture
     );
 
+    @Multipart
+    @POST("Upload_Project_Image.php")
+    Call<AddProjectImage> AddProjectImage(
+            @Query("id") String id,
+            @Part MultipartBody.Part picture
+    );
+
 
     @FormUrlEncoded
     @POST("add_vehicle.php")
@@ -194,7 +202,8 @@ public interface APIinterface {
             @Query("schedule_file") String schedule_file,
             @Query("contract_file") String contract_file,
             @Field("vehicle_id[]") ArrayList<String> vehicle_id,
-            @Field("employee_id[]") ArrayList<String> employee_id
+            @Field("employee_id[]") ArrayList<String> employee_id,
+            @Query("image") String image
             // @Query("child_id") String child_id
     );
 

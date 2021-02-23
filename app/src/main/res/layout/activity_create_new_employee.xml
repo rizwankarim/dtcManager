@@ -671,7 +671,7 @@
                         android:layout_weight="7"
                         android:background="@color/white"
                         android:fontFamily="@font/helveticaneue_light"
-                        android:hint="Paste Contract file link here"
+                        android:hint="PASTE CONTRACT FILE LINK HERE"
                         android:inputType="text"
                         android:textColor="@color/colorAppMain"
                         android:textSize="16sp" />

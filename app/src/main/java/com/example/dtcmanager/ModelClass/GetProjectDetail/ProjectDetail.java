@@ -42,6 +42,17 @@ public class ProjectDetail {
     @SerializedName("Vehicle")
     @Expose
     private List<Vehicle> vehicle = null;
+    @SerializedName("image")
+    @Expose
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getId() {
         return id;

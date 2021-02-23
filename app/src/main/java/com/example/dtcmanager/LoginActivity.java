@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         else{
                             String user_id = response.body().getManagerId().get(0).getId();
                             Paper.book().write("user_id", user_id);
+                            Paper.book().write("manager_name",user_name);
                             updateLoginStatus(user_id,Imei_Number);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
@@ -187,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
         } else {
             Imei_Number=getDeviceId(this);
-            Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -197,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             case REQUEST_READ_PHONE_STATE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Imei_Number=getDeviceId(this);
-                    Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, Imei_Number, Toast.LENGTH_SHORT).show();
                 }
                 break;
 

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AllEmployee {
 
-    @SerializedName("id")
+    @SerializedName("emp_id")
     @Expose
     private String id;
     @SerializedName("manager_id")
@@ -33,9 +33,9 @@ public class AllEmployee {
     @SerializedName("over_time")
     @Expose
     private String overTime;
-    @SerializedName("profile_image")
+    @SerializedName("image")
     @Expose
-    private String profileImage;
+    private String Image;
 
     public String getId() {
         return id;
@@ -109,12 +109,12 @@ public class AllEmployee {
         this.overTime = overTime;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public String getImage() {
+        return Image;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setImage(String Image) {
+        this.Image = Image;
     }
 
 }

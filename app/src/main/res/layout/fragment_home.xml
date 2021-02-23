@@ -382,7 +382,7 @@
                         android:background="@drawable/backgroungsearch"
                         android:layout_marginTop="1dp"
                         android:entries="@array/SpinnerCreateEmployeelist"
-                        app:hintText="Choose From employee" />
+                        app:hintText="Select From Employees" />
 
                 </LinearLayout>
 
